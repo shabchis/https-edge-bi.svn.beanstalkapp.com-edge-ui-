@@ -1,3 +1,8 @@
+<?php
+/**
+ *Importer view, called from importer controller
+ */
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +15,7 @@
 		}
 		#importer
 		{ 
-			width:700px;
+			width:80%;
 			margin:0 auto;
 			font-family: verdana;
 			font-size: 12px;
@@ -126,6 +131,7 @@
 			 var table = document.getElementById("tableID");
 			 table.deleteRow(row);
 		 }
+		 
 	</script>
     </head>
     <body>
