@@ -2,26 +2,17 @@
 
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=9" >
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 		<title>Edge.BI</title>
-
 		<!--<link rel="stylesheet" href="<?php base_url(); ?>assets/css/style.css" type="text/css" media="screen" />-->
-			<link rel="stylesheet" href="<?php base_url(); ?>assets/css/exstyle.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="<?php base_url(); ?>assets/css/exstyle.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php base_url(); ?>assets/css/960.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php base_url(); ?>assets/css/jquery.jscrollpane.css" type="text/css" media="screen" />
-		
-		<link rel="stylesheet" href="<?php base_url(); ?>assets/css/jquery-ui-1.8.8.custom.css" media="screen"/>  
-			<link rel="stylesheet" href="<?php base_url(); ?>assets/css/anythingslider.css" media="screen"/>  
-	
+		<link rel="stylesheet" href="<?php base_url(); ?>assets/css/jquery-ui-1.8.8.custom.css" media="screen"/>  	
 		<!--[if IE]>
 		<script src="<?php base_url();?>assets/js/html5shiv.js"></script>
-		<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>
-		<meta http-equiv="X-UA-Compatible" content="IE=8" />
-		<script src="<?php base_url();?>assets/js/modernizr-1.6.min.js"></script>
-					
 		<![endif]-->
-
 		<script src="<?php base_url();?>assets/js/jquery-1.4.4.js"></script>  
 		<script src="<?php base_url();?>assets/js/json_encoder.js"></script>  
 		<script src="<?php base_url();?>assets/js/selectivizr.js"></script>  
@@ -36,195 +27,284 @@
 		<script src="<?php base_url();?>assets/js/jquery.jscrollpane.min.js"></script>
 		<script src="<?php base_url();?>assets/js/jquery.mousewheel.js"></script>
 		<script src="<?php base_url();?>assets/js/jquery-ui-1.8.8.custom.min.js"></script>
-		<script src="<?php base_url();?>assets/js/jquery.anythingslider.js"></script>
-		<script src="<?php base_url();?>assets/js/jquery.tablesorter.min.js"></script>
-		
-	<!--	<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>-->
+		<script src="<?php base_url();?>assets/js/json2.js"></script>
+		<script src="<?php base_url();?>assets/js/scripts.js"></script>
 		<script type="text/javascript">
 			var _menudata = jQuery.parseJSON('<?php echo $menu; ?>');
 			var _accountdata = 	jQuery.parseJSON('<?php echo $account; ?>');
 			var _userdata = jQuery.parseJSON('<?php echo $user; ?>');
-		</script>
-		<script src="<?php base_url();?>assets/js/scripts.js"></script>
+		</script>		
 	</head>
-
 	<body>
 		<div id="container" >
-		<div id="modal">
-		<div id="content">
-		</div>
-		
-		</div>
+			<div id="modal">
+			<div id="content"></div>
+			</div>
 			<script id="usertmpl"  type="text/x-jquery-tmpl">
 				<span class="${UserID}">${Name}</span>
 			</script>
-		
+
+			<!--   Add menu items -->
 			<script id="tmpl"  type="text/x-jquery-tmpl">
-			 	{{if Name != "TOPBAR"}}
-					<h2 class="trigger ${IsOpen}" data-state="${IsOpen}" ><span> ${Name} </span></h2>
-					<div class='toggle_container'>
-		  				<div class='block'>
-							{{if ChildItems}} 
-		 						<ul class="list">
-		 							
-		 							<!-- 2nd level -->
-									{{each ChildItems}}
-										{{if MetaData}}
-		 									<li class="menuheader"><a href="#" data-path="${Path}">${Name}</a>
-		 								{{/if}}
-				 	  							{{if ChildItems != ""}}
-				 	 								<ul data-name ="${Name}" class="parent">
-				 	 								
-					 	 								<!-- 3rd level -->
-			 											{{each ChildItems}} 
-															<li class="menuitem"><a href="#" data-path="${Path}">${Name} </a>
-															{{if ChildItems }}
-																<ul data-name ="${Name}">  	
-					 	 			  								{{each ChildItems}}
-																		<li class="menuitem"><a href="#" data-path="${Path}">${Name}</a> </li>
-																	{{/each}}
-																</ul>
-			        										</li>
-			        										{{/if}}
-														{{/each}}
-		        
-													</ul>
-												{{/if}}
-        									</li>
-									{{/each}}
-        						</ul>
-		   					{{/if}}
-						</div>
-					</div>
- 				{{/if}}
-
-	</script>
-
-			<script id="topmenu" type ="text/x-jquery-tmpl">
-			
-			 {{if Name == "TOPBAR"}}
-			 	 <ul>
-			 	{{each ChildItems}}
-					<li>| <a TARGET="_blank" href="${MetaData.External}">${Name}</a></li>
-			  {{/each}}
-          		 </ul>
-			 {{/if}}
-			
-			</script>
-		<header>
-			<img src="<?php base_url();?>assets/img/logo_app.jpg" id="logo" />
-			<div id="login">
-				<div id="user">
-				&nbsp; <span id="loginout"><a href="login/logout">(Log Out)</a> </span>
-				</div>
-				
-				<div id="top"></div>
-				
-				
-				<div id="ajaxloader">
-					<img src="<?php base_url(); ?>assets/img/no-bg.gif" id="ajax" />
-					<b>Loading....</b>
-				</div>
-			</div>
-			<div id="breadcrumbs">
-			
-			</div>
-			
- 		</header>
- 		<div class="clear"></div>
-
-		
-	
-	<script id="accountbar"  type="text/x-jquery-tmpl">
-	
-		{{if Name }}
-		<ul>
-			<li id="${ID}" class="campaign" data-url="${SiteURL}" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
-				<span><a href="accounts/${ID}">${ Name }</a></span>
-				{{if ChildAccounts}}
-					{{each ChildAccounts}}
-						{{if ChildAccounts}}
-							<li id="${ID}" class="parent" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
-								<a href="accounts/${ID}">${ Name }</a>
-								{{if ChildAccounts}}
-									<ul>
-									{{each ChildAccounts}}
-										<li id="${ID}"{{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
-											<a href="accounts/${ID}" >${Name}</a>
+				{{if Name != "TOPBAR"}}
+				<h2 class="trigger ${IsOpen}" data-state="${IsOpen}" ><span> ${Name} </span></h2>
+				<div class='toggle_container'>
+					<div class='block'>
+					{{if ChildItems}} 
+					<ul class="list">
+						<!-- 2nd level -->
+						{{each ChildItems}}
+							{{if MetaData}}
+							<li class="menuheader"><a href="#" data-path="${Path}">${Name}</a>
+							{{/if}}
+								{{if ChildItems != ""}}
+									<ul data-name ="${Name}" class="parent">
+									<!-- 3rd level -->
+									{{each ChildItems}} 
+										<li class="menuitem"><a href="#" data-path="${Path}">${Name} </a>
+										{{if ChildItems }}
+											<ul data-name ="${Name}">  	
+										{{each ChildItems}}
+											<li class="menuitem"><a href="#" data-path="${Path}">${Name}</a> </li>
+										{{/each}}
+											</ul>
 										</li>
+										{{/if}}
 									{{/each}}
 									</ul>
 								{{/if}}
 							</li>
-						{{else}}
-							<li id="{ID}" {{if Permissions}} data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
-								<a href="accounts/${ID}">${Name}</a>
-							</li>
-						{{/if}}
-					{{/each}}
-				{{/if}}
-			</li>
-		</ul>
-		{{/if}}
-	</script>
-	
-
-	<div id="slider">
-		<span data-show="true"><img src="<?php base_url();?>assets/img/arrows_04.png" /></span>
-		<div id="caption">Hide</div>
-	</div>
-
-	<div id="inner">	
-	
-		<div id="menu">
-			<div id="menuwrapper">
-				<div id="accounts" class="folded">	
-		
-					<div id="head">
-						<div id="favicon"><img src='<?php base_url();?>assets/img/favicon4.ico'></img></div>	
-						<div  id="selected"></div>
-						<div id="arrow" class="regular">&nbsp;</div>
+						{{/each}}
+					</ul>
+					{{/if}}
 					</div>
-					<div class="clear"></div>
-					<div id="Campaign"></div>	
-					
 				</div>
-				<div id="accountwrapper" class="shadow"></div>	
-				<div id="sub"></div>
+				{{/if}}
+			</script>
+
+			<!--   Top  menu external links -->
+			<script id="topmenu" type ="text/x-jquery-tmpl">
+				{{if Name == "TOPBAR"}}
+					<ul>
+					{{each ChildItems}}
+						<li>| <a TARGET="_blank" href="${MetaData.External}">${Name}</a></li>
+					{{/each}}
+					</ul>
+				{{/if}}
+			</script>
+			
+			<!--   Top  menu internal links (logout & toolboard -->
+			<header>
+				<img src="<?php base_url();?>assets/img/logo_app.jpg" id="logo" />
+				<div id="login">
+					<div id="user">
+					&nbsp; <span id="loginout"><a href="login/logout">(Log Out)</a> </span>
+					</div>				
+					<div id="top"></div>	
+				</div>
+				<div id="login">
+					&nbsp; <span id="toolBox"><a href="#" id ="link" title="Tool Box"><img src="<?php base_url();?>assets/img/gear.jpg" id ="gear"  border =" 0"/></a> </span>				
+					<div id="popup" hidden="true" style="display:none" > 
+						<div>
+							<img src="<?php base_url();?>assets/img/tools/report_disabled.png" title="Service Report" id ="report"   border =" 0" class="toolIcons"/>
+							<img src="<?php base_url();?>assets/img/tools/import_disabled.png" title="Import Data" id ="import"  border =" 0" class="toolIcons"/>
+							<img src="<?php base_url();?>assets/img/tools/addRefund_disabled.png" title="Add Refund" id ="addRefund"  border =" 0" class="toolIcons"/>
+							<img src="<?php base_url();?>assets/img/tools/deleteRefund_disabled.png" title="Delete Refund" id ="deleteRefund"  border =" 0" class="toolIcons"/>
+							<img src="<?php base_url();?>assets/img/tools/reportGenerator_disabled.png" title="Generate Report" id ="reportGenerator"  border =" 0" class="toolIcons"/>
+						</div>
+						<br/>
+						<div id ="showTool"></div>
+					</div>
+					<div id="top"></div>							
+				</div>
+				<div id="breadcrumbs"><div>		
+			</header>
+			
+			<div id="ajaxloader">
+				<img src="<?php base_url(); ?>assets/img/no-bg.gif" id="ajax" />
+				<div>loading....</div>
 			</div>
-		</div>
-		<div id="main">
-			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		</div>
-	</div>
-	
-  		<div class="clear"></div>
+			<div class="clear"></div>
 
-		<footer>
-	    </footer>
+			<!--   Account  menu display -->
+			<script id="accountbar"  type="text/x-jquery-tmpl">
+			{{if Name }}
+			<ul>
+				<li id="${ID}" class="campaign" data-url="${SiteURL}" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
+					<span><a href="accounts/${ID}">${ Name }</a></span>
+					{{if ChildAccounts}}
+						{{each ChildAccounts}}
+							{{if ChildAccounts}}
+								<li id="${ID}" class="parent" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
+									<a href="accounts/${ID}">${ Name }</a>
+									{{if ChildAccounts}}
+										<ul>
+										{{each ChildAccounts}}
+											<li id="${ID}"{{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
+												<a href="accounts/${ID}" >${Name}</a>
+											</li>
+										{{/each}}
+										</ul>
+									{{/if}}
+								</li>
+							{{else}}
+								<li id="{ID}" {{if Permissions}} data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
+									<a href="accounts/${ID}">${Name}</a>
+								</li>
+							{{/if}}
+						{{/each}}
+					{{/if}}
+				</li>
+			</ul>
+			{{/if}}
+			</script>
 
-	</div>
-	
-	<script type='text/javascript'>
-		if(_menudata)
-		{
-			$("#tmpl").tmpl(_menudata).appendTo("#sub");
-			$("#topmenu").tmpl(_menudata).appendTo("#top");
-		}
-		else{
-		
+			<div id="slider">
+			<span data-show="true"><img src="<?php base_url();?>assets/img/arrows_04.png" /></span>
+			<div id="caption">Hide</div>
+			</div>
+
+			<div id="inner">	
+			<div id="menu">
+				<div id="menuwrapper">
+					<div id="accounts" class="folded">	
+						<div id="head">
+							<div id="favicon"><img src='<?php base_url();?>assets/img/favicon4.ico'></img></div>	
+							<div  id="selected"></div>
+							<div id="arrow" class="regular">&nbsp;</div>
+						</div>
+						<div class="clear"></div>
+						<div id="Campaign"></div>	
+					</div>
+					<div id="accountwrapper" class="shadow"></div>	
+					<div id="sub"></div>
+				</div>
+			</div>
+			<div id="main">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			</div>
+
+			<div class="clear"></div>
+			<footer></footer>
+		</div>	
+		<script type='text/javascript'>
+			if(_menudata)
+			{
+				$("#tmpl").tmpl(_menudata).appendTo("#sub");
+				$("#topmenu").tmpl(_menudata).appendTo("#top");
+			}
+			else{
+
 				$("#sub").html("the menu is unavailible for some reason");
-		}
-		if (_userdata)
-		{
-			$("#usertmpl").tmpl(_userdata).prependTo("#user");
-		}
-		
-		if(_accountdata)
-		{
-		 	$("#accountbar").tmpl(_accountdata).appendTo("#accountwrapper");
-		}
-	</script>
-	
-</body>
+			}
+			if (_userdata)
+			{
+				$("#usertmpl").tmpl(_userdata).prependTo("header #login #user");
+			}
+			if(_accountdata)
+			{
+				$("#accountbar").tmpl(_accountdata).appendTo("#accountwrapper");
+			}
+			
+			$('#link').click(function() { 
+				$('#popup').dialog({			 
+				 resizable: true,
+				title:"Tool Box",
+				modal: true,
+				height:'500',
+				width:'700',
+				buttons: { "Close": function() {
+							$(this).dialog('destroy');
+							$(".modal").remove();
+							$('#showTool').html("");
+							$('img').each(function () {
+								var curSrc = $(this).attr('src');
+								if(curSrc.indexOf("tools") != -1)
+									$('#'+this.id).attr('src','<?php base_url();?>assets/img/tools/'+this.id+'_disabled.png');
+							});
+							return false;
+							}
+						}
+				}); 
+				return false; 
+			});
+			
+			function changeImgs(img){
+				
+				$('#'+img.id).attr('src','<?php base_url();?>assets/img/tools/'+img.id+'.png');
+				$('img').each(function () {
+					var curSrc = $(this).attr('src');
+					if(curSrc.indexOf("tools") != -1&&this.id != img.id)
+						$('#'+this.id).attr('src','<?php base_url();?>assets/img/tools/'+this.id+'_disabled.png');
+					});
+			}
+			
+			$("#report").click(function() {
+				$.ajax({
+					url: "serviceStats", 
+					type: "POST",        
+					//data: data,  //any data you want to send to php file/function   
+					cache: false,
+					success: function (html) {  
+					$('#showTool').html(html); 
+					}       
+				});
+				changeImgs(this);
+				$('#popup').dialog('option', 'title', 'Services Outcome');
+			});
+			$("#import").click(function() {
+				$.ajax({
+					url: "importer", 
+					type: "POST",        
+					//data: data,  //any data you want to send to php file/function   
+					cache: false,
+					success: function (html) {  
+					$('#showTool').html(html); 
+					}       
+				});
+				changeImgs(this);
+				$('#popup').dialog('option', 'title', 'Import Data');
+			});
+			$("#addRefund").click(function() {
+				$.ajax({
+					url: " refund", 
+					type: "POST",        
+					//data: data,  //any data you want to send to php file/function   
+					cache: false,
+					success: function (html) {  
+					$('#showTool').html(html); 
+					}       
+				});
+				changeImgs(this);
+				$('#popup').dialog('option', 'title', 'Add Refund');
+			});
+			$("#deleteRefund").click(function() {
+				$.ajax({
+					url: " refund/delete", 
+					type: "POST",        
+					//data: data,  //any data you want to send to php file/function   
+					cache: false,
+					success: function (html) {  
+					$('#showTool').html(html); 
+					}       
+				});
+				changeImgs(this);
+				$('#popup').dialog('option', 'title', 'Delete Refund');
+			});
+			$("#reportGenerator").click(function() {
+				$.ajax({
+					url: " reportGenerator", 
+					type: "POST",        
+					//data: data,  //any data you want to send to php file/function   
+					cache: false,
+					success: function (html) {  
+					$('#showTool').html(html); 
+					}       
+				});
+				changeImgs(this);
+				$('#popup').dialog('option', 'title', 'Generate Report');
+			});
+			
+
+		</script>	
+	</body>
 </html>
