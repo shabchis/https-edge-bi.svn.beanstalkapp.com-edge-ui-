@@ -9,10 +9,14 @@
     
     </div>
     <div id="bottomfield">
-    <label for="refund">Refund </label>
-    <input name="refund" id="refund"  autocomplete="off" />
-    <label for="startDate">Date </label>
-    <input name="startDate" id="startDate" class="date-picker" autocomplete="off" />
+	<div>
+		<label for="refund">Refund </label>
+		<input name="refund" id="refund"  autocomplete="off" /></br>
+	 </div>
+	<div>
+		<label for="startDate">Date </label>
+		<input name="startDate" id="startDate" class="date-picker" autocomplete="off" />
+	 </div>
     </div>
     <div class="clear"></div>
 	<input type="submit" value="Submit" id="submit"/>
@@ -50,6 +54,7 @@ background-color: white;
 }
  .ui-datepicker-calendar{
  display: none;
+ font-size: 10px;
  }
    
 .ui-datepicker-title{
@@ -60,17 +65,12 @@ background-color: white;
 }
 
 #addrefund{
-
  overflow:hidden;
-    width:400px;
     color:#9BBD53;
-    text-align: center;
-    margin:30px auto;
-    
+    text-align: justify;
+    margin:0px auto;  
      font-family: Verdana;
     color: #616161;
-    padding: 20px 20px 10px 20px;
-
 } 
 form{
 	width:500px;
@@ -89,7 +89,7 @@ input[type=submit]{
         }
 #bottomfield{
    margin-top:5px;
-   width: 51%;
+   width: 80%;
    float: left;
         }
         
@@ -116,7 +116,7 @@ input[type=submit]{
     width:300px;
     color:#9BBD53;
     text-align: center;
-    margin:100px 0px 0px 10px;
+    margin:80px 0px 0px 100px;
       -moz-border-radius: 5px 5px 5px 5px;
     -moz-box-shadow: 0 0 10px #DBD8DB;
     background-color: #FFFFFF;
@@ -135,7 +135,6 @@ input[type=submit]{
 <script type="text/javascript">
     $(function() {
 
-
         $('.date-picker').datepicker( {
             changeMonth: true,
             changeYear: true,
@@ -150,7 +149,6 @@ input[type=submit]{
         });
         
       $("#submit").button();
-
 		$("#submit").click(function(){
 		
 			var form_data = {
