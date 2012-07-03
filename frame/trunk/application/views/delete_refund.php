@@ -96,13 +96,13 @@ input[type=submit]{
      float: left;
         }
 #bottomfield{
-   margin-top:5px;
+
    width: 51%;
    float: left;
-   margin-bottom: 10px;
+
         }
 	label[for=startDate],#startDate{
-		margin-top: 10px;
+		margin-top: 5px;
     }
     label{
     display: block;
@@ -122,22 +122,18 @@ input[type=submit]{
     }
    #delete{
    overflow:hidden;
-    width:400px;
     color:#9BBD53;
-    text-align: center;
-    margin:30px auto;
-    
+    text-align: left;
+    margin:0px auto;
      font-family: Verdana;
-    color: #616161;
-    padding: 20px 20px 10px 20px;
-   
+    color: #616161; 
     }
     #success{
     display:none;
     width:300px;
     color:#9BBD53;
     text-align: center;
-    margin:100px 0px 0px 0px;
+    margin:80px 0px 0px 100px;
       -moz-border-radius: 5px 5px 5px 5px;
     -moz-box-shadow: 0 0 10px #DBD8DB;
     background-color: #FFFFFF;
