@@ -11,18 +11,17 @@ class Importer extends Controller{
 	
 	function upload(){	
 		//Get accountID from cookie
-		$account = $_COOKIE['edgebi_parent_account']!='' ? $_COOKIE['edgebi_parent_account'] : '000';
+		$account = $_COOKIE['edgebi_parent_account']!='' ? $_COOKIE['edgebi_parent_account'] : '000';	
 		
-		$numOfFiles = count($_FILES['files']['tmp_name']);
-		
-		//Set destination location. Folder name based on userID and random number
+		//Set destination location, folder name based on userID and random number
 		$base_dir ="D:/uploads/"; //Directory location
 		$name = $_COOKIE['edgebi_user']!='' ? $_COOKIE['edgebi_user'] : '000';
 		$target_dir = $base_dir .$name."_".rand()."/";//Full path
 		
-		//Get service to run according to imort type
+		//Get service to run according to chosen imort type
 		$sevice  = $_POST["importType"];
 		
+		$numOfFiles = count($_FILES['files']['tmp_name']);
 		if(mkdir($target_dir , 0777)) 
 		{ 	
 			$data = array();
@@ -32,7 +31,7 @@ class Importer extends Controller{
 				 $filename =  $_FILES['files']['name'] [$i];
 				if (!empty($filename))
 				{
-					//Move files to destination folder
+					//Move file to destination folder
 					$move_dir = $target_dir . basename( $filename); 
 					move_uploaded_file($_FILES['files']['tmp_name'][$i], $move_dir);
 					
