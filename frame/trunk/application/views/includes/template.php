@@ -105,17 +105,33 @@
 				<div id="login">
 					&nbsp; <span id="toolBox"><a href="#" id ="link" title="Tool Box"><img src="<?php base_url();?>assets/img/gear.jpg" id ="gear"  border =" 0"/></a> </span>				
 					<div id="popup" hidden="true" style="display:none" > 
-						<div>
-							<img src="<?php base_url();?>assets/img/tools/report_disabled.png" title="Service Report" id ="report"   border =" 0" class="toolIcons"/>
-							<img src="<?php base_url();?>assets/img/tools/import_disabled.png" title="Import Data" id ="import"  border =" 0" class="toolIcons"/>
-							<img src="<?php base_url();?>assets/img/tools/addRefund_disabled.png" title="Add Refund" id ="addRefund"  border =" 0" class="toolIcons"/>
-							<img src="<?php base_url();?>assets/img/tools/deleteRefund_disabled.png" title="Delete Refund" id ="deleteRefund"  border =" 0" class="toolIcons"/>
-							<img src="<?php base_url();?>assets/img/tools/reportGenerator_disabled.png" title="Generate Report" id ="reportGenerator"  border =" 0" class="toolIcons"/>
-						</div>
+							<table class="toolsTable">
+								<tr>
+									<td id ="reportCell"><img src="<?php base_url();?>assets/img/tools/report_disabled.png" title="Service Report" id ="report"   border =" 0" class="toolIcons" onmouseover="changeImgs(this)" onmouseout="disableImgs()" />
+										Service Report
+									</td>
+									<td id ="importCell"><img src="<?php base_url();?>assets/img/tools/import_disabled.png" title="Import Data" id ="import"  border =" 0" class="toolIcons" onmouseover="changeImgs(this)" onmouseout="disableImgs()"/>
+										Import Data
+									</td>
+									<td id ="addRefundCell"><img src="<?php base_url();?>assets/img/tools/addRefund_disabled.png" title="Add Refund" id ="addRefund"  border =" 0" class="toolIcons" onmouseover="changeImgs(this)" onmouseout="disableImgs()"/>
+										Add Refund
+									</td>
+								</tr>
+								<tr>
+									<td id ="deleteRefundCell"><img src="<?php base_url();?>assets/img/tools/deleteRefund_disabled.png" title="Delete Refund" id ="deleteRefund"  border =" 0" class="toolIcons" onmouseover="changeImgs(this)" onmouseout="disableImgs()"/>
+										Delete Refund
+									</td>
+									<td id ="reportGeneratorCell"><img src="<?php base_url();?>assets/img/tools/reportGenerator_disabled.png" title="Generate Report" id ="reportGenerator"  border =" 0" class="toolIcons" onmouseover="changeImgs(this)" onmouseout="disableImgs()"/>
+										Generate Report
+									</td>
+								</tr>
+							</table>
 						<br/>
+						<div class =" back" >&lt; <a href="#"  id ="back">Back</a></div>
 						<div id ="showTool"></div>
+						
 					</div>
-					<div id="top"></div>							
+					<div id="top" ></div>							
 				</div>
 				<div id="breadcrumbs"><div>		
 			</header>
@@ -205,9 +221,12 @@
 				$("#accountbar").tmpl(_accountdata).appendTo("#accountwrapper");
 			}
 			
+			//onclick function for the tools icon
 			$('#link').click(function() { 
+				$('.back').hide();
+				$('.toolsTable').show();
 				$('#popup').dialog({			 
-				 resizable: true,
+				resizable: true,
 				title:"Tool Box",
 				modal: true,
 				height:'500',
@@ -216,11 +235,7 @@
 							$(this).dialog('destroy');
 							$(".modal").remove();
 							$('#showTool').html("");
-							$('img').each(function () {
-								var curSrc = $(this).attr('src');
-								if(curSrc.indexOf("tools") != -1)
-									$('#'+this.id).attr('src','<?php base_url();?>assets/img/tools/'+this.id+'_disabled.png');
-							});
+							disableImgs();
 							return false;
 							}
 						}
@@ -228,9 +243,10 @@
 				return false; 
 			});
 			
-			function changeImgs(img){
-				
+			//function for changing the images from color to greyscale when hovering over them
+			function changeImgs(img){				
 				$('#'+img.id).attr('src','<?php base_url();?>assets/img/tools/'+img.id+'.png');
+				$('#'+img.id+'Cell').css('color' , 'black');
 				$('img').each(function () {
 					var curSrc = $(this).attr('src');
 					if(curSrc.indexOf("tools") != -1&&this.id != img.id)
@@ -238,69 +254,89 @@
 					});
 			}
 			
+			function disableImgs(){
+				$('img').each(function () {
+					var curSrc = $(this).attr('src');
+					if(curSrc.indexOf("tools") != -1)
+						$('#'+this.id).attr('src','<?php base_url();?>assets/img/tools/'+this.id+'_disabled.png');
+						$('#'+this.id+'Cell').css('color' , '#666666');
+				});
+			}
+			
+			//function that handles the "back" link click
+			$("#back").click(function() {
+				$('#showTool').html("");
+				$('#popup').dialog('option', 'title', 'Tool Box');
+				$('.toolsTable').show();
+				$('.back').hide();
+			});
+			
+			//function that load page once clicking a tool image
 			$("#report").click(function() {
+				$('.toolsTable').hide();
 				$.ajax({
 					url: "serviceStats", 
 					type: "POST",        
-					//data: data,  //any data you want to send to php file/function   
 					cache: false,
 					success: function (html) {  
 					$('#showTool').html(html); 
 					}       
 				});
-				changeImgs(this);
-				$('#popup').dialog('option', 'title', 'Services Outcome');
+				$('.back').show();
+				$('#popup').dialog('option', 'title', 'Services Outcome');		
 			});
+			
 			$("#import").click(function() {
+				$('.toolsTable').hide();
 				$.ajax({
 					url: "importer", 
 					type: "POST",        
-					//data: data,  //any data you want to send to php file/function   
 					cache: false,
 					success: function (html) {  
 					$('#showTool').html(html); 
 					}       
 				});
-				changeImgs(this);
+				$('.back').show();
 				$('#popup').dialog('option', 'title', 'Import Data');
 			});
+			
 			$("#addRefund").click(function() {
+				$('.toolsTable').hide();
 				$.ajax({
 					url: " refund", 
 					type: "POST",        
-					//data: data,  //any data you want to send to php file/function   
 					cache: false,
 					success: function (html) {  
 					$('#showTool').html(html); 
 					}       
 				});
-				changeImgs(this);
+				$('.back').show();
 				$('#popup').dialog('option', 'title', 'Add Refund');
 			});
 			$("#deleteRefund").click(function() {
+				$('.toolsTable').hide();
 				$.ajax({
 					url: " refund/delete", 
-					type: "POST",        
-					//data: data,  //any data you want to send to php file/function   
+					type: "POST",         
 					cache: false,
 					success: function (html) {  
 					$('#showTool').html(html); 
 					}       
 				});
-				changeImgs(this);
+				$('.back').show();
 				$('#popup').dialog('option', 'title', 'Delete Refund');
 			});
 			$("#reportGenerator").click(function() {
+				$('.toolsTable').hide();
 				$.ajax({
 					url: " reportGenerator", 
 					type: "POST",        
-					//data: data,  //any data you want to send to php file/function   
 					cache: false,
 					success: function (html) {  
 					$('#showTool').html(html); 
 					}       
 				});
-				changeImgs(this);
+				$('.back').show();
 				$('#popup').dialog('option', 'title', 'Generate Report');
 			});
 			
