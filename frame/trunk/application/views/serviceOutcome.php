@@ -39,29 +39,29 @@
 		}
 		.bordered
 		{
-		margin-top: 40px;
+		margin-top: 20px;
 		font-family:verdana;
 		color: #504849;
 		font-size: 12px;
-		width:32%;
+		width:60%;
 		border:1px solid #96BA4B;
 		-moz-border-radius: 6px;
 		-webkit-border-radius: 6px;
 		border-radius: 6px;
 		border-width: 1px;
 		}
-		#tableID td, #tableID th 
+		/*#tableID td, #tableID th 
 		{
 		font-size:12px;
 		border:1px solid #96BA4B;
 		padding:3px 7px 2px 7px;
-		}
+		}*/
 		#tableID th 
 		{
 		font-size:14px;
 		text-align:left;
-		padding-top:2px;
-		padding-bottom:2px;
+		padding-top:0px;
+		padding-bottom:0px;
 		background-color:#96BA4B;
 		color:#fff;
 		}
@@ -71,19 +71,22 @@
 		margin-top:15px; 
 		font-size: 14px;	
 		}
-		#channelIcon{ 
-		width:24px; 
-		height:24px;
+		#channelIcon
+		{ 
+		width:32px; 
+		height:32px;
 		vertical-align:middle;
 		border:10 px;
 		margin:10 px;
-		}
+		}		
 	</style>
 	<script>
-
+		
 		$(function() {
-			$( "#datepicker" ).datepicker();
+			$("#datepicker").datepicker({dateFormat: 'dd-mm-yy'});
 		});
+
+		$( "#datepicker" ).datepicker();	
 		$("#datepicker").datepicker("setDate",new Date());
 		
 		$("#submit").click(function(){
@@ -104,11 +107,26 @@
 						 {
 							 switch(data[i].channel)
 							{
-								case ('Google.AdWords'):{img = 'google.jpg'; break;}
-								case('Facebook.AdsApi'):{img = 'facebook.jpg'; break;}
-								default: break;
+								case ('Google.AdWords'):{channelImg = 'google.png'; break;}
+								case('Facebook.GraphApi'):{channelImg = 'facebook.png'; break;}
+								case('Facebook.UpdateCampaignStatus'):{channelImg = 'facebook.png'; break;}
+								case('Microsoft.AdCenter'):{channelImg = 'bing.png'; break;}
+								case('FtpBoRetriever'):{channelImg = 'ftp.jpg'; break;}
+								case('FtpAdvertisingChannelRetriever'):{channelImg = 'ftp.jpg'; break;}
+								case('ImporterTester'):{channelImg = 'import.jpg'; break;}
+								case('BoPro'):{channelImg = 'bo.png'; break;}
+								case('BO rerun - current day'):{channelImg = 'bo.png'; break;}
+								default:{channelImg = 'google.png'; break; break;}
 							}
-							 $("#tableID").last().append('<tr><td><img src="<?php base_url();?>assets/img/'+img+'" id="channelIcon" />   '+data[i].channel+'</td><td>'+data[i].status.OutCome+'</td></tr>');
+							
+							if(data[i].status.OutCome=='Success'){
+								outcomeImg = 'pass.gif';	
+							}
+							else{
+								outcomeImg = 'fail.gif';
+							}
+								
+							 $("#tableID").last().append('<tr><td><img src="<?php base_url();?>assets/img/channels/'+channelImg+'" id="channelIcon" />   '+data[i].channel+'</td><td><img src="<?php base_url();?>assets/img/'+outcomeImg+' " id="outcomeIcon"/></td></tr>');
 						}
 					},
 					error:function(data){
@@ -124,7 +142,7 @@
 	</script>
     <body>
 	<form action="#" method="post">
-		Choose date: <input type="text" id="datepicker" name ="date" value="< ?php echo date('Y-m-d');?>">
+		Choose date: <input type="text" id="datepicker" name ="date" value="< ?php echo date('Y-m-d');?>" size="12">
 		<input type="submit" value="Go" id="submit"/>
 	</form>
 	<div id="result">
@@ -134,6 +152,6 @@
 				<th >Outcome</th>				
 			</tr>		
 		</table>	
-	</div>	
+	</div>
     </body>
 </html>
