@@ -1,3 +1,9 @@
+<?php
+/**
+ *Importer status  view, called from importer controller
+ *after uploading files in the importer view
+ */
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,140 +16,111 @@
 			font-family: Verdana;
 			color: #616161;
 		}
-		#progressBar
+		.progressBar
 		{		
 			width:300px;
-			height: 20px
+			height: 10px;
+			background-color: #cbdda6;
+			border: 0px;		
 		}
 		#importProgress
 		{		
 			font-family: Verdana;
+			width: 80%;
+			font-size: 12px;
 		}
 		#label
 		{
-			font-size: 12px;
-		}
-		#error
-		{
-			float:left;
-			vertical-align: bottom;
-			margin:0px 0px 0px 5px;
-		}
-		#success
-		{
-			float:left;
-			vertical-align: bottom;
-			margin:0px 0px 0px 5px;
-		}
-		#result
-		{
-			text-align: center;
-			display:none;
-			width:400px;
-			color:#9BBD53;
-			-moz-border-radius: 5px 5px 5px 5px;
-			-moz-box-shadow: 0 0 10px #DBD8DB;
-			background-color: #FFFFFF;
-			background-image: -moz-linear-gradient(center bottom , #F5F2F5 0%, #FAFAFA 17%, #FFFFFF 79%);
-			border: 1px solid #E5E5E5;
-			font-family: Verdana;
 			color: #616161;
-			padding: 10px;
-		 }
+			font-weight:bold;
+			text-align: center;
+		}
 	</style>
     </head>
 	<script src="http://localhost/frame/assets/js/jquery-1.4.4.js"></script> 
 	<link rel="stylesheet" href="http://localhost/frame/assets/css/jquery-ui-1.8.8.custom.css" media="screen"/>  	
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/start/jquery-ui.css" rel="stylesheet" />
-           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-           <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+	<script src="http://localhost/frame/assets/css/jquery-ui.css" />
+	<script src="http://localhost/frame/assets/js/jquery-ui.min.js"></script>	
+           <script src="http://localhost/frame/assets/js/jquery.min.js"></script>
+           <script src="http://localhost/frame/assets/js/jquery-ui-1.8.5.js"></script>
 	<script type="text/javascript">
 		var _guidArray = new Array();
+		var intervalIds=new Array();
+		var _filesArray = new Array();
 		<?php
+			//Get guids from controller
 			foreach ($_guids as $id) {
-			print "_guidArray.push($id);";
+				print "_guidArray.push($id);";
+			}
+			//Get file names from controller
+			foreach ($_files as $id) {
+				print "_filesArray.push('$id');";
 			}
 		?>
 		
 		$(document).ready(function() {
-
-			  $("#progressBar").show().progressbar();
-			  $("#progressBar").css({ 'background': '#cbdda6' , 'border':'0px' });
-			  $("#progressBar > div").css({ 'background': '#96BA4B','border':'0px' });
 			  $("#msg").append("Your import has been received and is now uploading. <br /> This may take a few minutes..").show();
-			  var intervalId =setInterval("checkStatus();", 500);
+			  for (var i = 0; i < _guidArray.length; i++)
+			   {
+				var fileName = "file"+i;
+				var progressBarName = "progressBar"+i;
+				var statusName ="status"+i;
+				var resultName ="result"+i;
+				 $("#tableID").last().append('<tr><td><div id="'+fileName+'"></div></td><td><div id="'+progressBarName+'"></div></td><td><div id ="'+statusName+'"> </div></td><td><div id ="'+resultName+'"> </div></td></tr>');
+				 $('#'+progressBarName).css({ 'background': '#cbdda6' , 'border':'0px' ,'height':'20px','width':'300px'});
+				 $('#'+progressBarName).show().progressbar();
+				 $('#'+progressBarName+'> div').css({ 'background': '#96BA4B','border':'0px' });
+				 $('#'+fileName).append(_filesArray[i]);
+				 var id = _guidArray[i];
+				 intervalId =setInterval("checkStatus('"+id+"','"+i+"');", 500);
+				 intervalIds.push(intervalId);			 
+			    }
 			});				
 		
-		function checkStatus()
-		{			
-			for (var i = 0; i < _guidArray.length; i++)
-			{
-			var id = _guidArray[i];
+		function checkStatus(id,i)
+		{	
+			var progressBarName = "progressBar"+i;
+			var statusName ="status"+i;
+			var resultName ="result"+i;
 			$.ajax({
-					type: 'GET',
+					type: 'POST',
 					url:'getStatus/'+id,
 					async: false,
 					success: function(data) {
 						var status =jQuery.parseJSON(data);
 						if (status.OutCome=="Unspecified"){
-							 $("#status").text(status.Progress*100+'%').show();
-							 $("#progressBar").progressbar({ value: status.Progress*100});
+							 $('#'+statusName).text(status.Progress*100+'%').show();
+							 $('#'+progressBarName).progressbar({ value: status.Progress*100});
 						}
 						else{
 							if(status.OutCome=="Success"){
-								$("#status").hide();
-								$("#label").hide();
 								$("#msg").hide();
-								$("#progressBar").hide();
-								$("#error").hide();
-								$("#result").append("Your import has uploaded successfully!").show();							
+								$('#'+progressBarName).progressbar({ value: 100});
+								$('#'+statusName).text('100%').show();
+								$('#'+resultName).append("<img src='http://localhost/frame/assets/img/pass.gif'/>");						
 							}
 							else{
-								$("#status").hide();
-								$("#label").hide();
 								$("#msg").hide();
-								$("#progressBar").hide();
-								$("#success").hide();
-								$("#result").append("There was an error importing your files,please contact us for assitance :Support@Edge.BI").show();
+								$('#'+resultName).append("<img src='http://localhost/frame/assets/img/fail.gif'/>");	
 							}
-							clearInterval(intervalId);
+							clearInterval(intervalIds[i]);
 							}
 						},
 					 error:function(jqXHR, textStatus, errorThrown){
-						$("#status").hide();
-						$("#label").hide();
 						$("#msg").hide();
-						$("#progressBar").hide();
-						$("#success").hide();
-						$("#result").append("There was an error importing your files, please contact us for assitance Support@Edge.BI").show();
-						clearInterval(intervalId);
+						$('#'+resultName).append("<img src='http://localhost/frame/assets/img/fail.gif'/>");
+						clearInterval(intervalIds[i]);
 					   }
 				});
-			}
-		}
-		
+		}	
 	</script>
     <body>
 	<div id="importProgress">
 		<div id ="msg"></div>		
-		<div id="result">
-			<div id="error">
-				<img src="http://localhost/frame/assets/img/alert-icon.png" />
-			</div>
-			<div id="success">
-				<img src="http://localhost/frame/assets/img/success-icon.png" />
-			</div>	
-		</div>		
 		<table id="tableID">
 			<tr>
-				<td ><div id="label">Progress:</div></td>
-				<td><div id="label"></div></td>		
-			</tr>
-			<tr>
-				<td><div id="progressBar"</div></td>
-				<td><div id ="status"> </div></td>			
-			</tr>			
+				<td colspan="4" ><div id="label">Import Status</div></td>					
+			</tr>		
 		</table>	
 	</div>
     </body>
