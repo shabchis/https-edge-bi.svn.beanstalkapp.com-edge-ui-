@@ -6,7 +6,7 @@ class serviceStats extends Controller{
 	
 	function index(){
 		
-		$this->load->view('serviceStats');		
+		$this->load->view('serviceOutcome');		
 	}
 	
 	function  getServices(){
