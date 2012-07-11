@@ -17,6 +17,24 @@ body{
 	margin-left: 30px;
 }
 
+#gear {
+	width: 20px;
+	height: 20px;
+}
+.toolIcons {
+	width: 48px;
+	height: 48px;
+	cursor: pointer;
+	}
+.toolsTable{
+	position:absolute;
+           top:5%;
+           left:15%;
+	text-align: left;
+	}
+.toolsTable td{
+	padding:10px;	
+	}
 #inner
 {
 	width: 100%;
