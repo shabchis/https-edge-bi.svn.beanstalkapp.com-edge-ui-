@@ -1,0 +1,90 @@
+﻿@model EdgeBiUI.Models.CreativeModel
+@using Easynet.Edge.UI.Data;
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+
+    function SaveCreative() {
+        $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
+        });
+    }
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+        @Model.Creative.Title
+    </div>
+    @using (Html.BeginForm("EditCreative", "Creatives", new { creativeGK = Model.Creative.GK }, FormMethod.Post, new { id = "PageEditorForm" }))
+    {
+    <div id="Tabs">        
+        <ul class="menu">
+			<li class="active" id="Segments">Segments</li>
+			<li class="ControllerTabsLi" id="Details">Details</li>
+            <li class="ControllerTabsLi" id="Associations">Associations</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        
+        <div class="Segments content">
+        @foreach (EdgeBiUI.Models.SegmentRowModel seg in Model.Segments)
+        {
+            <div class="segmentRow">
+                <div class="segmentRowName">@seg.SegmentRow.Name</div>
+                <div class="segmentRowValue">
+                    <select name="creativeSegmentValue_@(seg.SegmentRow.SegmentID)">
+                        <option value="-1">(none)</option>
+                    @foreach (Oltp.SegmentValueRow value in seg.Values)
+                    {
+                        <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
+                    }
+                    </select>
+                </div>
+            </div>
+        }
+        </div>
+
+        <div class="Details content">
+            <div class="segmentRow">
+                <div class="segmentRowName">Title</div>
+                <div class="segmentRowValue"><input type="text" disabled="disabled" value="@Model.Creative.Title" style="width:300px;" /></div>
+            </div>
+            <div class="segmentRow">
+                <div class="segmentRowName">Description 1</div>
+                <div class="segmentRowValue"><input type="text" disabled="disabled" value="@Model.Creative.Desc1" style="width:300px;" /></div>
+            </div>
+            <div class="segmentRow">
+                <div class="segmentRowName">Description 2</div>
+                <div class="segmentRowValue"><input type="text" disabled="disabled" value="@Model.Creative.Desc2" style="width:300px;" /></div>
+            </div>
+        </div>
+
+        <div class="Associations content">
+        
+            <div style="margin-bottom:10px;">Campaigns/Adgroups:</div>
+
+            @foreach (EdgeBiUI.Models.AssociationRowModel association in Model.Associations)
+            {
+                <div class="associationRow">
+                    <span>@(association.Campaign.Name)</span>
+                    >
+                    <span>@(association.AdGroup.Name)</span>
+                </div>
+            }
+        
+        </div>
+        
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="Apply" onclick="SaveCreative();" />
+        <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
+        <input type="button" value="OK" onclick="SaveCreative(); closeControllerDialog();" />
+    </div>
+        
+    }
+</div>

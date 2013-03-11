@@ -1,0 +1,16 @@
+﻿@model EdgeBiUI.Models.CreativeListModel
+@using Easynet.Edge.UI.Data;
+
+<div class="IndexTable">
+    <div class="IndexTableHeader">
+        <div class="" style="float:left; width:50%; height:14px; overflow:hidden;"><div style="padding-left:30px;">Name</div></div>
+        <div class="" style="float:left; width:50%; height:14px; overflow:hidden;">Description</div>
+    </div>
+    @foreach (Oltp.CreativeRow creative in Model.Creatives)
+    {
+        <div class="IndexTableRow">
+            <div class="IndexTableName"><div style="padding-left:30px;" onclick="openCreativeDetails(@creative.GK)">@creative.Title</div></div>
+            <div class="IndexTableDesc">@(creative.IsDesc1Null() ? "" : creative.Desc1.Substring(0, (creative.Desc1.Length > 40 ? 40 : creative.Desc1.Length)))</div>
+        </div>
+    }
+</div>

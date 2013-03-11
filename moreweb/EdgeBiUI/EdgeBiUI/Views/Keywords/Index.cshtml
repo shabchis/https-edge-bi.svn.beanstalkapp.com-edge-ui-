@@ -1,0 +1,34 @@
+﻿@model EdgeBiUI.Models.KeywordsListModel
+           
+@{
+    ViewBag.Title = "Creatives";
+}
+
+<script type="text/javascript">
+
+    function openKeywordDetails(keywordGK) {
+        $.get('@(Url.Action("EditKeyword", "Keywords"))', { keywordGK: keywordGK }, function (data) {
+            $('#ControllerDialogDiv').html(data);
+            openController(600, 400);
+        });
+    }
+
+    function closeControllerDialog() {
+        $('#ControllerDialogDiv').css("display", "none");
+        $('#ScreenOverlay').css("display", "none");
+        $('#ScreenOverlay').css("z-index", -1000);
+    }
+
+</script>
+
+<div class="IndexTable">
+    <div class="IndexTableHeader">
+        <div class="" style="float:left; width:50%; height:14px; overflow:hidden;"><div style="padding-left:30px;">Name</div></div>
+    </div>
+    @foreach (EdgeBiUI.EdgeBIServer.Oltp.KeywordRow keyword in Model.Keywords)
+    {
+        <div class="IndexTableRow">
+            <div class="IndexTableName"><div style="padding-left:30px;" onclick="openKeywordDetails(@keyword.GK)">@keyword.Keyword</div></div>
+        </div>
+    }
+</div>

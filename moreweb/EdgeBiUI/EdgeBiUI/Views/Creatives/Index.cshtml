@@ -1,0 +1,39 @@
+﻿@model EdgeBiUI.Models.CreativeListModel
+@using Easynet.Edge.UI.Data;
+           
+@{
+    ViewBag.Title = "Creatives";
+}
+
+<script type="text/javascript">
+
+    function openCreativeDetails(creativeGK) {
+        ShowLoadingMessage();
+        $.get('@(Url.Action("EditCreative", "Creatives"))', { creativeGK: creativeGK }, function (data) {
+            HideLoadingMessage();
+            $('#ControllerDialogDiv').html(data);
+            openController(600, 400);
+        });
+    }
+
+    function findCreatives() {
+        searchText = $("#search_value").val();
+        ShowLoadingMessage();
+        $.get('@(Url.Action("FindCreatives", "Creatives"))', { searchText: searchText }, function (data) {
+            HideLoadingMessage();
+            $('#IndexDynamicTableContainer').html(data);
+        });
+    }
+
+
+
+</script>
+
+<div class="IndexTopNav">
+    <input type="text" name="search_value" class="searchText" id="search_value" />
+    <input type="button" value="find" onclick="findCreatives()" />
+</div>
+
+<div id="IndexDynamicTableContainer">
+@Html.Partial("Table", Model)
+</div>

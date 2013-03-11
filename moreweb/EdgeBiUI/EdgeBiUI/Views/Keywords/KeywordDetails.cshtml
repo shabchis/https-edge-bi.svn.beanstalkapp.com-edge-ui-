@@ -1,0 +1,44 @@
+﻿@model EdgeBiUI.Models.KeywordModel
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+        @Model.Keyword.Keyword
+    </div>
+
+    <div id="Tabs">        
+        <ul class="menu">
+            <li class="ControllerTabsLi active" id="Associations">Associations</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        
+        <div class="Associations content">
+        
+            <div style="margin-bottom:10px;">Campaigns/Adgroups:</div>
+
+            @foreach (EdgeBiUI.Models.AssociationRowModel association in Model.Associations)
+            {
+                <div class="associationRow">
+                    <span>@(association.Campaign.Name)</span>
+                    >
+                    <span>@(association.AdGroup.Name)</span>
+                </div>
+            }
+        
+        </div>
+        
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="OK" onclick="closeControllerDialog();" />
+    </div>
+</div>
