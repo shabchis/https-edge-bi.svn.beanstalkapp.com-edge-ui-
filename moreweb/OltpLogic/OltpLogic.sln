@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.Data", "Data\UI.Data.csproj", "{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.Server", "Server\UI.Server.csproj", "{71264783-6865-4525-B43D-C04A4D996E94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Demo|Any CPU = Demo|Any CPU
+		Production|Any CPU = Production|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Seperia|Any CPU = Seperia|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Production|Any CPU.Build.0 = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Seperia|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Seperia|Any CPU.Build.0 = Release|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Production|Any CPU.ActiveCfg = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Production|Any CPU.Build.0 = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Seperia|Any CPU.ActiveCfg = Debug|Any CPU
+		{71264783-6865-4525-B43D-C04A4D996E94}.Seperia|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
