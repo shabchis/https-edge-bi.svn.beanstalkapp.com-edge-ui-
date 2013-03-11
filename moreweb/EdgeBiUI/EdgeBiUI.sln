@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeBiUI", "EdgeBiUI\EdgeBiUI.csproj", "{0D5186FF-B739-4AAE-BE81-53CEB18824D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.Data", "..\OltpLogic\Data\UI.Data.csproj", "{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{0D5186FF-B739-4AAE-BE81-53CEB18824D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D5186FF-B739-4AAE-BE81-53CEB18824D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D5186FF-B739-4AAE-BE81-53CEB18824D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
