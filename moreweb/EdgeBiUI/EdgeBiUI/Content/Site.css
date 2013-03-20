@@ -7,7 +7,7 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 
 #SiteContainer          { margin:5px; padding:5px; }
 
-.IndexTopNav        { margin-bottom:10px; }
+.IndexTopNav        { margin-bottom:10px; overflow:auto; }
 .searchText         { width:200px; height:20px; border:1px solid #8d8d8d; }
 
 .IndexTable         { min-width:200px; border:1px solid silver; padding:2px; font-family:Arial; font-size:13px; }
@@ -16,6 +16,9 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 .IndexTableRow:hover { background-color:#e3edcb; }
 .IndexTableName     { float:left; width:50%; color:#7ca826; height:16px; overflow:hidden; cursor:pointer; }
 .IndexTableDesc     { float:left; width:50%; color:#666666; height:16px; overflow:hidden; }
+
+.FilterSegment      { float:left; margin-right:20px; }
+.FilterSegmentTitle { margin-bottom:4px; } 
 
 
 #container                      { padding:25px; height:350px; background-color:Gray; }

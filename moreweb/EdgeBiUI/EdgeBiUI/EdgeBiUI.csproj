@@ -77,6 +77,7 @@
     <Compile Include="Models\KeywordsListModel.cs" />
     <Compile Include="Models\CreativeModel.cs" />
     <Compile Include="Models\CreativeListModel.cs" />
+    <Compile Include="Models\TrackerModel.cs" />
     <Compile Include="Models\TrackersListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,6 +163,9 @@
     <Content Include="Views\Keywords\KeywordDetails.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Creatives\Table.cshtml" />
+    <Content Include="Views\Trackers\Index.cshtml" />
+    <Content Include="Views\Trackers\Table.cshtml" />
+    <Content Include="Views\Trackers\TrackerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -192,7 +196,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>20857</DevelopmentServerPort>
+          <DevelopmentServerPort>58725</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
