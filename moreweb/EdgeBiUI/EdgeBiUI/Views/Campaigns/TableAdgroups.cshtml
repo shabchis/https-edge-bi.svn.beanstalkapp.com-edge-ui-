@@ -1,0 +1,14 @@
+﻿@model List<EdgeBiUI.Models.AdgroupRowModel>
+@using Easynet.Edge.UI.Data;
+
+
+    @foreach (EdgeBiUI.Models.AdgroupRowModel adgroup in Model)
+    {
+        <div class="IndexTableRow">
+            <div class="IndexTableName">
+                <div style="margin-left:70px; padding-left:20px; background-image:url('@Url.Content("~/Content/images/bullet.png")'); background-repeat:no-repeat;" onclick="openAdgroupDetails(@adgroup.AdgroupGK)" title="@adgroup.AdgroupGK">
+                    @adgroup.AdgroupName
+                </div>
+            </div>
+        </div>
+    }

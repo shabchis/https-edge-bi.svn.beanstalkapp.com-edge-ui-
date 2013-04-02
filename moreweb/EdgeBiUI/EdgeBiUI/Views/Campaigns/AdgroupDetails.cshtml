@@ -1,0 +1,145 @@
+﻿@model EdgeBiUI.Models.AdgroupModel
+@using Easynet.Edge.UI.Data;
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+
+    function SaveAdgroup() {
+        $.post($('#AdgroupEditForm').attr("action"), $('#AdgroupEditForm').serialize(), function (data) {
+        });
+    }
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+       @Model.Adgroup.Name
+    </div>
+    @using (Html.BeginForm("EditAdgroup", "Campaigns", new { adgroupGK = Model.Adgroup.GK }, FormMethod.Post, new { id = "AdgroupEditForm" }))
+    {
+    <div id="Tabs">        
+        <ul class="menu">						
+            <li class="active" id="Segments">Segments</li>
+            <li class="ControllerTabsLi" id="Keywords">Keywords</li>
+            <li class="ControllerTabsLi" id="Creatives">Creatives</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        <div class="Segments content">
+        @foreach (EdgeBiUI.Models.SegmentRowModel seg in Model.Segments)
+        {
+            <div class="segmentRow">
+                <div class="segmentRowName">@seg.SegmentRow.Name</div>
+                <div class="segmentRowValue">
+                    <select name="adgroupSegmentValue_@(seg.SegmentRow.SegmentID)">
+                        <option value="-1">(none)</option>
+                        @foreach (Oltp.SegmentValueRow value in seg.Values)
+                        {
+                        <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        }
+        </div>        
+        
+        <div class="Keywords content">
+            <div class="adgroupInnerTable">
+                <div class="adgroupInnerTableHeader">
+                    <div style="float:left; width:40%; height:14px; overflow:hidden;">
+                        Keyword
+                    </div>
+                    <div style="float:left; width:20%; height:14px; overflow:hidden;">
+                        Match Type
+                    </div>
+                    <div style="float:left; width:40%; height:14px; overflow:hidden;">
+                        Destination URL
+                    </div>
+                </div>
+            
+                @foreach (EdgeBiUI.Models.AdgroupKeywordModel keyword in Model.Keywords)
+                {
+                    <div class="adgroupInnerTableRow">
+                        <div style="float:left; width:40%; height:14px; overflow:hidden;">
+                            @keyword.KeywordName
+                        </div>
+                        <div style="float:left; width:20%; height:14px; overflow:hidden;">
+                            @keyword.MatchType
+                        </div>
+                        <div style="float:left; width:40%; height:14px; overflow:hidden;">
+                            @keyword.DestinationURL
+                        </div>
+                    </div>
+                }
+            </div>
+            
+        </div>
+
+        <div class="Creatives content">
+            <div class="adgroupInnerTable">
+                <div class="adgroupInnerTableHeader">
+                    <div style="float:left; width:50%;">
+                        Creative
+                    </div>
+                    <div style="float:left; width:50%;">
+                        Segment
+                    </div>
+                </div>
+            
+                @foreach (EdgeBiUI.Models.AdgroupCreativeModel creative in Model.Creatives)
+                {
+                    <div class="adgroupInnerTableRow">
+                        <div style="float:left; width:50%; overflow:hidden;">
+                            <div style="font-weight:bold; margin-bottom:5px;">
+                                @creative.Title
+                            </div>
+                            <div style="">
+                                @creative.Desc1
+                            </div>
+                            <div style="margin-bottom:5px;">
+                                @creative.Desc2
+                            </div>
+                            <div style="margin-bottom:5px;">
+                                @creative.DisplayURL
+                            </div>
+                            <div style="font-size:11px; color:Gray; white-space:normal">
+                                @creative.DestinationURL
+                            </div>
+                        </div>
+                        <div style="float:left; width:50%; overflow:hidden;">
+                            <div style="padding-top:25px;">
+                                @foreach (EdgeBiUI.Models.SegmentRowModel seg in creative.Segments)
+                                {
+                                    <div class="segmentRow">
+                                        <div class="segmentRowName" style="width:90px;">@seg.SegmentRow.Name</div>
+                                        <div class="segmentRowValue">
+                                            <select name="adgroupcreative@(creative.AdgroupCreativeGK)_SegmentValue_@(seg.SegmentRow.SegmentID)" style="width:80px;">
+                                                <option value="-1">(none)</option>
+                                                @foreach (Oltp.SegmentValueRow value in seg.Values)
+                                                {
+                                                <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="Apply" onclick="SaveAdgroup();" />
+        <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
+        <input type="button" value="OK" onclick="SaveAdgroup(); closeControllerDialog();" />
+    </div>
+        
+    }
+</div>

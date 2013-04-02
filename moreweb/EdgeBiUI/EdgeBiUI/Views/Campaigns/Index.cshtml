@@ -1,0 +1,106 @@
+﻿@model EdgeBiUI.Models.CampaignListModel
+@using Easynet.Edge.UI.Data;
+           
+@{
+    ViewBag.Title = "Campaigns";
+}
+
+<script type="text/javascript">
+
+    function openCampaignDetails(campaignGK) {
+        ShowLoadingMessage();
+        $.get('@(Url.Action("EditCampaign", "Campaigns"))', { campaignGK: campaignGK }, function (data) {
+            HideLoadingMessage();
+            $('#ControllerDialogDiv').html(data);
+            openController(600, 400);
+        });
+    }
+
+    function openAdgroupDetails(adgroupGK) {
+        ShowLoadingMessage();
+        $.get('@(Url.Action("EditAdgroup", "Campaigns"))', { adgroupGK: adgroupGK }, function (data) {
+            HideLoadingMessage();
+            $('#ControllerDialogDiv').html(data);
+            openController(600, 400);
+        });
+    }
+
+    function findCampaigns() {
+        ShowLoadingMessage();
+        $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
+            $("#IndexDynamicTableContainer").html(data);
+            HideLoadingMessage();
+        });
+    }
+
+    function openAdGroups(campaignGK) {
+        if ($("#Adgroups" + campaignGK).css("display") == "none") {
+            ShowLoadingMessage();
+            $.get('@Url.Action("GetAdgroupsForCampaign","Campaigns")', { campaignGK: campaignGK }, function (data) {
+                $("#Adgroups" + campaignGK).html(data);
+                $("#Adgroups" + campaignGK).css("display", "block");
+                HideLoadingMessage();
+            });
+        }
+        else
+            $("#Adgroups" + campaignGK).css("display", "none");
+    }
+
+    function changeIcon(elem) {
+        if (elem.className == "campaignButtonClose")
+            elem.className = "campaignButtonOpen";
+        else
+            elem.className = "campaignButtonClose";
+    }
+
+    $(document).ready(function () {
+        //findCampaigns();
+    });
+</script>
+
+<div class="IndexTopNav">
+@using (Html.BeginForm("Find", "Campaigns", FormMethod.Post, new { id = "PageEditorForm" }))
+{
+    <div class="FilterSegment">
+        <div class="FilterSegmentTitle">
+            Channel
+        </div>
+        <select name="Channel">
+            <option value="0">All Channels</option>
+            @foreach (int channelID in Model.Channels.Keys)
+            {
+                <option value="@channelID">@Model.Channels[channelID]</option>
+            }
+        </select>
+    </div>
+
+    <div class="FilterSegment">
+        <div class="FilterSegmentTitle">
+            Campaign Status
+        </div>
+        <select name="Status">
+            <option value="0">All Status</option>
+            @foreach (int statusID in Model.Statuses.Keys)
+            {
+                <option value="@statusID">@Model.Statuses[statusID]</option>
+            }
+        </select>
+    </div>
+    
+    <div class="FilterSegment">
+        <div class="FilterSegmentTitle">
+            Name of &nbsp;
+            <input type="radio" name="typeOfSearch" value="campaign" checked="checked" style="padding:0px; margin:0px; margin-right:4px;" />Campaign &nbsp;
+            <input type="radio" name="typeOfSearch" value="adgroup" style="padding:0px; margin:0px; margin-right:4px;" />Adgroup &nbsp;
+        </div>
+        <div>
+            <input type="text" name="searchText" style="width:250px;" />
+            <input type="button" value="Filter" onclick="findCampaigns()" style="" />
+        </div>
+    </div>
+}
+</div>
+
+<div id="IndexDynamicTableContainer">
+@Html.Partial("Table", Model.Campaigns)
+</div>

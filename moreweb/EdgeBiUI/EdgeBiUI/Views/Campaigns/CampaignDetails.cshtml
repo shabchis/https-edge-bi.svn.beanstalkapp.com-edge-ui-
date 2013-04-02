@@ -1,0 +1,73 @@
+﻿@model EdgeBiUI.Models.CampaignModel
+@using Easynet.Edge.UI.Data;
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+
+    function SaveCampaign() {
+        $.post($('#CampaignEditForm').attr("action"), $('#CampaignEditForm').serialize(), function (data) {
+        });
+    }
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+       @Model.Campaign.Name
+    </div>
+    @using (Html.BeginForm("EditCampaign", "Campaigns", new { campaignGK = Model.Campaign.GK }, FormMethod.Post, new { id = "CampaignEditForm" }))
+    {
+    <div id="Tabs">        
+        <ul class="menu">						
+            <li class="active" id="Segments">Segments</li>
+            <li class="ControllerTabsLi" id="Targets">Targets</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        <div class="Segments content">
+        @foreach (EdgeBiUI.Models.SegmentRowModel seg in Model.Segments)
+        {
+            <div class="segmentRow">
+                <div class="segmentRowName">@seg.SegmentRow.Name</div>
+                <div class="segmentRowValue">
+                    <select name="campaignSegmentValue_@(seg.SegmentRow.SegmentID)">
+                        <option value="-1">(none)</option>
+                    @foreach (Oltp.SegmentValueRow value in seg.Values)
+                    {
+                        <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
+                    }
+                    </select>
+                </div>
+            </div>
+        }
+        </div>        
+        
+        <div class="Targets content">
+            <div class="segmentRow">
+                <div class="segmentRowName">CPA (Customers)</div>
+                <div class="segmentRowValue">
+                    <input type="text" name="Target1" value="@Model.Target_Customer" />
+                </div>
+            </div>
+            <div class="segmentRow">
+                <div class="segmentRowName">CPA (Depositors)</div>
+                <div class="segmentRowValue">
+                    <input type="text" name="Target2" value="@Model.Target_Depositor" />
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="Apply" onclick="SaveCampaign();" />
+        <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
+        <input type="button" value="OK" onclick="SaveCampaign(); closeControllerDialog();" />
+    </div>
+        
+    }
+</div>

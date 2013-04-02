@@ -1,0 +1,77 @@
+﻿@model EdgeBiUI.Models.TrackersListModel
+@using Easynet.Edge.UI.Data;
+           
+@{
+    ViewBag.Title = "Trackers";
+}
+
+<script type="text/javascript">
+
+    function openTrackerDetails(identifier) {
+        ShowLoadingMessage();
+        $.get('@(Url.Action("EditTracker", "Trackers"))', { identifier: identifier }, function (data) {
+            HideLoadingMessage();
+            $('#ControllerDialogDiv').html(data);
+            openController(600, 400);
+        });
+    }
+
+    function findTrackers() {
+        ShowLoadingMessage();
+        $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
+            $("#IndexDynamicTableContainer").html(data);
+            HideLoadingMessage();
+        });
+    }
+
+
+
+</script>
+
+<div class="IndexTopNav">
+@using (Html.BeginForm("FindTrackers", "Trackers", FormMethod.Post, new { id = "PageEditorForm" }))
+{
+    <div class="FilterSegment">
+        <div class="FilterSegmentTitle">
+            Channel
+        </div>
+        <select name="Channel">
+            <option value="0">All Channels</option>
+            @foreach (int channelID in Model.Channels.Keys)
+            {
+                <option value="@channelID">@Model.Channels[channelID]</option>
+            }
+        </select>
+    </div>
+
+    foreach (EdgeBiUI.Models.SegmentRowModel segment in Model.Segments)
+    {
+    <div class="FilterSegment">
+        <div class="FilterSegmentTitle">
+            @segment.SegmentRow.Name
+        </div>
+        <select name="Segment@(segment.SegmentRow.SegmentID)">
+            <option value="0">(Any)</option>
+            <option value="-1">None</option>
+            @foreach (Oltp.SegmentValueRow Value in segment.Values)
+            {
+                <option value="@Value.ValueID">@Value.Value</option>
+            }
+        </select>
+    </div>
+    }
+    
+    <div class="FilterSegment">
+        <div class="FilterSegmentTitle">
+            Tracker ID
+        </div>
+        <input type="text" name="Identifier" />
+    </div>
+    
+    <input type="button" value="Filter" onclick="findTrackers()" style="margin-top:18px;" />
+}
+</div>
+
+<div id="IndexDynamicTableContainer">
+@Html.Partial("Table", Model.Trackers)
+</div>

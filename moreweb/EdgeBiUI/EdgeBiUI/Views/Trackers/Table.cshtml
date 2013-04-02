@@ -1,0 +1,16 @@
+﻿@model List<EdgeBiUI.Models.TrackerRowModel>
+@using Easynet.Edge.UI.Data;
+
+<div class="IndexTable">
+    <div class="IndexTableHeader">
+        <div class="" style="float:left; width:80%; height:14px; overflow:hidden;"><div style="padding-left:30px;">Name</div></div>
+        <div class="" style="float:left; width:20%; height:14px; overflow:hidden;">Channel</div>
+    </div>
+    @foreach (EdgeBiUI.Models.TrackerRowModel tracker in Model)
+    {
+        <div class="IndexTableRow">
+            <div class="IndexTableName" style="width:80%;"><div style="padding-left:30px;" onclick="openTrackerDetails(@tracker.Identifier)" title="@tracker.TrackerID">@tracker.TrackerName (@tracker.Identifier)</div></div>
+            <div class="IndexTableDesc" style="width:20%;">@tracker.ChannelName</div>
+        </div>
+    }
+</div>
