@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auxilary\Enums.cs" />
+    <Compile Include="Controllers\CampaignsController.cs" />
     <Compile Include="Controllers\CreativesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KeywordsController.cs" />
@@ -72,6 +73,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AssociationRowModel.cs" />
+    <Compile Include="Models\CampaignListModel.cs" />
+    <Compile Include="Models\CampaignModel.cs" />
+    <Compile Include="Models\AdgroupModel.cs" />
     <Compile Include="Models\SegmentRowModel.cs" />
     <Compile Include="Models\KeywordModel.cs" />
     <Compile Include="Models\KeywordsListModel.cs" />
@@ -86,6 +90,11 @@
     <Content Include="bin\EdgeBiUI.pdb" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.xml" />
+    <Content Include="Content\images\bullet.png" />
+    <Content Include="Content\images\tb-closed-hover.png" />
+    <Content Include="Content\images\tb-closed.png" />
+    <Content Include="Content\images\tb-open-hover.png" />
+    <Content Include="Content\images\tb-open.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -166,6 +175,12 @@
     <Content Include="Views\Trackers\Index.cshtml" />
     <Content Include="Views\Trackers\Table.cshtml" />
     <Content Include="Views\Trackers\TrackerDetails.cshtml" />
+    <Content Include="Views\Campaigns\Index.cshtml" />
+    <Content Include="Views\Campaigns\Table.cshtml" />
+    <Content Include="Views\Campaigns\TableAdgroups.cshtml" />
+    <Content Include="Views\Campaigns\CampaignDetails.cshtml" />
+    <Content Include="Views\Campaigns\AdgroupDetails.cshtml" />
+    <Content Include="Views\Keywords\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -196,7 +211,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58725</DevelopmentServerPort>
+          <DevelopmentServerPort>4203</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

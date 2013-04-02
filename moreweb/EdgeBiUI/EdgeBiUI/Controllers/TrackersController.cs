@@ -109,6 +109,7 @@ namespace EdgeBiUI.Controllers
                 Oltp.ChannelDataTable channels = client.Service.Channel_Get();
                 m.Channels = channels.ToDictionary(c => c.ID, c => c.DisplayName);
                 m.LandingPages = client.Service.Page_Get(acc_id, null, true, -1).ToDictionary(p => p.GK, p => p.DisplayName);
+                m.AppliedTo = GetReferenceData(m.Tracker, client);
             }
 
 
@@ -152,6 +153,44 @@ namespace EdgeBiUI.Controllers
             }
 
             return Content("OK");
+        }
+
+
+        private string GetReferenceData(Oltp.GatewayRow tracker, OltpLogicClient client)
+        {
+            string referenceData = "";
+            if (tracker.AdgroupGK < 1)
+                return "";
+
+            Oltp.AdgroupDataTable adg = client.Service.Adgroup_GetSingle(tracker.AdgroupGK);
+            if (adg.Rows.Count < 1)
+                return "";
+
+            Oltp.AdgroupRow adgroup = adg[0];
+
+            Oltp.CampaignDataTable cmpn = client.Service.Campaign_GetSingle(adgroup.CampaignGK);
+            if (cmpn.Rows.Count > 0)
+                referenceData += "<span>"+(cmpn.Rows[0] as Oltp.CampaignRow).Name + "</span> > ";
+            referenceData += "<span>" + adgroup.Name + "</span> > ";
+
+            
+            if (!tracker.IsReferenceTypeNull())
+            {
+                if (tracker.ReferenceType == Oltp.GatewayReferenceType.Creative)
+                {
+                    Oltp.CreativeDataTable c = client.Service.Creative_GetSingle(tracker.ReferenceID);
+                    if (c.Rows.Count > 0)
+                        referenceData += "Creative: <span>" + (c[0] as Oltp.CreativeRow).Title + "</span>";
+                }
+                else
+                {
+                    Oltp.KeywordDataTable k = client.Service.Keyword_GetSingle(tracker.ReferenceID);
+                    if (k.Rows.Count > 0)
+                        referenceData += "Keyword: <span>" + (k[0] as Oltp.KeywordRow).Keyword + "</span>";
+                }
+            }
+
+            return referenceData;
         }
     }
 }

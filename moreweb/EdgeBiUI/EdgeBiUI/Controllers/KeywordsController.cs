@@ -14,18 +14,26 @@ namespace EdgeBiUI.Controllers
         public ActionResult Index()
         {
             Models.KeywordsListModel m = new Models.KeywordsListModel();
-
-            using (var client = new OltpLogicClient(null))
-            {
-                Oltp.KeywordDataTable keywords = client.Service.Keyword_Get(acc_id, true, "s%", true);
-
-                foreach (Oltp.KeywordRow keyword in keywords)
-                    m.Keywords.Add(keyword);
-            }
-
             return View(m);
         }
 
+        [OutputCache(Duration = 0, NoStore = true)]
+        public PartialViewResult FindKeywords(string searchText)
+        {
+            List<Oltp.KeywordRow> L = new List<Oltp.KeywordRow>();
+            using (var client = new OltpLogicClient(null))
+            {
+                string str = searchText.Trim().Length > 0 ? searchText.Trim() + "%" : null;
+                Oltp.KeywordDataTable keywords = client.Service.Keyword_Get(acc_id, true, str, true);
+
+                foreach (Oltp.KeywordRow keyword in keywords)
+                    L.Add(keyword);
+            }
+
+            return PartialView("Table", L);
+        }
+
+        [OutputCache(Duration = 0, NoStore = true)]
         public ActionResult EditKeyword(long keywordGK)
         {
             Models.KeywordModel m = new Models.KeywordModel();

@@ -8,28 +8,31 @@
 <script type="text/javascript">
 
     function openKeywordDetails(keywordGK) {
+        ShowLoadingMessage();
         $.get('@(Url.Action("EditKeyword", "Keywords"))', { keywordGK: keywordGK }, function (data) {
             $('#ControllerDialogDiv').html(data);
             openController(600, 400);
+            HideLoadingMessage();
         });
     }
 
-    function closeControllerDialog() {
-        $('#ControllerDialogDiv').css("display", "none");
-        $('#ScreenOverlay').css("display", "none");
-        $('#ScreenOverlay').css("z-index", -1000);
+    function findKeywords() {
+        searchText = $("#search_value").val();
+        ShowLoadingMessage();
+        $.get('@(Url.Action("FindKeywords", "Keywords"))', { searchText: searchText }, function (data) {
+            HideLoadingMessage();
+            $('#IndexDynamicTableContainer').html(data);
+        });
     }
 
 </script>
 
-<div class="IndexTable">
-    <div class="IndexTableHeader">
-        <div class="" style="float:left; width:50%; height:14px; overflow:hidden;"><div style="padding-left:30px;">Name</div></div>
-    </div>
-    @foreach (Oltp.KeywordRow keyword in Model.Keywords)
-    {
-        <div class="IndexTableRow">
-            <div class="IndexTableName"><div style="padding-left:30px;" onclick="openKeywordDetails(@keyword.GK)">@keyword.Keyword</div></div>
-        </div>
-    }
+<div class="IndexTopNav">
+    <input type="text" name="search_value" class="searchText" id="search_value" />
+    <input type="button" value="find" onclick="findKeywords()" />
 </div>
+
+<div id="IndexDynamicTableContainer">
+@Html.Partial("Table", Model.Keywords)
+</div>
+

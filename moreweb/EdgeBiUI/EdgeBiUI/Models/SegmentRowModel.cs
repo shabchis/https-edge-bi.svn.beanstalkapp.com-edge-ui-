@@ -10,6 +10,6 @@ namespace EdgeBiUI.Models
     {
         public Oltp.SegmentRow SegmentRow { get; set; }
         public List<Oltp.SegmentValueRow> Values { get; set; }
-        public int SelectedValue { get; set; }
+        public long SelectedValue { get; set; }
     }
 }

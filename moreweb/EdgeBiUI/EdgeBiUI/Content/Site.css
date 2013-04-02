@@ -11,11 +11,13 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 .searchText         { width:200px; height:20px; border:1px solid #8d8d8d; }
 
 .IndexTable         { min-width:200px; border:1px solid silver; padding:2px; font-family:Arial; font-size:13px; }
-.IndexTableHeader   { background-color:#8d8d8d; color:White; overflow:auto; height:16px; padding-top:7px; padding-bottom:7px; margin-bottom:2px; }
-.IndexTableRow      { background-color:#f5f5f5; color:black; overflow:auto; height:16px; padding-top:7px; padding-bottom:7px;  border-top:1px solid silver; }   
+.IndexTableHeader   { background-color:#8d8d8d; color:White; overflow:auto; height:19px; padding-top:7px; padding-bottom:7px; margin-bottom:2px; }
+.IndexTableRow      { background-color:#f5f5f5; color:black; overflow:auto; height:19px; padding-top:7px; padding-bottom:7px;  border-top:1px solid silver; }   
 .IndexTableRow:hover { background-color:#e3edcb; }
-.IndexTableName     { float:left; width:50%; color:#7ca826; height:16px; overflow:hidden; cursor:pointer; }
-.IndexTableDesc     { float:left; width:50%; color:#666666; height:16px; overflow:hidden; }
+.IndexTableName     { float:left; width:50%; color:#7ca826; height:19px; overflow:hidden; cursor:pointer; }
+.IndexTableDesc     { float:left; width:50%; color:#666666; height:19px; overflow:hidden; }
+
+.IndexTableContainer .IndexTableRow  { background-color:#FFFFFF; }
 
 .FilterSegment      { float:left; margin-right:20px; }
 .FilterSegmentTitle { margin-bottom:4px; } 
@@ -32,7 +34,7 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 #container ul.menu li           { margin:0px; float:left; color:Black; padding:5px 10px 4px 10px; margin-right:-1px; cursor: pointer; border:1px solid #8c8e94; background-color:#d1d1d1; }
 #container ul.menu li:first-child {  }
 #container ul.menu li.active    { background-color:#FFFFFF; color:#000000; border-bottom:1px solid white; }
-.content                        { position:absolute; top:0; left:0; padding:20px; }
+.content                        { position:absolute; top:0; left:0; padding:20px; width:510px; height:210px; overflow:auto; }
 
 #Buttons                        { margin-top:10px; }
 #Buttons input                  { float:right; margin-left:10px; width:60px; height:25px; }
@@ -40,6 +42,19 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 .segmentRow         { margin-bottom:10px; overflow:auto; clear:both; }
 .segmentRowName     { float:left; width:120px; padding-top:3px; }
 .segmentRowValue    { float:left; }
+.segmentRowValue.appliedTo  { float:none;  }
+.segmentRowValue.appliedTo span { color:#7ca826; }
 
 .associationRow     { margin-bottom:5px; }
 .associationRow span    { color:#7ca826; }
+
+.adgroupInnerTable          { border:1px solid silver; background-color:White; padding:2px; padding-bottom:0px; }
+.adgroupInnerTableHeader    { background-color:#8d8d8d; color:White; overflow:auto; height:16px; padding:4px; margin-bottom:2px; }
+.adgroupInnerTableRow       { background-color:#D3D3D3; color:#042271; overflow:auto; padding:3px; margin-bottom:2px; }
+
+.campaignButtonClose        { width:19px; height:19px; float:left; margin-left:20px; background-image:url('images/tb-closed.png'); }
+.campaignButtonClose:hover  { width:19px; height:19px; float:left; margin-left:20px; background-image:url('images/tb-closed-hover.png'); }
+
+.campaignButtonOpen         { width:19px; height:19px; float:left; margin-left:20px; background-image:url('images/tb-open.png'); }
+.campaignButtonOpen:hover   { width:19px; height:19px; float:left; margin-left:20px; background-image:url('images/tb-open-hover.png'); }
+

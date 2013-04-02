@@ -13,13 +13,11 @@ namespace EdgeBiUI.Controllers
         int acc_id = 10035;
         public ActionResult Index()
         {
-
             Models.CreativeListModel m = new Models.CreativeListModel();
-
             return View(m);
         }
 
-        
+        [OutputCache(Duration = 0, NoStore = true)]
         public PartialViewResult FindCreatives(string searchText)
         {
             Models.CreativeListModel m = new Models.CreativeListModel();
