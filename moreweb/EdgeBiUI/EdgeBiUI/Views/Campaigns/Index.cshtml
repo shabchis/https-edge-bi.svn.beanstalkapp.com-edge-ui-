@@ -59,7 +59,7 @@
 </script>
 
 <div class="IndexTopNav">
-@using (Html.BeginForm("Find", "Campaigns", FormMethod.Post, new { id = "PageEditorForm" }))
+@using (Html.BeginForm("Find", "Campaigns", FormMethod.Post, new { id = "PageEditorForm", defaultbutton="FilterButton" }))
 {
     <div class="FilterSegment">
         <div class="FilterSegmentTitle">
@@ -95,7 +95,7 @@
         </div>
         <div>
             <input type="text" name="searchText" style="width:250px;" />
-            <input type="button" value="Filter" onclick="findCampaigns()" style="" />
+            <input type="button" value="Filter" id="FilterButton" onclick="findCampaigns()" style="" />
         </div>
     </div>
 }

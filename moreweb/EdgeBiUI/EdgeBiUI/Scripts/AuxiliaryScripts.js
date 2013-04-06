@@ -2,11 +2,25 @@
 /// <reference path="jquery.validate-vsdoc.js" />
 /// <reference path="jquery-ui-1.8.11.js" />
 
+var ButtonKeys = { "EnterKey": 13 };
+
 $(document).ready(function () {
 
+    $("#PageEditorForm").keypress(function (e) {
+        if (e.which == ButtonKeys.EnterKey) {
+            var defaultButtonId = $(this).attr("defaultbutton");
+            $("#" + defaultButtonId).click();
+            return false;
+        }
+    });
 
 })
 
+function selectRow(gk, multiple) {
+    if (!multiple)
+        $(".IndexTableRow.selected").removeClass("selected");
+    $("#IndexTableRow_" + gk).addClass("selected");
+}
 
 function getBrowserHeight() {
     var intH = 0;

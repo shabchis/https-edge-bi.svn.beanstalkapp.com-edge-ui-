@@ -70,7 +70,16 @@ namespace EdgeBiUI.Controllers
 
                 foreach (Oltp.GatewayRow g in t)
                 {
-                    L.Add(new Models.TrackerRowModel() { TrackerID = g.GK, ChannelName = Channels[g.ChannelID], TrackerName = g.Name, Identifier = g.Identifier });
+                    Models.TrackerRowModel m1 = new Models.TrackerRowModel();
+                    m1.TrackerID = g.GK;
+                    m1.ChannelName = Channels[g.ChannelID];
+                    if (g.IsNameNull())
+                        m1.TrackerName = "";
+                    else
+                        m1.TrackerName = g.Name;
+                    m1.Identifier = g.Identifier;
+
+                    L.Add(m1);
                 }
             }
 

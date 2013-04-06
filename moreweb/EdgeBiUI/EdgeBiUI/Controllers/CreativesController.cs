@@ -30,7 +30,11 @@ namespace EdgeBiUI.Controllers
                 {
                     m.Creatives.Add(creative);
                 }
+
+                
             }
+
+            
 
             return PartialView("Table", m);
         }
@@ -50,7 +54,7 @@ namespace EdgeBiUI.Controllers
 
                 foreach (Oltp.SegmentRow r in segments)
                 {
-                    bool is_creative_segment = ((Auxilary.SegmentAssociationFlags)r.Association).HasFlag(Auxilary.SegmentAssociationFlags.AdgroupCreative);
+                    bool is_creative_segment = ((Auxilary.SegmentAssociationFlags)r.Association).HasFlag(Auxilary.SegmentAssociationFlags.Creative);
                     if (is_creative_segment)
                     {
                         Oltp.SegmentValueDataTable values = client.Service.SegmentValue_Get(acc_id, r.SegmentID);
@@ -64,7 +68,8 @@ namespace EdgeBiUI.Controllers
                             case 5: value = creative.Segment5; break;
                             default: value = creative.Segment1; break;
                         }
-
+                        
+                        
                         m.Segments.Add(new Models.SegmentRowModel() { SegmentRow = r, Values = values.ToList(), SelectedValue = value });
                     }
                 }

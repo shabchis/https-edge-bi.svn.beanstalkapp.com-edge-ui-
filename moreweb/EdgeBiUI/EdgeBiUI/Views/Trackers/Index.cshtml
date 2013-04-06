@@ -29,7 +29,7 @@
 </script>
 
 <div class="IndexTopNav">
-@using (Html.BeginForm("FindTrackers", "Trackers", FormMethod.Post, new { id = "PageEditorForm" }))
+@using (Html.BeginForm("FindTrackers", "Trackers", FormMethod.Post, new { id = "PageEditorForm", defaultbutton = "FilterButton" }))
 {
     <div class="FilterSegment">
         <div class="FilterSegmentTitle">
@@ -68,7 +68,7 @@
         <input type="text" name="Identifier" />
     </div>
     
-    <input type="button" value="Filter" onclick="findTrackers()" style="margin-top:18px;" />
+    <input type="button" value="Filter" id="FilterButton" onclick="findTrackers()" style="margin-top:18px;" />
 }
 </div>
 

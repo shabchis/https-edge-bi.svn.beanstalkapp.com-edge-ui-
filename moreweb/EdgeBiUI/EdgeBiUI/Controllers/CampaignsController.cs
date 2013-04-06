@@ -172,10 +172,10 @@ namespace EdgeBiUI.Controllers
                     r["CPA_new_activations"] = target2;
 
                 if (t.Rows.Count > 0 && target1 == null && target2 == null)
-                    t.Rows.Remove(r);
+                    r.Delete();
                 else if (t.Rows.Count == 0 && (target1 != null || target2 != null))
                 {
-                    r.Delete();
+                    t.Rows.Add(r);
                 }
 
                 client.Service.CampaignTargets_Save(acc_id, t);                    
