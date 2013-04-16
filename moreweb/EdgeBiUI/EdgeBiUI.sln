@@ -5,7 +5,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeBiUI", "EdgeBiUI\EdgeBi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.Data", "..\OltpLogic\Data\UI.Data.csproj", "{AC9C4389-97C8-47B9-84F3-E5E4E32C5E73}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A2D54670-A221-4F73-991D-076FF20133AF}"
+	ProjectSection(SolutionItems) = preProject
+		EdgeBiUI.vsmdi = EdgeBiUI.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = EdgeBiUI.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

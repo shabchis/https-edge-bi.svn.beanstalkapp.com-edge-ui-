@@ -21,12 +21,14 @@ namespace EdgeBiUI.Models
 
     }
 
-    public struct CampaignRowModel
+    public class CampaignRowModel
     {
         public long CampaignGK { get; set; }
         public string CampaignName { get; set; }
         public string Status { get; set; }
         public string ChannelName { get; set; }
+        public double? CPA1 { get; set; }
+        public double? CPA2 { get; set; }
     }
 
     public struct AdgroupRowModel

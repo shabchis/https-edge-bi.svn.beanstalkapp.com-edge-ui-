@@ -45,4 +45,18 @@ namespace EdgeBiUI.Models
             Segments = new List<SegmentRowModel>();
         }
     }
+
+    public class MultipleAdgroupModel
+    {
+        public string AdgroupsGK { get; set; }
+        public List<Oltp.AdgroupRow> Adgroups { get; set; }
+        public List<SegmentRowModel> Segments { get; set; }
+
+        public MultipleAdgroupModel()
+        {
+            Segments = new List<SegmentRowModel>();
+            Adgroups = new List<Oltp.AdgroupRow>();
+
+        }
+    }
 }

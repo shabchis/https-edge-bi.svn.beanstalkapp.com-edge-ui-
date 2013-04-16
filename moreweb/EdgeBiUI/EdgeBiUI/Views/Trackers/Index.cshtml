@@ -16,6 +16,15 @@
         });
     }
 
+    function openBatchTrackers() {
+        ShowLoadingMessage();
+        $.get('@(Url.Action("BatchUpdate", "Trackers"))', function (data) {
+            HideLoadingMessage();
+            $('#ControllerDialogDiv').html(data);
+            openController(600, 400);
+        });
+    }
+
     function findTrackers() {
         ShowLoadingMessage();
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
@@ -29,6 +38,9 @@
 </script>
 
 <div class="IndexTopNav">
+    <div style="float:right;">
+        <a href="" onclick="openBatchTrackers(); return false;">Batch Update</a>
+    </div>
 @using (Html.BeginForm("FindTrackers", "Trackers", FormMethod.Post, new { id = "PageEditorForm", defaultbutton = "FilterButton" }))
 {
     <div class="FilterSegment">

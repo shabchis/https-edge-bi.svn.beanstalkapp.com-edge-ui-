@@ -34,12 +34,13 @@
             <div class="segmentRow">
                 <div class="segmentRowName">@seg.SegmentRow.Name</div>
                 <div class="segmentRowValue">
-                    <select name="adgroupSegmentValue_@(seg.SegmentRow.SegmentID)">
+                    <select name="adgroupSegmentValue_@(seg.SegmentRow.SegmentID)" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
                         <option value="-1">(none)</option>
                         @foreach (Oltp.SegmentValueRow value in seg.Values)
                         {
                         <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
                         }
+                        <option value="-1000">Add New...</option>
                     </select>
                 </div>
             </div>
@@ -93,16 +94,16 @@
                 {
                     <div class="adgroupInnerTableRow">
                         <div style="float:left; width:50%; overflow:hidden;">
-                            <div style="font-weight:bold; margin-bottom:5px;">
+                            <div style="font-weight:bold; margin-bottom:8px;">
                                 @creative.Title
                             </div>
                             <div style="">
                                 @creative.Desc1
                             </div>
-                            <div style="margin-bottom:5px;">
+                            <div style="margin-bottom:8px;">
                                 @creative.Desc2
                             </div>
-                            <div style="margin-bottom:5px;">
+                            <div style="margin-bottom:8px;">
                                 @creative.DisplayURL
                             </div>
                             <div style="font-size:11px; color:Gray; white-space:normal">

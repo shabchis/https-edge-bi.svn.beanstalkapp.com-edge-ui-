@@ -7,6 +7,9 @@
 
 <script type="text/javascript">
 
+    var cpa_has_changed = false;
+    var targets_are_open = false;
+
     function openCampaignDetails(campaignGK) {
         ShowLoadingMessage();
         $.get('@(Url.Action("EditCampaign", "Campaigns"))', { campaignGK: campaignGK }, function (data) {
@@ -15,6 +18,41 @@
             openController(600, 400);
         });
     }
+
+    function openMultipleCampaignOrAdgroupDetails() {
+        var campaignsGK = "";
+        var adgroupsGK = "";
+        $("#IndexDynamicTableContainer input:checked").each(function () {
+            var s = this.name.split('_')[0];
+            if (s == "adgroupMultiSelect")
+                adgroupsGK += this.name.split('_')[1] + ",";
+            if (s == "campaignMultiSelect")
+                campaignsGK += this.name.split('_')[1] + ",";
+        });
+        if (campaignsGK.length > 0 && adgroupsGK.length > 0) {
+            alert("To edit multiple items, select items of the same type.");
+            return;
+        }
+
+        if (campaignsGK.length > 0) {
+            ShowLoadingMessage();
+            $.get('@(Url.Action("EditMultipleCampaign", "Campaigns"))', { campaignsGK: campaignsGK }, function (data) {
+                HideLoadingMessage();
+                $('#ControllerDialogDiv').html(data);
+                openController(600, 400);
+            });
+        }
+
+        if (adgroupsGK.length > 0) {
+            ShowLoadingMessage();
+            $.get('@(Url.Action("EditMultipleAdgroups", "Campaigns"))', { adgroupsGK: adgroupsGK }, function (data) {
+                HideLoadingMessage();
+                $('#ControllerDialogDiv').html(data);
+                openController(600, 400);
+            });
+        }
+    }
+
 
     function openAdgroupDetails(adgroupGK) {
         ShowLoadingMessage();
@@ -29,6 +67,11 @@
         ShowLoadingMessage();
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
             $("#IndexDynamicTableContainer").html(data);
+            if (targets_are_open)
+                openTargets();
+            else
+                closeTargets();
+
             HideLoadingMessage();
         });
     }
@@ -56,6 +99,41 @@
     $(document).ready(function () {
         //findCampaigns();
     });
+
+    function openTargets() {
+        targets_are_open = true;
+        $(".IndexTableDescCPA").css("display", "block");
+        $("#OpenTargetsButton").css("display", "none")
+        $("#CloseSaveTargetsButtons").css("display", "block")
+    }
+
+    function closeTargets() {
+        targets_are_open = false;
+        $(".IndexTableDescCPA").css("display", "none");
+        $("#OpenTargetsButton").css("display", "block")
+        $("#CloseSaveTargetsButtons").css("display", "none")
+    }
+
+    function saveTargets() {
+        if ($(".errorValue").length > 0) {
+            alert("wrong input data");
+            return;
+        }
+
+        if (cpa_has_changed) {
+            $.post($('#TargetsEditorForm').attr("action"), $('#TargetsEditorForm').serialize(), function (data) {                
+                alert("Targets Saved");
+            });
+        }
+    }
+
+    function checkvalue(e) {
+        if (isNaN(e.value))
+            $(e).addClass("errorValue");
+        else
+            $(e).removeClass("errorValue");
+    }
+    
 </script>
 
 <div class="IndexTopNav">
@@ -99,6 +177,19 @@
         </div>
     </div>
 }
+</div>
+
+<div style="text-align:left;">
+    <div style="float:right;">
+        <span id="OpenTargetsButton">
+            <a href="" onclick="openTargets(); return false;">Open Targets</a>
+        </span>
+        <span id="CloseSaveTargetsButtons" style="display:none;">
+            <a href="" onclick="saveTargets(); return false;">Save</a>
+            <a href="" onclick="closeTargets(); return false;">Cancel</a>
+        </span>
+    </div>
+    <a href="" onclick="openMultipleCampaignOrAdgroupDetails(); return false;">Edit Multiple</a>
 </div>
 
 <div id="IndexDynamicTableContainer">

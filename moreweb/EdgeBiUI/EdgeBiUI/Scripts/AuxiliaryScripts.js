@@ -13,7 +13,6 @@ $(document).ready(function () {
             return false;
         }
     });
-
 })
 
 function selectRow(gk, multiple) {
@@ -89,4 +88,48 @@ function HideLoadingMessage() {
     $('#ScreenOverlay').css("z-index", -1000);
 
     $('#LoadingMessage').css("display", "none");
+}
+
+function handleNewValue(selectElement) {
+    var jElement = $(selectElement)
+    var value = jElement.val();
+    var segmentID = jElement.attr("segmentID");
+    if (value == -1000) {
+        //jElement.css("display", "none");
+        jElement.fadeOut(200, function () {
+            jElement.after("<span id='newValeOption_" + segmentID + "_div'><input type='text' id='newValeOption_" + segmentID + "'/><input type='button' value='Add' id='newValeOption_" + segmentID + "_button' /><input type='button' value='Cancel' id='newValeOption_" + segmentID + "_cancel'/></span>");
+            $("#newValeOption_" + segmentID + "_button").click(function () { addNewValue(selectElement); });
+            $("#newValeOption_" + segmentID + "_cancel").click(function () { cancelNewValue(selectElement); });
+        });
+    }
+}
+
+function addNewValue(selectElement) {
+    var jElement = $(selectElement);
+    var segmentID = jElement.attr("segmentID");
+    var newValue = $("#newValeOption_" + segmentID).val();
+    
+    var exist = false;
+    jElement.children("option").each(function () { if (this.text == newValue) exist = true; });
+
+    if (!exist) {
+        $.post("../Home/AddNewSegmentValue", { segmentID: segmentID, newValue: newValue }, function (data) {
+            $("#newValeOption_" + segmentID + "_div").remove();
+            jElement.children("option[value='-1000']").remove();
+            jElement.append(new Option(newValue, data, false, true));
+            jElement.append(new Option("Add New...", "-1000", false, false));
+            jElement.fadeIn(200);
+        });
+    }
+    else {
+        alert("The segment value '" + newValue + "' already exist");
+    }
+}
+
+function cancelNewValue(selectElement) {
+    var jElement = $(selectElement);
+    var segmentID = jElement.attr("segmentID");
+    $("#newValeOption_" + segmentID + "_div").remove();
+    jElement.val(jElement.attr("originalValue"));
+    jElement.fadeIn(200);    
 }

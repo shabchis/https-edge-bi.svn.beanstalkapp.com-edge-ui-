@@ -77,6 +77,7 @@
     <Compile Include="Models\CampaignListModel.cs" />
     <Compile Include="Models\CampaignModel.cs" />
     <Compile Include="Models\AdgroupModel.cs" />
+    <Compile Include="Models\TrackersBatchModel.cs" />
     <Compile Include="Models\SegmentRowModel.cs" />
     <Compile Include="Models\KeywordModel.cs" />
     <Compile Include="Models\KeywordsListModel.cs" />
@@ -92,6 +93,7 @@
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.xml" />
     <Content Include="Content\images\bullet.png" />
+    <Content Include="Content\images\loading-icon.gif" />
     <Content Include="Content\images\tb-closed-hover.png" />
     <Content Include="Content\images\tb-closed.png" />
     <Content Include="Content\images\tb-open-hover.png" />
@@ -175,13 +177,17 @@
     <Content Include="Views\Creatives\Table.cshtml" />
     <Content Include="Views\Trackers\Index.cshtml" />
     <Content Include="Views\Trackers\Table.cshtml" />
-    <Content Include="Views\Trackers\TrackerDetails.cshtml" />
+    <Content Include="Views\Trackers\BatchTrackers.cshtml" />
     <Content Include="Views\Campaigns\Index.cshtml" />
     <Content Include="Views\Campaigns\Table.cshtml" />
     <Content Include="Views\Campaigns\TableAdgroups.cshtml" />
     <Content Include="Views\Campaigns\CampaignDetails.cshtml" />
     <Content Include="Views\Campaigns\AdgroupDetails.cshtml" />
     <Content Include="Views\Keywords\Table.cshtml" />
+    <Content Include="Views\Campaigns\MultiCampaignDetails.cshtml" />
+    <Content Include="Views\Creatives\MultiCreativeDetails.cshtml" />
+    <Content Include="Views\Campaigns\MultipleAdgroupDetails.cshtml" />
+    <Content Include="Views\Trackers\TrackerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -212,7 +218,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>8869</DevelopmentServerPort>
+          <DevelopmentServerPort>31015</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

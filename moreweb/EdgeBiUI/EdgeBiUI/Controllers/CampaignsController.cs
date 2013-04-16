@@ -29,7 +29,7 @@ namespace EdgeBiUI.Controllers
             return View(m);
         }
 
-        
+        [OutputCache(Duration = 0, NoStore = true)]
         public PartialViewResult Find(FormCollection colls)
         {
             Models.CampaignListModel m = new Models.CampaignListModel();            
@@ -46,11 +46,26 @@ namespace EdgeBiUI.Controllers
                 Oltp.CampaignDataTable t = client.Service.Campaign_Get(acc_id, channelID, statusID, textToSearch, filterByAdgroup);
                 foreach (Oltp.CampaignRow c in t)
                     m.Campaigns.Add(new Models.CampaignRowModel() { CampaignGK = c.GK, CampaignName = c.Name, Status = m.Statuses[c.StatusID], ChannelName = m.Channels[c.ChannelID] });
+
+                DataTable targets = client.Service.CampaignTargets_Get(acc_id, null);
+                Dictionary<long, Models.CampaignRowModel> dic = m.Campaigns.ToDictionary(q => q.CampaignGK, q => q);
+
+                foreach (DataRow r in targets.Rows)
+                {
+                    long campaignGK = (long)(int)r["CampaignGK"];
+                    if (dic.ContainsKey(campaignGK))
+                    {
+                        dic[campaignGK].CPA1 = r["CPA_new_users"] == DBNull.Value ? null : (double?)r["CPA_new_users"];
+                        dic[campaignGK].CPA2 = r["CPA_new_activations"] == DBNull.Value ? null : (double?)r["CPA_new_activations"];
+                    }
+                }
+
             }
 
             return PartialView("Table", m.Campaigns);
         }
 
+        [OutputCache(Duration = 0, NoStore = true)]
         public PartialViewResult GetAdgroupsForCampaign(long campaignGK)
         {
             List<Models.AdgroupRowModel> L = new List<Models.AdgroupRowModel>();
@@ -109,6 +124,76 @@ namespace EdgeBiUI.Controllers
 
         }
 
+        [HttpPost]
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult SaveTargets(FormCollection coll)
+        {
+            using (var client = new OltpLogicClient(null))
+            {
+                string a1 = coll["campaignsGK"];
+                Dictionary<long, long> campaignsGK = a1.Split(',').Select(x => long.Parse(x)).ToDictionary(d=>d, d=>d);
+                DataTable targetsTable = client.Service.CampaignTargets_Get(acc_id, null);
+                
+                List<DataRow> RowsToRemove = new List<DataRow>();
+                foreach(DataRow r in targetsTable.Rows)
+                {
+                    long gk = long.Parse(r["CampaignGK"].ToString());
+                    if (!campaignsGK.ContainsKey(gk))
+                        RowsToRemove.Add(r);
+                }
+                RowsToRemove.ForEach(x => targetsTable.Rows.Remove(x));
+
+                List<DataRow> RowsToAdd = new List<DataRow>();
+                foreach (long gk in campaignsGK.Keys)
+                {
+                    bool f = false;
+                    foreach (DataRow r in targetsTable.Rows)
+                        if (long.Parse(r["CampaignGK"].ToString()) == gk)
+                            f = true;
+
+                    if (!f)
+                    {
+                        DataRow r = targetsTable.NewRow();
+                        r["CampaignGK"] = gk;
+                        r["AdgroupGK"] = -1;
+                        RowsToAdd.Add(r);
+                    }
+                }
+
+                RowsToAdd.ForEach(x => targetsTable.Rows.Add(x));
+
+                foreach (DataRow r in targetsTable.Rows)
+                {
+                    long gk = long.Parse(r["CampaignGK"].ToString());
+                    double? target1, target2;
+
+                    if (coll["campaigntarget_" + gk + "_CPA1"].Equals(""))
+                        target1 = null;
+                    else
+                        target1 = double.Parse(coll["campaigntarget_" + gk + "_CPA1"]);
+
+                    if (coll["campaigntarget_" + gk + "_CPA2"].Equals(""))
+                        target2 = null;
+                    else
+                        target2 = double.Parse(coll["campaigntarget_" + gk + "_CPA2"]);
+
+                    if (target1 == null)
+                        r["CPA_new_users"] = DBNull.Value;
+                    else
+                        r["CPA_new_users"] = target1;
+
+                    if (target2 == null)
+                        r["CPA_new_activations"] = DBNull.Value;
+                    else
+                        r["CPA_new_activations"] = target2;
+                }
+
+
+                client.Service.CampaignTargets_Save(acc_id, targetsTable);
+            }
+
+            return Content("OK");
+        }
 
         [HttpPost]
         [OutputCache(Duration = 0, NoStore = true)]
@@ -183,6 +268,175 @@ namespace EdgeBiUI.Controllers
 
             return Content("OK");
         }
+
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult EditMultipleCampaign(string campaignsGK)
+        {
+            List<long> CampaingsGK = campaignsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
+            Models.MultiCampaignModel m = new Models.MultiCampaignModel();
+            m.CampaignsGK = campaignsGK;
+            using (var client = new OltpLogicClient(null))
+            {
+                m.Campaigns = client.Service.Campaign_GetIndividualCampaigns(CampaingsGK.ToArray()).ToList();
+
+                Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
+                foreach (Oltp.SegmentRow segment in segments)
+                {
+                    bool is_campaign_segment = ((Auxilary.SegmentAssociationFlags)segment.Association).HasFlag(Auxilary.SegmentAssociationFlags.Campaign);
+                    if (is_campaign_segment)
+                    {
+                        Oltp.SegmentValueDataTable segment_values = client.Service.SegmentValue_Get(acc_id, segment.SegmentID);
+                        int value;
+                        switch (segment.SegmentID)
+                        {
+                            case 1: value = GetCommonValue(m.Campaigns.Select(x=>x.Segment1).ToList()); break;
+                            case 2: value = GetCommonValue(m.Campaigns.Select(x => x.Segment2).ToList()); break;
+                            case 3: value = GetCommonValue(m.Campaigns.Select(x => x.Segment3).ToList()); break;
+                            case 4: value = GetCommonValue(m.Campaigns.Select(x => x.Segment4).ToList()); break;
+                            case 5: value = GetCommonValue(m.Campaigns.Select(x => x.Segment5).ToList()); break;
+                            default: value = GetCommonValue(m.Campaigns.Select(x => x.Segment1).ToList()); break;
+                        }
+                        m.Segments.Add(new Models.SegmentRowModel() { SegmentRow = segment, Values = segment_values.ToList(), SelectedValue = value });
+                    }
+                }
+            }
+
+
+            return PartialView("MultiCampaignDetails", m); 
+        }
+
+        [HttpPost]
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult EditMultipleCampaign(string campaignsGK, FormCollection coll)
+        {
+            Oltp.CampaignDataTable campaigns;
+            List<long> CampaingsGK = campaignsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
+
+            using (var client = new OltpLogicClient(null))
+            {
+                campaigns = client.Service.Campaign_GetIndividualCampaigns(CampaingsGK.ToArray());
+                foreach (string key in coll.Keys)
+                {
+                    if (key.Contains("campaignSegmentValueEdit_"))
+                    {
+                        if (coll[key] == "1")
+                        {
+                            string segment_id = key.Split('_')[1];
+                            int segmentID = int.Parse(segment_id);
+                            int segmentValue = int.Parse(coll["campaignSegmentValue_" + segment_id]);
+                            if (segmentValue != -100)
+                            {
+                                switch (segmentID)
+                                {
+                                    case 1: campaigns.ToList().ForEach(x=>x.Segment1 = segmentValue); break;
+                                    case 2: campaigns.ToList().ForEach(x => x.Segment2 = segmentValue); break;
+                                    case 3: campaigns.ToList().ForEach(x => x.Segment3 = segmentValue); break;
+                                    case 4: campaigns.ToList().ForEach(x => x.Segment4 = segmentValue); break;
+                                    case 5: campaigns.ToList().ForEach(x => x.Segment5 = segmentValue); break;
+                                    default: break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                client.Service.Campaign_Save(campaigns, false);
+
+                double? target1, target2;
+                if (coll["Target1"] == null || coll["Target1"].Equals(""))
+                    target1 = null;
+                else
+                    target1 = double.Parse(coll["Target1"]);
+
+                if (coll["Target2"] == null || coll["Target2"].Equals(""))
+                    target2 = null;
+                else
+                    target2 = double.Parse(coll["Target2"]);
+
+                bool editTarget1 = coll["EditTarget1"] == "1";
+                bool editTarget2 = coll["EditTarget2"] == "1";
+
+                if (editTarget1 || editTarget1)
+                {
+                    DataTable t = client.Service.CampaignTargets_Get(acc_id, null);
+                    List<DataRow> RowsToRemove = new List<DataRow>();
+                    foreach (DataRow r in t.Rows)
+                    {
+                        if (!CampaingsGK.Contains((long)(int)r["CampaignGK"]))
+                            RowsToRemove.Add(r);
+                        else
+                        {
+                            if (editTarget1)
+                            {
+                                if (target1 != null)
+                                    r["CPA_new_users"] = target1;
+                                else
+                                    r["CPA_new_users"] = DBNull.Value;
+                            }
+                            if (editTarget2)
+                            {
+                                if (target2 != null)
+                                    r["CPA_new_activations"] = target2;
+                                else
+                                    r["CPA_new_activations"] = DBNull.Value;
+                            }
+                        }
+                    }
+                    RowsToRemove.ForEach(x => t.Rows.Remove(x));
+
+                    List<DataRow> RowsToAdd = new List<DataRow>();
+                    foreach (Oltp.CampaignRow c in campaigns)
+                    {
+                        bool f = false;
+                        foreach (DataRow r in t.Rows)
+                            if ((long)(int)r["CampaignGK"] == c.GK)
+                                f = true;
+
+                        if (!f)
+                        {
+                            DataRow r = t.NewRow();
+                            r["CampaignGK"] = c.GK;
+                            r["AdgroupGK"] = -1;
+                            if (editTarget1)
+                            {
+                                if (target1 != null)
+                                    r["CPA_new_users"] = target1;
+                                else
+                                    r["CPA_new_users"] = DBNull.Value;
+                            }
+                            if (editTarget2)
+                            {
+                                if (target2 != null)
+                                    r["CPA_new_activations"] = target2;
+                                else
+                                    r["CPA_new_activations"] = DBNull.Value;
+                            }
+                            RowsToAdd.Add(r);
+                        }
+                    }
+
+                    RowsToAdd.ForEach(x => t.Rows.Add(x));
+
+                    client.Service.CampaignTargets_Save(acc_id, t);
+                }
+            }
+
+            return Content("OK");
+        }
+
+
+        public int GetCommonValue(List<int> vals)
+        {
+            int y = vals[0];
+            bool a = true;
+            vals.ForEach(x => { a = a && (x == y); y = x; });
+            if (a)
+                return y;
+            else
+                return -100;
+        }
+        
+
 
         [OutputCache(Duration = 0, NoStore = true)]
         public PartialViewResult EditAdgroup(long adgroupGK)
@@ -326,5 +580,93 @@ namespace EdgeBiUI.Controllers
             }
             return Content("OK");
         }
+
+        [OutputCache(Duration = 0, NoStore = true)]
+        public PartialViewResult EditMultipleAdgroups(string adgroupsGK)
+        {
+            Oltp.AdgroupDataTable adgroups;
+            List<long> AdgroupsGK = adgroupsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
+            Models.MultipleAdgroupModel m = new Models.MultipleAdgroupModel();
+            m.AdgroupsGK = adgroupsGK;
+
+            using (var client = new OltpLogicClient(null))
+            {
+                foreach (long adgroupGK in AdgroupsGK)
+                {
+                    Oltp.AdgroupDataTable t = client.Service.Adgroup_GetSingle(adgroupGK);
+                    if (t.Count > 0)
+                        m.Adgroups.Add(t[0]);
+                }
+
+
+                Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
+                foreach (Oltp.SegmentRow segment in segments)
+                {
+                    bool is_adgroup_segment = ((Auxilary.SegmentAssociationFlags)segment.Association).HasFlag(Auxilary.SegmentAssociationFlags.Adgroup);
+                    if (is_adgroup_segment)
+                    {
+                        Oltp.SegmentValueDataTable segment_values = client.Service.SegmentValue_Get(acc_id, segment.SegmentID);
+                        int value;
+                        switch (segment.SegmentID)
+                        {
+                            case 1: value = GetCommonValue(m.Adgroups.Select(x=>x.Segment1).ToList()); break;
+                            case 2: value = GetCommonValue(m.Adgroups.Select(x => x.Segment2).ToList()); break;
+                            case 3: value = GetCommonValue(m.Adgroups.Select(x => x.Segment3).ToList()); break;
+                            case 4: value = GetCommonValue(m.Adgroups.Select(x => x.Segment4).ToList()); break;
+                            case 5: value = GetCommonValue(m.Adgroups.Select(x => x.Segment5).ToList()); break;
+                            default: value = GetCommonValue(m.Adgroups.Select(x => x.Segment1).ToList()); break;
+                        }
+                        m.Segments.Add(new Models.SegmentRowModel() { SegmentRow = segment, Values = segment_values.ToList(), SelectedValue = value });
+                    }
+                }
+            }
+
+            return PartialView("MultipleAdgroupDetails", m);
+        }
+
+        [HttpPost]
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult EditMultipleAdgroups(string adgroupsGK, FormCollection coll)
+        {
+            List<long> AdgroupsGK = adgroupsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
+
+            using (var client = new OltpLogicClient(null))
+            {
+                Oltp.AdgroupDataTable adgroups = new Oltp.AdgroupDataTable();
+                foreach (long adgroupGK in AdgroupsGK)
+                    adgroups.Merge(client.Service.Adgroup_GetSingle(adgroupGK));
+
+                foreach (string key in coll.Keys)
+                {
+                    if (key.Contains("adgroupSegmentValueEdit_"))
+                    {
+                        if (coll[key] == "1")
+                        {
+                            string segment_id = key.Split('_')[1];
+                            int segmentID = int.Parse(segment_id);
+                            int segmentValue = int.Parse(coll["adgroupSegmentValue_" + segment_id]);
+                            if (segmentValue != -100)
+                            {
+                                switch (segmentID)
+                                {
+                                    case 1: adgroups.ToList().ForEach(x => x.Segment1 = segmentValue); break;
+                                    case 2: adgroups.ToList().ForEach(x => x.Segment2 = segmentValue); break;
+                                    case 3: adgroups.ToList().ForEach(x => x.Segment3 = segmentValue); break;
+                                    case 4: adgroups.ToList().ForEach(x => x.Segment4 = segmentValue); break;
+                                    case 5: adgroups.ToList().ForEach(x => x.Segment5 = segmentValue); break;
+                                    default: break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                client.Service.Adgroup_Save(adgroups, false);
+            }
+
+            return Content("OK");
+        }
     }
 }
+
+

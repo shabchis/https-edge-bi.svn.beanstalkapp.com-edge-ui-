@@ -201,5 +201,88 @@ namespace EdgeBiUI.Controllers
 
             return referenceData;
         }
+
+        [OutputCache(Duration = 0, NoStore = true)]
+        public PartialViewResult BatchUpdate()
+        {
+            Models.TrackersBatchModel m = new Models.TrackersBatchModel();
+
+            using (var client = new OltpLogicClient(null))
+            {
+                Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
+                foreach (Oltp.SegmentRow segment in segments)
+                {
+                    bool is_tracker_segment = ((Auxilary.SegmentAssociationFlags)segment.Association).HasFlag(Auxilary.SegmentAssociationFlags.Gateyway);
+                    if (is_tracker_segment)
+                    {
+                        Oltp.SegmentValueDataTable segment_values = client.Service.SegmentValue_Get(acc_id, segment.SegmentID);
+                        m.Segments.Add(new Models.SegmentRowModel() { SegmentRow = segment, Values = segment_values.ToList(), SelectedValue = -1 });
+                    }
+                }
+                Oltp.ChannelDataTable channels = client.Service.Channel_Get();
+                m.Channels = channels.ToDictionary(c => c.ID, c => c.DisplayName);
+                m.LandingPages = client.Service.Page_Get(acc_id, null, true, -1).ToDictionary(p => p.GK, p => p.DisplayName);
+            }
+
+
+            return PartialView("BatchTrackers", m);
+        }
+
+        [HttpPost]
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult BatchUpdate(FormCollection coll)
+        {
+            List<long[]> ranges = new List<long[]>();
+            string[] rangeStrings = coll["Range"].Split(',');
+            bool error = false;
+            
+            foreach (string rangeString in rangeStrings)
+            {                
+                string[] boundStrings = rangeString.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                if (boundStrings.Length == 1 || boundStrings.Length == 2)
+                {
+                    long[] bounds = new long[boundStrings.Length];
+                    for (int i = 0; i < bounds.Length; i++)
+                    {
+                        if (!long.TryParse(boundStrings[i], out bounds[i]))
+                        {
+                            error = true;
+                            break;
+                        }
+                    }
+                    ranges.Add(bounds);
+                }
+                else
+                {
+                    error = true;
+                    break;
+                }
+            }
+
+            if (error)
+                return Content("Error");
+
+            int? channelID = coll["Channel"] == "-1" ? null : (int?)int.Parse(coll["Channel"]);
+            long? pageGK = coll["LandingPage"] == "-1" ? null : (long?)long.Parse(coll["LandingPage"]);
+            
+            int?[] segments = new int?[5];
+            for (int i = 1; i < 6; i++)
+            {
+                if (coll.AllKeys.Contains("batchtrackersSegmentValue_" + i))
+                    segments[i - 1] = int.Parse(coll["batchtrackersSegmentValue_" + i]);
+                else
+                    segments[i - 1] = null;
+                if (segments[i - 1] == -1)
+                    segments[i - 1] = null;
+            }
+
+            int[] result;
+            using (var client = new OltpLogicClient(null))
+            {
+                result = client.Service.Gateway_BatchProperties(acc_id, ranges.ToArray(), channelID, pageGK, segments);
+            }
+
+            return Content(result[0] + "," + (result[0] - result[1]));
+        }
     }
 }

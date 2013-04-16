@@ -18,4 +18,17 @@ namespace EdgeBiUI.Models
         }
     }
 
+    public class MutliCreativeModel
+    {
+        public string CreativesGK { get; set; }
+        public List<Oltp.CreativeRow> Creatives { get; set; }
+        public List<SegmentRowModel> Segments { get; set; }
+
+        public MutliCreativeModel()
+        {
+            Creatives = new List<Oltp.CreativeRow>();
+            Segments = new List<SegmentRowModel>();
+        }
+    }
+
 }

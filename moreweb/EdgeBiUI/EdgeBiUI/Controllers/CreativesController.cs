@@ -128,5 +128,102 @@ namespace EdgeBiUI.Controllers
 
             return Content("OK");
         }
+
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult EditMultipleCreatives(string creativesGK)
+        {
+            List<long> CreativesGK = creativesGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
+            Models.MutliCreativeModel m = new Models.MutliCreativeModel();
+            m.CreativesGK = creativesGK;
+
+            using (var client = new OltpLogicClient(null))
+            {
+                foreach (long creativeGK in CreativesGK)
+                {
+                    Oltp.CreativeDataTable t = client.Service.Creative_GetSingle(creativeGK);
+                    if (t.Count > 0)
+                        m.Creatives.Add(t[0]);
+                }
+
+                Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, false);
+
+                foreach (Oltp.SegmentRow r in segments)
+                {
+                    bool is_creative_segment = ((Auxilary.SegmentAssociationFlags)r.Association).HasFlag(Auxilary.SegmentAssociationFlags.Creative);
+                    if (is_creative_segment)
+                    {
+                        Oltp.SegmentValueDataTable values = client.Service.SegmentValue_Get(acc_id, r.SegmentID);
+                        int value;
+                        switch (r.SegmentID)
+                        {
+                            case 1: value = GetCommonValue(m.Creatives.Select(x => x.Segment1).ToList()); break;
+                            case 2: value = GetCommonValue(m.Creatives.Select(x => x.Segment2).ToList()); break;
+                            case 3: value = GetCommonValue(m.Creatives.Select(x => x.Segment3).ToList()); break;
+                            case 4: value = GetCommonValue(m.Creatives.Select(x => x.Segment4).ToList()); break;
+                            case 5: value = GetCommonValue(m.Creatives.Select(x => x.Segment5).ToList()); break;
+                            default: value = GetCommonValue(m.Creatives.Select(x => x.Segment1).ToList()); break;
+                        }
+
+                        m.Segments.Add(new Models.SegmentRowModel() { SegmentRow = r, Values = values.ToList(), SelectedValue = value });
+                    }
+                }
+            }
+
+            return PartialView("MultiCreativeDetails", m);
+        }
+
+        [HttpPost]
+        [OutputCache(Duration = 0, NoStore = true)]
+        public ActionResult EditMultipleCreatives(string creativesGK, FormCollection coll)
+        {
+            List<long> CreativesGK = creativesGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
+
+            using (var client = new OltpLogicClient(null))
+            {
+                Oltp.CreativeDataTable Creatives = new Oltp.CreativeDataTable();
+                foreach (long creativeGK in CreativesGK)
+                    Creatives.Merge(client.Service.Creative_GetSingle(creativeGK));
+
+                foreach (string key in coll.Keys)
+                {
+                    if (key.Contains("creativeSegmentValueEdit_"))
+                    {
+                        if (coll[key] == "1")
+                        {
+                            string segment_id = key.Split('_')[1];
+                            int segmentID = int.Parse(segment_id);
+                            int segmentValue = int.Parse(coll["creativeSegmentValue_" + segment_id]);
+                            if (segmentValue != -100)
+                            {
+                                switch (segmentID)
+                                {
+                                    case 1: Creatives.ToList().ForEach(x => x.Segment1 = segmentValue); break;
+                                    case 2: Creatives.ToList().ForEach(x => x.Segment2 = segmentValue); break;
+                                    case 3: Creatives.ToList().ForEach(x => x.Segment3 = segmentValue); break;
+                                    case 4: Creatives.ToList().ForEach(x => x.Segment4 = segmentValue); break;
+                                    case 5: Creatives.ToList().ForEach(x => x.Segment5 = segmentValue); break;
+                                    default: break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                client.Service.Creative_Save(Creatives);
+            }
+
+            return Content("OK");
+        }
+
+        public int GetCommonValue(List<int> vals)
+        {
+            int y = vals[0];
+            bool a = true;
+            vals.ForEach(x => { a = a && (x == y); y = x; });
+            if (a)
+                return y;
+            else
+                return -100;
+        }
     }
 }

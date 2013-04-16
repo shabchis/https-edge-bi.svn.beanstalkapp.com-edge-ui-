@@ -9,7 +9,12 @@
     @foreach (Oltp.CreativeRow creative in Model.Creatives)
     {
         <div class="IndexTableRow" id="IndexTableRow_@(creative.GK)" onclick="selectRow(@(creative.GK), false);">
-            <div class="IndexTableName"><div style="padding-left:30px;" onclick="openCreativeDetails(@creative.GK)">@creative.Title</div></div>
+            <div class="IndexTableName">
+                <input type="checkbox" name="creativeMultiSelect_@(creative.GK)" style="float:left;" />
+                <div style="padding-left:30px;" onclick="openCreativeDetails(@creative.GK)">                    
+                    @creative.Title
+                </div>
+            </div>
             <div class="IndexTableDesc">@(creative.IsDesc1Null() ? "" : EdgeBiUI.Auxilary.Helpers.GetShortDescription(creative.Desc1, 60))</div>
         </div>
     }

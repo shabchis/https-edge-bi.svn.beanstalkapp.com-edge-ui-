@@ -8,13 +8,25 @@
 <script type="text/javascript">
 
     function openCreativeDetails(creativeGK) {
-        
         ShowLoadingMessage();
         $.get('@(Url.Action("EditCreative", "Creatives"))', { creativeGK: creativeGK }, function (data) {
             HideLoadingMessage();
             $('#ControllerDialogDiv').html(data);
             openController(600, 400);
         });
+    }
+
+    function openMultipleCreativeDetails() {
+        var creativesGK = "";
+        $("#IndexDynamicTableContainer input:checked").each(function () { creativesGK += this.name.split('_')[1] + ","; });
+        if (creativesGK.length > 0) {
+            ShowLoadingMessage();
+            $.get('@(Url.Action("EditMultipleCreatives", "Creatives"))', { creativesGK: creativesGK }, function (data) {
+                HideLoadingMessage();
+                $('#ControllerDialogDiv').html(data);
+                openController(600, 400);
+            });
+        }
     }
 
     function findCreatives() {
@@ -33,6 +45,10 @@
 <div class="IndexTopNav">
     <input type="text" name="search_value" class="searchText" id="search_value" />
     <input type="button" value="find" onclick="findCreatives()" />
+</div>
+
+<div style="text-align:left;">
+    <a href="" onclick="openMultipleCreativeDetails(); return false;">Edit Multiple</a>
 </div>
 
 <div id="IndexDynamicTableContainer">
