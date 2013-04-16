@@ -1,0 +1,95 @@
+﻿@model EdgeBiUI.Models.MultiCampaignModel
+@using Easynet.Edge.UI.Data;
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+
+    function SaveCampaigns() {
+        $.post($('#CampaignEditForm').attr("action"), $('#CampaignEditForm').serialize(), function (data) {
+        });
+    }
+
+    function editSegmentValue(segID) {
+        var d = $("#campaignSegmentValue_" + segID).attr("disabled");
+        if (d == true)
+            $("#campaignSegmentValue_" + segID).attr("disabled", "");
+        else
+            $("#campaignSegmentValue_" + segID).attr("disabled", "disabled");
+    }
+
+    function editTarget(targetID) {
+        var d = $("#Target" + targetID).attr("disabled");
+        if (d == true)
+            $("#Target" + targetID).attr("disabled", "");
+        else
+            $("#Target" + targetID).attr("disabled", "disabled");
+    }
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+       (multiple campaigns)
+    </div>
+    @using (Html.BeginForm("EditMultipleCampaign", "Campaigns", new { campaignsGK = Model.CampaignsGK }, FormMethod.Post, new { id = "CampaignEditForm" }))
+    {
+        
+    <div id="Tabs">        
+        <ul class="menu">						
+            <li class="active" id="Segments">Segments</li>
+            <li class="ControllerTabsLi" id="Targets">Targets</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        <div class="Segments content">
+        @foreach (EdgeBiUI.Models.SegmentRowModel seg in Model.Segments)
+        {
+            <div class="segmentRow">
+                <div class="segmentRowName">@seg.SegmentRow.Name</div>
+                <div class="segmentRowValue">
+                    <select id="campaignSegmentValue_@(seg.SegmentRow.SegmentID)" name="campaignSegmentValue_@(seg.SegmentRow.SegmentID)" disabled="disabled" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
+                        <option value="-100" @(seg.SelectedValue == -100 ? "selected=\"selected\"" : "")></option>
+                        <option value="-1">(none)</option>
+                    @foreach (Oltp.SegmentValueRow value in seg.Values)
+                    {
+                        <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
+                    }
+                        <option value="-1000">Add New...</option>
+                    </select>
+                    <input type="checkbox" name="campaignSegmentValueEdit_@(seg.SegmentRow.SegmentID)" value="1" onclick="editSegmentValue(@(seg.SegmentRow.SegmentID));" />
+                </div>
+            </div>
+        }
+        </div>        
+        
+        <div class="Targets content">
+            <div class="segmentRow">
+                <div class="segmentRowName">CPA (Customers)</div>
+                <div class="segmentRowValue">
+                    <input type="text" id="Target1" name="Target1" value="@Model.Target_Customer" disabled="disabled" />
+                    <input type="checkbox" name="EditTarget1" value="1" onclick="editTarget(1);" />
+                </div>
+            </div>
+            <div class="segmentRow">
+                <div class="segmentRowName">CPA (Depositors)</div>
+                <div class="segmentRowValue">
+                    <input type="text" id="Target2" name="Target2" value="@Model.Target_Depositor" disabled="disabled" />
+                    <input type="checkbox" name="EditTarget2" value="1" onclick="editTarget(2);" />
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="Apply" onclick="SaveCampaigns();" />
+        <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
+        <input type="button" value="OK" onclick="SaveCampaigns(); closeControllerDialog();" />
+    </div>
+        
+    }
+</div>

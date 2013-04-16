@@ -1,0 +1,68 @@
+﻿@model EdgeBiUI.Models.MultipleAdgroupModel
+@using Easynet.Edge.UI.Data;
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+
+    function SaveAdgroups() {
+        $.post($('#AdgroupEditForm').attr("action"), $('#AdgroupEditForm').serialize(), function (data) {
+        });
+    }
+
+    function editSegmentValue(segID) {
+        var d = $("#adgroupSegmentValue_" + segID).attr("disabled");
+        if (d == true)
+            $("#adgroupSegmentValue_" + segID).attr("disabled", "");
+        else
+            $("#adgroupSegmentValue_" + segID).attr("disabled", "disabled");
+    }
+
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+       (multiple adgroups)
+    </div>
+    @using (Html.BeginForm("EditMultipleAdgroups", "Campaigns", new { adgroupsGK = Model.AdgroupsGK }, FormMethod.Post, new { id = "AdgroupEditForm" }))
+    {
+    <div id="Tabs">        
+        <ul class="menu">						
+            <li class="active" id="Segments">Segments</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        <div class="Segments content">
+        @foreach (EdgeBiUI.Models.SegmentRowModel seg in Model.Segments)
+        {
+            <div class="segmentRow">
+                <div class="segmentRowName">@seg.SegmentRow.Name</div>
+                <div class="segmentRowValue">
+                    <select id="adgroupSegmentValue_@(seg.SegmentRow.SegmentID)" name="adgroupSegmentValue_@(seg.SegmentRow.SegmentID)" disabled="disabled" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
+                        <option value="-100" @(seg.SelectedValue == -100 ? "selected=\"selected\"" : "")></option>
+                        <option value="-1">(none)</option>
+                        @foreach (Oltp.SegmentValueRow value in seg.Values)
+                        {
+                        <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
+                        }
+                        <option value="-1000">Add New...</option>
+                    </select>
+                    <input type="checkbox" name="adgroupSegmentValueEdit_@(seg.SegmentRow.SegmentID)" value="1" onclick="editSegmentValue(@(seg.SegmentRow.SegmentID));" />
+                </div>
+            </div>
+        }
+        </div>        
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="Apply" onclick="SaveAdgroups();" />
+        <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
+        <input type="button" value="OK" onclick="SaveAdgroups(); closeControllerDialog();" />
+    </div>
+        
+    }
+</div>

@@ -1,0 +1,95 @@
+﻿@model EdgeBiUI.Models.TrackersBatchModel
+@using Easynet.Edge.UI.Data;
+
+<script type="text/javascript">
+    $(function () {
+        OpenTabsJS();
+    });
+
+    function BatchUpdate() {
+        $.post($('#TrackersEditForm').attr("action"), $('#TrackersEditForm').serialize(), function (data) {
+            if (data == "Error")
+                alert("Make sure the range is in the correct format: 111-222,333-444,555,666");
+            else {
+                var s = data.split(',');
+                alert(s[0] + " trackers were affected (of which " + s[1] + " are new)");
+            }
+        });
+    }
+</script>
+
+<div id="container">
+
+    <div class="containerTitle">
+       Batch Trackers
+    </div>
+    @using (Html.BeginForm("BatchUpdate", "Trackers", FormMethod.Post, new { id = "TrackersEditForm" }))
+    {
+    <div id="Tabs">        
+        <ul class="menu">			
+			<li class="active" id="General">General</li>
+            <li class="ControllerTabsLi" id="Segments">Segments</li>
+		</ul>
+    </div>
+
+    <div id="TabsContent">
+        <div class="General content">
+            <div class="segmentRow">
+                <div class="segmentRowName">Range</div>
+                <div class="segmentRowValue"><input type="text"  name="Range" style="width:150px;" /></div>
+            </div>
+            <div class="segmentRow">
+                <div class="segmentRowName">Channel</div>
+                <div class="segmentRowValue">
+                    <select name="Channel">
+                        <option value="-1">(no change)</option>
+                        @foreach (KeyValuePair<int, string> channel in Model.Channels)
+                        {
+                            <option value="@channel.Key">@channel.Value</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="segmentRow">
+                <div class="segmentRowName">Landing Page</div>
+                <div class="segmentRowValue">
+                    <select name="LandingPage">
+                        <option value="-1">(no change)</option>
+                        @foreach (KeyValuePair<long, string> landingPage in Model.LandingPages)
+                        {
+                            <option value="@landingPage.Key">@landingPage.Value</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="Segments content">
+        @foreach (EdgeBiUI.Models.SegmentRowModel seg in Model.Segments)
+        {
+            <div class="segmentRow">
+                <div class="segmentRowName">@seg.SegmentRow.Name</div>
+                <div class="segmentRowValue">
+                    <select name="batchtrackersSegmentValue_@(seg.SegmentRow.SegmentID)" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
+                        <option value="-1">(no change)</option>
+                        @foreach (Oltp.SegmentValueRow value in seg.Values)
+                        {
+                            <option value="@(value.ValueID)">@(value.Value)</option>
+                        }
+                        <option value="-1000">Add New...</option>
+                    </select>
+                </div>
+            </div>
+        }
+        </div>
+      
+    </div>
+
+
+    <div id="Buttons">
+        <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
+        <input type="button" value="OK" onclick="BatchUpdate();" />
+    </div>
+        
+    }
+</div>
