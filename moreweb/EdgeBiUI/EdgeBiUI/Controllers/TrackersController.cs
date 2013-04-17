@@ -250,6 +250,12 @@ namespace EdgeBiUI.Controllers
                             break;
                         }
                     }
+                    if (bounds.Length==2)
+                        if (bounds[0] >= bounds[1])
+                        {
+                            error = true;
+                            break;
+                        }
                     ranges.Add(bounds);
                 }
                 else

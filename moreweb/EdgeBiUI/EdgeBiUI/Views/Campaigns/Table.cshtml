@@ -6,26 +6,26 @@
         <div class="" style="float:left; width:60%; height:14px; overflow:hidden;"><div style="padding-left:30px;">Name</div></div>
         <div class="" style="float:left; width:10%; height:14px; overflow:hidden;">Channel</div>
         <div class="" style="float:left; width:10%; height:14px; overflow:hidden;">Status</div>
-        <div class="IndexTableDescCPA" style="float:left; width:10%; height:14px; overflow:hidden; display:none;">CPA (Customers)</div>
-        <div class="IndexTableDescCPA" style="float:left; width:10%; height:14px; overflow:hidden; display:none;">CPA (Depositors)</div>
+        <div class="IndexTableDescCPA" style="float:left; width:10%; height:14px; font-size:13px; letter-spacing:-1px; overflow:hidden; display:none;">CPA (Customers)</div>
+        <div class="IndexTableDescCPA" style="float:left; width:10%; height:14px; font-size:13px; letter-spacing:-1px; overflow:hidden; display:none;">CPA (Depositors)</div>
     </div>
     @using (Html.BeginForm("SaveTargets", "Campaigns", FormMethod.Post, new { id = "TargetsEditorForm", defaultbutton = "FilterButton222" }))
     {
         foreach (EdgeBiUI.Models.CampaignRowModel campaign in Model)
         {
-            <div class="IndexTableRow">
+            <div class="IndexTableRow" id="IndexTableRow_@(campaign.CampaignGK)" onclick="selectRow(@(campaign.CampaignGK), false);">
                 <div class="IndexTableName" style="width:60%;">
                     <div class="campaignMultiSelect"><input type="checkbox" name="campaignMultiSelect_@(campaign.CampaignGK)" /></div>
                     <div class="campaignButtonClose" onclick="openAdGroups(@campaign.CampaignGK); changeIcon(this);"></div>
-                    <div style="float:left; margin-left:5px;" onclick="openCampaignDetails(@campaign.CampaignGK)" title="@campaign.CampaignGK">@campaign.CampaignName</div>
+                    <div style="float:left; margin-left:5px;" onclick="openCampaignDetails(@campaign.CampaignGK)" title="GK=@campaign.CampaignGK">@campaign.CampaignName</div>
                 </div>
                 <div class="IndexTableDesc" style="width:10%;">@campaign.ChannelName</div>
                 <div class="IndexTableDesc" style="width:10%;">@campaign.Status</div>
                 <div  class="IndexTableDesc IndexTableDescCPA" style="width:10%; display:none;">
-                    <input name="campaigntarget_@(campaign.CampaignGK)_CPA1" type="text" value="@(campaign.CPA1)" style="width:70px; margin-right:5px;" onkeyup="checkvalue(this)" onchange="cpa_has_changed=true;" />
+                    <input name="campaigntarget_@(campaign.CampaignGK)_CPA1" type="text" value="@(campaign.CPA1)" style="width:70px; margin-right:5px;" onkeyup="checkvalue(this)" onchange="cpa_has_changed=true;" originalValue="@(campaign.CPA1)" />
                 </div>
                 <div class="IndexTableDesc IndexTableDescCPA" style="width:10%; display:none;">
-                    <input name="campaigntarget_@(campaign.CampaignGK)_CPA2" type="text" value="@(campaign.CPA2)" style="width:70px;" onkeyup="checkvalue(this)" onchange="cpa_has_changed=true;" />
+                    <input name="campaigntarget_@(campaign.CampaignGK)_CPA2" type="text" value="@(campaign.CPA2)" style="width:70px;" onkeyup="checkvalue(this)" onchange="cpa_has_changed=true;" originalValue="@(campaign.CPA2)" />
                 </div>
                 <input type="hidden" name="campaignsGK" value="@(campaign.CampaignGK)" />
             </div>

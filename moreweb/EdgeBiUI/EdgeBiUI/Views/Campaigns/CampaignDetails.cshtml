@@ -5,9 +5,14 @@
     $(function () {
         OpenTabsJS();
     });
-
+    
     function SaveCampaign() {
         $.post($('#CampaignEditForm').attr("action"), $('#CampaignEditForm').serialize(), function (data) {
+            var cpa1 = $("#TabsContent input[name=Target1]").val();
+            var cpa2 = $("#TabsContent input[name=Target2]").val();
+            $("input[name=campaigntarget_@(Model.Campaign.GK)_CPA1]").val(cpa1);
+            $("input[name=campaigntarget_@(Model.Campaign.GK)_CPA2]").val(cpa2);
+            closeControllerDialog();
         });
     }
 </script>
@@ -67,7 +72,7 @@
     <div id="Buttons">
         <input type="button" value="Apply" onclick="SaveCampaign();" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveCampaign(); closeControllerDialog();" />
+        <input type="button" value="OK" onclick="SaveCampaign();" />
     </div>
         
     }

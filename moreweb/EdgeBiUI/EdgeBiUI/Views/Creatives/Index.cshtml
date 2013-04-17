@@ -35,6 +35,7 @@
         $.get('@(Url.Action("FindCreatives", "Creatives"))', { searchText: searchText }, function (data) {
             HideLoadingMessage();
             $('#IndexDynamicTableContainer').html(data);
+            $(".IndexTableRowNoResult").css("display", "block");
         });
     }
 

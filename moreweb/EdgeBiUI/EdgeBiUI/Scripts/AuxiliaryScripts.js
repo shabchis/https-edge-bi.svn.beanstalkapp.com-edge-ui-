@@ -108,9 +108,13 @@ function addNewValue(selectElement) {
     var jElement = $(selectElement);
     var segmentID = jElement.attr("segmentID");
     var newValue = $("#newValeOption_" + segmentID).val();
-    
+
+    if (newValue.replace(/^\s+|\s+$/g,"") == "") {
+        alert("The segment name is empty");
+        return;
+    }
     var exist = false;
-    jElement.children("option").each(function () { if (this.text == newValue) exist = true; });
+    jElement.children("option").each(function () { if (this.text.toLowerCase() == newValue.toLowerCase()) exist = true; });
 
     if (!exist) {
         $.post("../Home/AddNewSegmentValue", { segmentID: segmentID, newValue: newValue }, function (data) {

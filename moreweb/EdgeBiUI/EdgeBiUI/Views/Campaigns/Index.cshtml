@@ -9,6 +9,8 @@
 
     var cpa_has_changed = false;
     var targets_are_open = false;
+    var campaigns_all_checked = false;
+    var adgroups_all_checked = false;
 
     function openCampaignDetails(campaignGK) {
         ShowLoadingMessage();
@@ -70,9 +72,10 @@
             if (targets_are_open)
                 openTargets();
             else
-                closeTargets();
+                closeTargets(false);
 
             HideLoadingMessage();
+            $(".IndexTableRowNoResult").css("display", "block");
         });
     }
 
@@ -107,8 +110,10 @@
         $("#CloseSaveTargetsButtons").css("display", "block")
     }
 
-    function closeTargets() {
+    function closeTargets(cancelMode) {
         targets_are_open = false;
+        if (cancelMode)
+            $("#CampaignsIndexTable input[originalValue]").each(function () { $(this).val($(this).attr("originalValue")); });
         $(".IndexTableDescCPA").css("display", "none");
         $("#OpenTargetsButton").css("display", "block")
         $("#CloseSaveTargetsButtons").css("display", "none")
@@ -132,6 +137,27 @@
             $(e).addClass("errorValue");
         else
             $(e).removeClass("errorValue");
+    }
+
+    function selectAllCampaigns() {
+        $(".adgroupMultiSelect input").each(function () { $(this).removeAttr("checked"); });
+        adgroups_all_checked = false;
+        if (campaigns_all_checked)
+            $(".campaignMultiSelect input").each(function () { $(this).removeAttr("checked"); });
+        else
+            $(".campaignMultiSelect input").each(function () { $(this).attr("checked", "checked"); });
+        campaigns_all_checked = !campaigns_all_checked;
+    }
+
+    function selectAllAdgroups() {
+        $(".campaignMultiSelect input").each(function () { $(this).removeAttr("checked"); });
+        campaigns_all_checked = false;
+
+        if (adgroups_all_checked)
+            $(".adgroupMultiSelect input").each(function () { $(this).removeAttr("checked"); });
+        else
+            $(".adgroupMultiSelect input").each(function () { $(this).attr("checked", "checked"); });
+        adgroups_all_checked = !adgroups_all_checked;
     }
     
 </script>
@@ -185,10 +211,12 @@
             <a href="" onclick="openTargets(); return false;">Open Targets</a>
         </span>
         <span id="CloseSaveTargetsButtons" style="display:none;">
-            <a href="" onclick="saveTargets(); return false;">Save</a>
-            <a href="" onclick="closeTargets(); return false;">Cancel</a>
+            <a href="" onclick="saveTargets(); return false;">Save</a> &nbsp;|&nbsp;
+            <a href="" onclick="closeTargets(true); return false;">Cancel</a>
         </span>
     </div>
+    <a href="" onclick="selectAllCampaigns(); return false;">Select All Campaigns</a> &nbsp;|&nbsp; 
+    <a href="" onclick="selectAllAdgroups(); return false;">Select All Adgroups</a> &nbsp;|&nbsp; 
     <a href="" onclick="openMultipleCampaignOrAdgroupDetails(); return false;">Edit Multiple</a>
 </div>
 

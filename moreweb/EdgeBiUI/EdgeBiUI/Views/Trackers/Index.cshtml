@@ -30,6 +30,7 @@
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
             $("#IndexDynamicTableContainer").html(data);
             HideLoadingMessage();
+            $(".IndexTableRowNoResult").css("display", "block");
         });
     }
 

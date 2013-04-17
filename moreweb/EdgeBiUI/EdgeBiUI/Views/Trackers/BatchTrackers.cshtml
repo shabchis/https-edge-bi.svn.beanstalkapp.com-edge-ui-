@@ -13,7 +13,8 @@
             else {
                 var s = data.split(',');
                 alert(s[0] + " trackers were affected (of which " + s[1] + " are new)");
-            }
+                closeControllerDialog();
+            }            
         });
     }
 </script>

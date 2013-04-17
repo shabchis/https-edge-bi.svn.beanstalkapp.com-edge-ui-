@@ -17,10 +17,11 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 .IndexTableRow.selected { background-color:#e3edcb; } 
 .IndexTableName     { float:left; width:50%; color:#7ca826; height:19px; overflow:hidden; cursor:pointer; }
 .IndexTableDesc     { float:left; width:50%; color:#666666; height:19px; overflow:hidden; }
-.IndexTableRowNoResult  { height:19px; padding-top:7px; padding-bottom:7px; padding-left:5px; }
+.IndexTableRowNoResult  { height:19px; padding-top:7px; padding-bottom:7px; padding-left:5px; display:none; }
 
 .IndexTableContainer .IndexTableRow         { background-color:#FFFFFF; }
 .IndexTableContainer .IndexTableRow:hover   { background-color:#e3edcb; }
+.IndexTableContainer .IndexTableRow.selected { background-color:#e3edcb; } 
 
 .FilterSegment      { float:left; margin-right:20px; }
 .FilterSegmentTitle { margin-bottom:4px; } 
