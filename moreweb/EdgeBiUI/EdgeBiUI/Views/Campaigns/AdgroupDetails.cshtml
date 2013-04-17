@@ -116,13 +116,14 @@
                                 {
                                     <div class="segmentRow">
                                         <div class="segmentRowName" style="width:90px;">@seg.SegmentRow.Name</div>
-                                        <div class="segmentRowValue">
-                                            <select name="adgroupcreative@(creative.AdgroupCreativeGK)_SegmentValue_@(seg.SegmentRow.SegmentID)" style="width:100px;">
+                                        <div class="segmentRowValue" style="margin-left:95px;">
+                                            <select name="adgroupcreative@(creative.AdgroupCreativeGK)_SegmentValue_@(seg.SegmentRow.SegmentID)" style="width:100px;" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
                                                 <option value="-1">(none)</option>
                                                 @foreach (Oltp.SegmentValueRow value in seg.Values)
                                                 {
                                                 <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
                                                 }
+                                                <option value="-1000">Add New...</option>
                                             </select>
                                         </div>
                                     </div>

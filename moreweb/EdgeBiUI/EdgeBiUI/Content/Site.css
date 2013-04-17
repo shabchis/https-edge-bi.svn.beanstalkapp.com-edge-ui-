@@ -60,6 +60,8 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 .adgroupInnerTableRow       { background-color:#E6E6E6; color:#042271; overflow:auto; padding:3px; margin-bottom:2px; }
 .adgroupInnerTableRow:hover { background-color:#D3D3D3; } 
 
+.adgroupInnerTableRow .segmentRowValue input[type=text] { width:135px; }
+
 .campaignButtonClose        { width:19px; height:19px; float:left; margin-left:10px; background-image:url('images/tb-closed.png'); }
 .campaignButtonClose:hover  { width:19px; height:19px; float:left; margin-left:10px; background-image:url('images/tb-closed-hover.png'); }
 
