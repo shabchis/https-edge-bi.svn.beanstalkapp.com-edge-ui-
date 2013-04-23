@@ -5,14 +5,31 @@ using System.Web;
 using System.Web.Mvc;
 using Easynet.Edge.UI.Data;
 using Easynet.Edge.UI.Client;
+using EdgeBiUI.Auxilary;
 
 namespace EdgeBiUI.Controllers
 {
     public class CreativesController : Controller
     {
-        int acc_id = 10035;
-        public ActionResult Index()
+        //int acc_id = 10035;
+
+        int acc_id = 0;
+        string session_id = null;
+
+        public CreativesController()
         {
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+        }
+
+        public ActionResult Index(int account, string session)
+        {
+            AppState.AccountID = account;
+            AppState.SessionID = session == "" ? null : "";
+
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+
             Models.CreativeListModel m = new Models.CreativeListModel();
             return View(m);
         }
@@ -22,7 +39,7 @@ namespace EdgeBiUI.Controllers
         {
             Models.CreativeListModel m = new Models.CreativeListModel();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 Oltp.CreativeDataTable creatives = client.Service.Creative_Get(acc_id, searchText + "%", true);
 
@@ -44,7 +61,7 @@ namespace EdgeBiUI.Controllers
         {
             Models.CreativeModel m = new Models.CreativeModel();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 Oltp.CreativeRow creative = client.Service.Creative_GetSingle(creativeGK)[0];
                 //client.Service.Creative_Get(
@@ -94,10 +111,8 @@ namespace EdgeBiUI.Controllers
         public ActionResult EditCreative(long creativeGK, FormCollection coll)
         {
             Oltp.CreativeDataTable creatives;
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
-                Oltp.UserDataTable x = client.Service.User_LoginBySessionID(null);
-
                 creatives = client.Service.Creative_GetSingle(creativeGK);
             }
 
@@ -121,7 +136,7 @@ namespace EdgeBiUI.Controllers
             }
             System.Data.DataTable t = creatives.GetChanges();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 client.Service.Creative_Save(creatives);
             }
@@ -136,7 +151,7 @@ namespace EdgeBiUI.Controllers
             Models.MutliCreativeModel m = new Models.MutliCreativeModel();
             m.CreativesGK = creativesGK;
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 foreach (long creativeGK in CreativesGK)
                 {
@@ -178,7 +193,7 @@ namespace EdgeBiUI.Controllers
         {
             List<long> CreativesGK = creativesGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 Oltp.CreativeDataTable Creatives = new Oltp.CreativeDataTable();
                 foreach (long creativeGK in CreativesGK)

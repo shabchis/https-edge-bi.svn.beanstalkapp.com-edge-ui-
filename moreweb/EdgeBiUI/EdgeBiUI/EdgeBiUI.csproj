@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Auxilary\Enums.cs" />
     <Compile Include="Auxilary\Helpers.cs" />
+    <Compile Include="Auxilary\SessionState.cs" />
     <Compile Include="Controllers\CampaignsController.cs" />
     <Compile Include="Controllers\CreativesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -218,7 +219,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>31015</DevelopmentServerPort>
+          <DevelopmentServerPort>2794</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

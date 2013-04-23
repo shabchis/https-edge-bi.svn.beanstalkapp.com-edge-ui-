@@ -8,12 +8,23 @@
 <script type="text/javascript">
 
     function openCreativeDetails(creativeGK) {
-        ShowLoadingMessage();
-        $.get('@(Url.Action("EditCreative", "Creatives"))', { creativeGK: creativeGK }, function (data) {
-            HideLoadingMessage();
-            $('#ControllerDialogDiv').html(data);
-            openController(600, 400);
-        });
+        var creativesGK = "";
+        $("#IndexDynamicTableContainer input:checked").each(function () { creativesGK += this.name.split('_')[1] + ","; });
+
+        var containsGK = false;
+        $("#IndexDynamicTableContainer input:checked").each(function () { if (this.name.split('_')[1] == creativeGK) containsGK = true; });
+
+        if (containsGK && creativesGK.length > 0)
+            openMultipleCreativeDetails();
+        else
+        {
+            ShowLoadingMessage();
+            $.get('@(Url.Action("EditCreative", "Creatives"))', { creativeGK: creativeGK }, function (data) {
+                HideLoadingMessage();
+                $('#ControllerDialogDiv').html(data);
+                openController(600, 400);
+            });
+        }
     }
 
     function openMultipleCreativeDetails() {

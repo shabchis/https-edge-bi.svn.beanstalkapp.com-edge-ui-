@@ -5,14 +5,29 @@ using System.Web;
 using System.Web.Mvc;
 using Easynet.Edge.UI.Data;
 using Easynet.Edge.UI.Client;
+using EdgeBiUI.Auxilary;
 
 namespace EdgeBiUI.Controllers
 {
     public class KeywordsController : Controller
     {
-        int acc_id = 10035;
-        public ActionResult Index()
+        int acc_id = 0;
+        string session_id = null;
+
+        public KeywordsController()
         {
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+        }
+
+        public ActionResult Index(int account, string session)
+        {
+            AppState.AccountID = account;
+            AppState.SessionID = session == "" ? null : "";
+
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+
             Models.KeywordsListModel m = new Models.KeywordsListModel();
             return View(m);
         }
@@ -21,7 +36,7 @@ namespace EdgeBiUI.Controllers
         public PartialViewResult FindKeywords(string searchText)
         {
             List<Oltp.KeywordRow> L = new List<Oltp.KeywordRow>();
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 string str = searchText.Trim().Length > 0 ? searchText.Trim() + "%" : null;
                 Oltp.KeywordDataTable keywords = client.Service.Keyword_Get(acc_id, true, str, true);
@@ -38,7 +53,7 @@ namespace EdgeBiUI.Controllers
         {
             Models.KeywordModel m = new Models.KeywordModel();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 m.Keyword = client.Service.Keyword_GetSingle(keywordGK)[0];
 

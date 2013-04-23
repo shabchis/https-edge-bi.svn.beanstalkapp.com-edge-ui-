@@ -5,22 +5,36 @@ using System.Web;
 using System.Web.Mvc;
 using Easynet.Edge.UI.Client;
 using Easynet.Edge.UI.Data;
+using EdgeBiUI.Auxilary;
 
 namespace EdgeBiUI.Controllers
 {
     public class TrackersController : Controller
     {
-        int acc_id = 10035;
+        int acc_id = 0;
+        string session_id = null;
 
-        public ActionResult Index()
+        public TrackersController()
         {
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+        }
+
+        public ActionResult Index(int account, string session)
+        {
+            AppState.AccountID = account;
+            AppState.SessionID = session == "" ? null : "";
+
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+
             Models.TrackersListModel m = new Models.TrackersListModel();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 // Load Channels
                 Oltp.ChannelDataTable channels = client.Service.Channel_Get();
-                m.Channels = channels.ToDictionary(c => c.ID, c => c.DisplayName);
+                m.Channels = channels.OrderBy(x => x.DisplayName).ToDictionary(c => c.ID, c => c.DisplayName);
 
                 // Load Segments
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
@@ -42,7 +56,7 @@ namespace EdgeBiUI.Controllers
         {
             List<EdgeBiUI.Models.TrackerRowModel> L = new List<Models.TrackerRowModel>();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 int? channelID = colls["Channel"] == "0" ? null : (int?)int.Parse(colls["Channel"]);
 
@@ -91,7 +105,7 @@ namespace EdgeBiUI.Controllers
         {
             Models.TrackerModel m = new Models.TrackerModel();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 m.Tracker = client.Service.Gateway_GetByIdentifier(acc_id, identifier)[0];
 
@@ -131,7 +145,7 @@ namespace EdgeBiUI.Controllers
         public ActionResult EditTracker(string identifier, FormCollection coll)
         {
             Oltp.GatewayDataTable trackers;
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 trackers = client.Service.Gateway_GetByIdentifier(acc_id, identifier);
 
@@ -207,7 +221,7 @@ namespace EdgeBiUI.Controllers
         {
             Models.TrackersBatchModel m = new Models.TrackersBatchModel();
 
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
                 foreach (Oltp.SegmentRow segment in segments)
@@ -283,7 +297,7 @@ namespace EdgeBiUI.Controllers
             }
 
             int[] result;
-            using (var client = new OltpLogicClient(null))
+            using (var client = new OltpLogicClient(session_id))
             {
                 result = client.Service.Gateway_BatchProperties(acc_id, ranges.ToArray(), channelID, pageGK, segments);
             }

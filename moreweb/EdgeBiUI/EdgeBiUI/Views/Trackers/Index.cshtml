@@ -50,9 +50,9 @@
         </div>
         <select name="Channel">
             <option value="0">All Channels</option>
-            @foreach (int channelID in Model.Channels.Keys)
+            @foreach (KeyValuePair<int, string> channel in Model.Channels.ToList().OrderBy(s=>s.Value))
             {
-                <option value="@channelID">@Model.Channels[channelID]</option>
+                <option value="@channel.Key">@channel.Value</option>
             }
         </select>
     </div>

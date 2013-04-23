@@ -13,12 +13,30 @@
     var adgroups_all_checked = false;
 
     function openCampaignDetails(campaignGK) {
-        ShowLoadingMessage();
-        $.get('@(Url.Action("EditCampaign", "Campaigns"))', { campaignGK: campaignGK }, function (data) {
-            HideLoadingMessage();
-            $('#ControllerDialogDiv').html(data);
-            openController(600, 400);
+
+        var campaignsGK = "";
+        var containsGK = false;
+
+        $("#IndexDynamicTableContainer input:checked").each(function () {
+            var s = this.name.split('_')[0];
+            if (s == "campaignMultiSelect")
+            {
+                campaignsGK += this.name.split('_')[1] + ",";
+                if (this.name.split('_')[1]==campaignGK)
+                    containsGK = true;
+            }                
         });
+
+        if (campaignsGK.length > 0 && containsGK)
+            openMultipleCampaignOrAdgroupDetails();
+        else {
+            ShowLoadingMessage();
+            $.get('@(Url.Action("EditCampaign", "Campaigns"))', { campaignGK: campaignGK }, function (data) {
+                HideLoadingMessage();
+                $('#ControllerDialogDiv').html(data);
+                openController(600, 400);
+            });
+        }
     }
 
     function openMultipleCampaignOrAdgroupDetails() {
@@ -57,12 +75,27 @@
 
 
     function openAdgroupDetails(adgroupGK) {
-        ShowLoadingMessage();
-        $.get('@(Url.Action("EditAdgroup", "Campaigns"))', { adgroupGK: adgroupGK }, function (data) {
-            HideLoadingMessage();
-            $('#ControllerDialogDiv').html(data);
-            openController(600, 400);
+        var adgroupsGK = "";
+        var containsGK = false;
+        $("#IndexDynamicTableContainer input:checked").each(function () {
+            var s = this.name.split('_')[0];
+            if (s == "adgroupMultiSelect") {
+                adgroupsGK += this.name.split('_')[1] + ",";
+                if (this.name.split('_')[1] == adgroupGK)
+                    containsGK = true;
+            }
         });
+
+        if (containsGK && adgroupsGK.length > 0)
+            openMultipleCampaignOrAdgroupDetails();
+        else {
+            ShowLoadingMessage();
+            $.get('@(Url.Action("EditAdgroup", "Campaigns"))', { adgroupGK: adgroupGK }, function (data) {
+                HideLoadingMessage();
+                $('#ControllerDialogDiv').html(data);
+                openController(600, 400);
+            });
+        }
     }
 
     function findCampaigns() {
@@ -171,9 +204,9 @@
         </div>
         <select name="Channel">
             <option value="0">All Channels</option>
-            @foreach (int channelID in Model.Channels.Keys)
+            @foreach (KeyValuePair<int, string> channel in Model.Channels.ToList().OrderBy(s=>s.Value))
             {
-                <option value="@channelID">@Model.Channels[channelID]</option>
+                <option value="@channel.Key">@channel.Value</option>
             }
         </select>
     </div>
