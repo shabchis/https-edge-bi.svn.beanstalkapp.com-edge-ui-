@@ -14,6 +14,7 @@
     <AssemblyName>EdgeBiUI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,7 +93,6 @@
     <Content Include="bin\EdgeBiUI.dll" />
     <Content Include="bin\EdgeBiUI.pdb" />
     <Content Include="bin\EntityFramework.dll" />
-    <Content Include="bin\EntityFramework.xml" />
     <Content Include="Content\images\bullet.png" />
     <Content Include="Content\images\loading-icon.gif" />
     <Content Include="Content\images\tb-closed-hover.png" />
@@ -131,7 +131,6 @@
     <Content Include="obj\Debug\EdgeBiUI.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\EdgeBiUI.dll" />
     <Content Include="obj\Debug\EdgeBiUI.pdb" />
-    <Content Include="obj\Debug\TempPE\Service References.EdgeBIServer.Reference.cs.dll" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
@@ -142,6 +141,13 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.Deployment.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Razor.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Helpers.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="obj\Debug\build.force" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
@@ -192,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OltpLogic\Data\UI.Data.csproj">
