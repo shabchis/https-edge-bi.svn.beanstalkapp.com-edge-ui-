@@ -63,13 +63,13 @@ namespace Easynet.Edge.UI.Server
 			using (DataManager.Current.OpenConnection())
 			{
 				SqlCommand cmd = DataManager.CreateCommand("Session_ValidateSession(@sessionID:int)", CommandType.StoredProcedure);
-				cmd.Parameters["@sessionID"].Value = DBNull.Value; //sessionID;
+				cmd.Parameters["@sessionID"].Value = sessionID;
 
 				int userID;
 				using (SqlDataReader reader = cmd.ExecuteReader())
 				{
 					if (!reader.Read())
-						throw new ArgumentException("Session does not exist. Please refresh the page.");
+						throw new ArgumentException(String.Format("Session does not exist. Session ID: {0}.", sessionID));
 					userID = reader["UserID"] is int ? (int)reader["UserID"] : -1;
 					if (userID <= 0)
 						throw new ArgumentException("Session has expired. Please refresh the page.");
