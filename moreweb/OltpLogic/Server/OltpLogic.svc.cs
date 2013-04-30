@@ -46,16 +46,16 @@ namespace Easynet.Edge.UI.Server
 		#region User
 		/*=========================*/
 
+		static Encryptor _decryptor = new Encryptor("5c51374e366f41297356413c71677220386c534c394742234947567840");
+
 		public Oltp.UserDataTable User_LoginBySessionID(string sessionIDString)
 		{
-			/*
 			int sessionID;
 			try { sessionID = Int32.Parse(_decryptor.Dec(sessionIDString)); }
 			catch (Exception ex)
 			{
 				throw new ArgumentException("Invalid session. Please refresh the page and try again.", ex);
 			}
-			*/
 
 			using (DataManager.Current.OpenConnection())
 			{
