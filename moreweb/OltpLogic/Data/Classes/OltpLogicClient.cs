@@ -17,7 +17,7 @@ namespace Easynet.Edge.UI.Client
 		public OltpLogicClient(string sessionID)
 		{
 			// Automatically restart session
-			SessionStart(CurrentSessionID);
+			SessionStart(sessionID);
 		}
 
 		public string CurrentSessionID
