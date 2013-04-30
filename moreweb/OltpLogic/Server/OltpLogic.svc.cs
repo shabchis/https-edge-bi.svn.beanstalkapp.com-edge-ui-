@@ -50,11 +50,14 @@ namespace Easynet.Edge.UI.Server
 
 		public Oltp.UserDataTable User_LoginBySessionID(string sessionIDString)
 		{
+			if (String.IsNullOrEmpty(sessionIDString))
+				throw new ArgumentNullException("Session information is missing.");
+
 			int sessionID;
 			try { sessionID = Int32.Parse(_decryptor.Dec(sessionIDString)); }
 			catch (Exception ex)
 			{
-				throw new ArgumentException("Invalid session. Please refresh the page and try again.", ex);
+				throw new ArgumentException(String.Format("Session information is invalid. Data: {0}", sessionIDString), ex);
 			}
 
 			using (DataManager.Current.OpenConnection())
@@ -66,10 +69,10 @@ namespace Easynet.Edge.UI.Server
 				using (SqlDataReader reader = cmd.ExecuteReader())
 				{
 					if (!reader.Read())
-						throw new ArgumentException("Session not found. Please refresh the page and try again.");
+						throw new ArgumentException("Session does not exist. Please refresh the page.");
 					userID = reader["UserID"] is int ? (int)reader["UserID"] : -1;
 					if (userID <= 0)
-						throw new ArgumentException("Session has expired. Please refresh the page and try again.");
+						throw new ArgumentException("Session has expired. Please refresh the page.");
 				}
 
 				SqlCommand usrCmd = DataManager.CreateCommand(@"User_GetByID(@userID:int)", CommandType.StoredProcedure);
