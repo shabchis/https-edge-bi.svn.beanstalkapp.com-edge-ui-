@@ -40,6 +40,13 @@ namespace Easynet.Edge.UI.Server
 			return new TableAdapter();
 		}
 
+		private string EscapeSearchString(string search)
+		{
+			return search
+				.Replace("%", "[%]")
+				.Replace("*", "%");
+		}
+
 		/*=========================*/
 		#endregion
 
@@ -952,11 +959,11 @@ namespace Easynet.Edge.UI.Server
 		/// 
 		/// </summary>
 		/// <param name="accountID"></param>
-		/// <param name="keywordFilter"></param>
+		/// <param name="filter"></param>
 		/// <returns></returns>
-		public Oltp.KeywordDataTable Keyword_Get(int accountID, bool includeRelated, string keywordFilter, bool includeUnmonitored)
+		public Oltp.KeywordDataTable Keyword_Get(int accountID, bool includeRelated, string filter, bool includeUnmonitored)
 		{
-			return From<KeywordTableAdapter>().Get(accountID, includeRelated, keywordFilter, includeUnmonitored);
+			return From<KeywordTableAdapter>().Get(accountID, includeRelated, EscapeSearchString(filter), includeUnmonitored);
 		}
 
 		/// <summary>
@@ -1011,9 +1018,9 @@ namespace Easynet.Edge.UI.Server
 		/// <param name="accountID"></param>
 		/// <param name="keywordFilter"></param>
 		/// <returns></returns>
-		public Oltp.CreativeDataTable Creative_Get(int accountID, string titleFilter, bool includeUnmonitored)
+		public Oltp.CreativeDataTable Creative_Get(int accountID, string filter, bool includeUnmonitored)
 		{
-			return From<CreativeTableAdapter>().Get(accountID, titleFilter, includeUnmonitored);
+			return From<CreativeTableAdapter>().Get(accountID, EscapeSearchString(filter), includeUnmonitored);
 		}
 
 		/// <summary>
@@ -1068,7 +1075,7 @@ namespace Easynet.Edge.UI.Server
 		}
 		public Oltp.CampaignDataTable Campaign_Get(int accountID, int? channelID, int? statusID, string filter, bool filterByAdgroup)
 		{
-			return From<CampaignTableAdapter>().Get(accountID, channelID, statusID, filter, filterByAdgroup);
+			return From<CampaignTableAdapter>().Get(accountID, channelID, statusID, EscapeSearchString(filter), filterByAdgroup);
 		}
 
 		public Oltp.CampaignDataTable Campaign_GetIndividualCampaigns(long[] campaignGKs)
@@ -1288,7 +1295,7 @@ namespace Easynet.Edge.UI.Server
 
 		public Oltp.AdgroupDataTable Adgroup_Get(long campaignGK, string filter)
 		{
-			return From<AdgroupTableAdapter>().Get(campaignGK, filter);
+			return From<AdgroupTableAdapter>().Get(campaignGK, EscapeSearchString(filter));
 		}
 
 		public Oltp.AdgroupDataTable Adgroup_GetSingle(long adgroupGK)
