@@ -24,7 +24,7 @@ namespace EdgeBiUI.Controllers
         public ActionResult Index(int account, string session)
         {
             AppState.AccountID = account;
-            AppState.SessionID = session == "" ? null : "";
+            AppState.SessionID = session;
 
             acc_id = AppState.AccountID;
             session_id = AppState.SessionID;
