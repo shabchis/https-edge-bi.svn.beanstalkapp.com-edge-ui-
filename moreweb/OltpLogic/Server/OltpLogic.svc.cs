@@ -42,7 +42,7 @@ namespace Easynet.Edge.UI.Server
 
 		private string EscapeSearchString(string search)
 		{
-			return search
+			return String.IsNullOrEmpty(search) ? search : search
 				.Replace("%", "[%]")
 				.Replace("*", "%");
 		}
