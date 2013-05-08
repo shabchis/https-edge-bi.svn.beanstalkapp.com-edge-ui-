@@ -570,11 +570,11 @@ SELECT Creative_GK, Account_ID, Creative_Title, Creative_Desc1, Creative_Desc2, 
 							c.Creative_Desc1,
 							c.Creative_Desc2,
 							c.IsMonitored,
-							case when STDEV(isnull(ac.Segment1,-1)) = 0 then MAX(ac.Segment1) else null end as Segment1,
-							case when STDEV(isnull(ac.Segment2,-1)) = 0 then MAX(ac.Segment2) else null end as Segment2,
-							case when STDEV(isnull(ac.Segment3,-1)) = 0 then MAX(ac.Segment3) else null end as Segment3,
-							case when STDEV(isnull(ac.Segment4,-1)) = 0 then MAX(ac.Segment4) else null end as Segment4,
-							case when STDEV(isnull(ac.Segment5,-1)) = 0 then MAX(ac.Segment5) else null end as Segment5
+							case when isnull(STDEV(isnull(ac.Segment1,-1)),0) = 0 then MAX(ac.Segment1) else null end as Segment1,
+							case when isnull(STDEV(isnull(ac.Segment2,-1)),0) = 0 then MAX(ac.Segment2) else null end as Segment2,
+							case when isnull(STDEV(isnull(ac.Segment3,-1)),0) = 0 then MAX(ac.Segment3) else null end as Segment3,
+							case when isnull(STDEV(isnull(ac.Segment4,-1)),0) = 0 then MAX(ac.Segment4) else null end as Segment4,
+							case when isnull(STDEV(isnull(ac.Segment5,-1)),0) = 0 then MAX(ac.Segment5) else null end as Segment5
 						FROM
 							UserProcess_GUI_Creative c LEFT OUTER JOIN
 							UserProcess_GUI_PaidAdgroupCreative ac ON
