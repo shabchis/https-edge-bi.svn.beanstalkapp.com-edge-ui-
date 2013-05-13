@@ -54,7 +54,7 @@ namespace EdgeBiUI.Controllers
                 
                 int? channelID = colls["Channel"] == "0" ? null : (int?)int.Parse(colls["Channel"]);
                 int? statusID = colls["Status"] == "0" ? null : (int?)int.Parse(colls["Status"]);
-                string textToSearch = colls["searchText"].Trim().Equals("") ? null : colls["searchText"].Trim()+"%";
+                string textToSearch = colls["searchText"].Trim().Equals("") ? null : colls["searchText"].Trim() + "*";
                 bool filterByAdgroup = colls["typeOfSearch"] == "adgroup";
 
                 Oltp.CampaignDataTable t = client.Service.Campaign_Get(acc_id, channelID, statusID, textToSearch, filterByAdgroup);

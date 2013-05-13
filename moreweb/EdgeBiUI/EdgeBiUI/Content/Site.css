@@ -1,5 +1,7 @@
 body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr; text-align:left; }
-
+a:link      { color:#7ca826;  }
+a:visited   { color:#7ca826;  }
+a:hover     { color:#7ca826;  }
 
 #ControllerDialogDiv    { width:600px; height:450px; background-color:#FFFFFF; position:fixed; top:50%; margin-top:-225px; right:50%; margin-right:-300px; display:none; z-index:1200; overflow:hidden; }
 #ScreenOverlay          { position:fixed; filter:Alpha(Opacity=80); background-color:rgb(0,0,0); opacity:0.1; z-index:-1000; display:none; top:0px; left:0px; }
@@ -23,7 +25,7 @@ body { font-family:Arial; font-size:13px; padding:0px; margin:0px; direction:ltr
 .IndexTableContainer .IndexTableRow:hover   { background-color:#e3edcb; }
 .IndexTableContainer .IndexTableRow.selected { background-color:#e3edcb; } 
 
-.FilterSegment      { float:left; margin-right:20px; }
+.FilterSegment      { float:left; margin-right:10px; }
 .FilterSegmentTitle { margin-bottom:4px; } 
 
 #CampaignsIndexTable .IndexTableRow { height:21px; }

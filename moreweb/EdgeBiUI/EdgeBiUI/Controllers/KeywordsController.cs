@@ -38,7 +38,7 @@ namespace EdgeBiUI.Controllers
             List<Oltp.KeywordRow> L = new List<Oltp.KeywordRow>();
             using (var client = new OltpLogicClient(session_id))
             {
-                string str = searchText.Trim().Length > 0 ? searchText.Trim() + "%" : null;
+                string str = searchText.Trim().Length > 0 ? searchText.Trim() + "*" : null;
                 Oltp.KeywordDataTable keywords = client.Service.Keyword_Get(acc_id, true, str, true);
 
                 foreach (Oltp.KeywordRow keyword in keywords)
