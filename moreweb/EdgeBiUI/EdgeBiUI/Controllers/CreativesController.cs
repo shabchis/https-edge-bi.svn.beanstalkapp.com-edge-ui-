@@ -41,14 +41,13 @@ namespace EdgeBiUI.Controllers
 
             using (var client = new OltpLogicClient(session_id))
             {
-                Oltp.CreativeDataTable creatives = client.Service.Creative_Get(acc_id, searchText + "%", true);
+                Oltp.CreativeDataTable creatives = client.Service.Creative_Get(acc_id, searchText.Trim() + "*", true);
 
                 foreach (Oltp.CreativeRow creative in creatives)
                 {
-                    m.Creatives.Add(creative);
-                }
-
-                
+                    if (creative.Title.Trim().Length>0)
+                        m.Creatives.Add(creative);
+                }                  
             }
 
             

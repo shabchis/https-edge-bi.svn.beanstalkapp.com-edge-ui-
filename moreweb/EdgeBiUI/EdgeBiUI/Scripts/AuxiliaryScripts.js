@@ -120,8 +120,11 @@ function addNewValue(selectElement) {
         $.post("../Home/AddNewSegmentValue", { segmentID: segmentID, newValue: newValue }, function (data) {
             $("#newValeOption_" + segmentID + "_div").remove();
             jElement.children("option[value='-1000']").remove();
-            jElement.append(new Option(newValue, data, false, true));
-            jElement.append(new Option("Add New...", "-1000", false, false));
+            //alert(newValue + " " + data);
+            //jElement.append(new Option(newValue, data, false, true));
+            jElement.append("<option value='" + data + "' selected='selected'>" + newValue + "</option>");
+            //jElement.append(new Option("Add New...", "-1000", false, false));
+            jElement.append("<option value='" + -1000 + "'>" + "Add New..." + "</option>");
             jElement.fadeIn(200);
         });
     }
