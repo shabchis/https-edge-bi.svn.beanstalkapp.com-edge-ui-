@@ -1,287 +1,231 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-	<script type="text/javascript" src="jquery.cookie.js"></script>
-
-
-	<!--[if IE]>
-		
-		<meta http-equiv="X-UA-Compatible" content="IE=8" />
-		
-					
+	<head>
+		<!--[if IE]>
+			<meta http-equiv="X-UA-Compatible" content="IE=8" />
 		<![endif]-->
-		<script src="assets/js/modernizr-1.6.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
-    <title>Login Edge.BI</title>
-	
-<style type="text/css">
-	html{
-		margin:0 auto;
-		font-family:Verdana;
-		font-size:12px;
-	}
-	#conatainer{
-		font-family:Verdana;
-		width:500px;
-		margin:0 auto;
-		overflow:hidden;
-		position: relative;
-	}
-	#login{
-	-moz-border-radius: 10px 10px 10px 10px;
-    background: url("assets/img/login-box_03.jpg") no-repeat scroll 0 0 transparent;
-    height: 500px;
-    margin: 0 auto;
-    overflow: hidden;
-    width: 379px;
-	position:relative;
-	padding-top:20px;
-	
-	}
-	label{
-	display:block;
-	width:100px;
-	float:left;
-	
-	}
-	
-	form{
-	margin: 25px 0 0 37px;
-    width: 100%
-  
-	}
-	
-	img{
-	 float: left;
- /*   height: 91px;           */
-    margin-bottom: 12px;
-    margin-left: 198px;
-    /*  width: 163px;    */
-	
-	}
-	#submit {
-    background: url("assets/img/login_btn.jpg") repeat-x scroll left top #F2F2F2 !important;
-    border: medium none !important;
-    float: left;
-    height: 79px;
-    margin-left: 82px;
-    margin-top: 0px;
-	margin-top: 0px\9;
-    outline: medium none;
-    width: 164px;
-}
-
-	#submit:hover{
-		/*background: url("assets/img/login_btn_hover.jpg") repeat-x scroll left top #F2F2F2 !important;*/
-		outline:none;
-	}
-#error{
-	 color: red;
-    display: block;
-    font-weight: bold;
-    left: 160px;
-    position: absolute;
-    text-align: left;
-
-    top: 110px;
-    width: 205px;
-}
-
-input
-{
-	display: block;
-
-   outline:none;
-    margin-bottom: 10px;
-    width: 204px;
-    font-family: verdana;
-	
-	}
-	input[type="checkbox"]{
-		width:50px;
-		float:left;
-		display:block;
-		margin-left:-19px;
-		 outline: none;
-
-		border:0px;
-	}
-	input[type="checkbox"]:focus{
-		
-		 outline: none;
-
-		
-	}
-
-
-	
-	input:not([type="checkbox"]):focus{
-	border:1px solid #92B744;
-	padding:2px 0px 2px 2px;
-	}
-	
-	#ajaxloader {
-	display:none;
-	background: url("assets/img/loading-box.png") no-repeat scroll right center transparent;
-	background:#fff \9;
-    height: 159px;
-     position: absolute;
-   left: 154px;
-   top: 300px;
-     top: 400px\9;
-	 
-  width:229px;
-     z-index: 100;
-
-
-}
-#ajaxloader img#ajax{
- position: absolute;
-   top: 188px;
-   left: 200px;
-   width: 49px;
-   height: 49px;
-
-   margin-top: -73%; /* Half the height */
-   margin-left: -50%; /* Half the width */
-
-}
-
-#ajaxloader b {
-	bottom: 15px;
-    display: block;
-    margin-bottom: 10px;
-    margin-left: 38%;
-    position: absolute;
-    width: 100%;
-	
-}
-</style>
-</head>
-<body>
-<div id="conatainer">
-		<div id="ajaxloader">
-					<img src="assets/img/no-bg.gif" id="ajax" />
-					<b>Loading....</b>
-				</div>		
-<img src="assets/img/edge-logo-login.gif" alt="" />
-</div>
-<div id="login">
-
-<form method="post" action="login">
-    	
-     
-        	<label for="email"><span class="required">Email </span></label>
-            <input id="email" type="text" name="email" value="Please enter an email" class="required" minlength="2" />
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="assets/js/modernizr-1.6.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+		<title>Login Edge.BI</title>
+		<style type="text/css">
+			html {
+				margin:0 auto;
+				font-family:Verdana;
+				font-size:12px;
+			}
+			#conatainer {
+				font-family:Verdana;
+				width:500px;
+				margin:0 auto;
+				overflow:hidden;
+				position: relative;
+			}
+			#login {
+				-moz-border-radius: 10px 10px 10px 10px;
+				background: url("assets/img/login-box_03.jpg") no-repeat scroll 0 0 transparent;
+				height: 500px;
+				margin: 0 auto;
+				overflow: hidden;
+				width: 379px;
+				position:relative;
+				padding-top:20px;
+			}
+			label {
+				display:block;
+				width:100px;
+				float:left;
+			}
+			form {
+				margin: 25px 0 0 37px;
+				width: 100%
+			}
+			img {
+				float: left;
+				/*   height: 91px;           */
+				margin-bottom: 12px;
+				margin-left: 198px;
+				/*  width: 163px;    */
+			}
+			#submit {
+				background: url("assets/img/login_btn.jpg") repeat-x scroll left top #F2F2F2 !important;
+				border: medium none !important;
+				float: left;
+				height: 79px;
+				margin-left: 82px;
+				margin-top: 0px;
+				margin-top: 0px\9;
+				outline: medium none;
+				width: 164px;
+			}
+			#submit:hover {
+				/*background: url("assets/img/login_btn_hover.jpg") repeat-x scroll left top #F2F2F2 !important;*/
+				outline:none;
+			}
+			#error {
+				color: red;
+				display: block;
+				font-weight: bold;
+				left: 160px;
+				position: absolute;
+				text-align: left;
+				top: 110px;
+				width: 205px;
+			}
+			input {
+				display: block;
+				outline:none;
+				margin-bottom: 10px;
+				width: 204px;
+				font-family: verdana;
+			}
+			input[type="checkbox"] {
+				width:50px;
+				float:left;
+				display:block;
+				margin-left:-19px;
+				outline: none;
+				border:0px;
+			}
+			input[type="checkbox"]:focus {
+				outline: none;
+			}
+			input:not([type="checkbox"]):focus {
+				border:1px solid #92B744;
+				padding:2px 0px 2px 2px;
+			}
+			#ajaxloader {
+				display:none;
+				background: url("assets/img/loading-box.png") no-repeat scroll right center transparent;
+				background:#fff \9;
+				height: 159px;
+				position: absolute;
+				left: 154px;
+				top: 300px;
+				top: 400px\9;
+				width:229px;
+				z-index: 100;
+			}
+			#ajaxloader img#ajax {
+				position: absolute;
+				top: 188px;
+				left: 200px;
+				width: 49px;
+				height: 49px;
+				margin-top: -73%;
+				/* Half the height */
+				margin-left: -50%;
+				/* Half the width */
+			}
+			#ajaxloader b {
+				bottom: 15px;
+				display: block;
+				margin-bottom: 10px;
+				margin-left: 38%;
+				position: absolute;
+				width: 100%;
+			}
 			
+		</style>
+	</head>
+	<body>
+		<div id="conatainer">
+			<div id="ajaxloader">
+				<img src="assets/img/no-bg.gif" id="ajax" />	<b>Loading....</b>
 
-   
-
-        
-        	<label for="password"><span class="required">Password  </span></label>
-            <input id="password" type="password" name="password" class="text required" minlength="4" maxlength="20"  />
-       
-			<label for="rememberme">Remember</label>
-            <input type="checkbox" name="rememberme" value="Remember me"  />
-
-      
-       
-        	<input type="submit" id="submit" value="" name="submit" />
-        
-
- 
-    </form>
-	 <div id="error"></div>
+			</div>
+			<img src="assets/img/edge-logo-login.gif" alt="" />
+		</div>
+		<div id="login">
+			<form method="post" action="login">
+				<label for="email"><span class="required">Email </span>
+				</label>
+				<input id="email" type="text" name="email" value="Please enter an email" class="required" minlength="2" />
+				<label for="password"><span class="required">Password  </span>
+				</label>
+				<input id="password" type="password" name="password" class="text required" minlength="4" maxlength="20" />
+				<label for="rememberme">Remember</label>
+				<input type="checkbox" name="rememberme" value="Remember me" />
+				<input type="submit" id="submit" value="" name="submit" />
+			</form>
+			<div id="error"></div>
+		</div>
+	</body>
 	
-</div>
-  </div>
-
-</body>
-
-
-</html>
-
-
-<script type="text/javascript">
-$("#login").ajaxStart(function(){
-		$("#ajaxloader").fadeIn(500);	
-	});
-	
-	$("#login").ajaxComplete(function(){
-		$("#ajaxloader").fadeOut(500);
-	});
-	$("#login").ajaxError(function(){
-		$("#ajaxloader").fadeOut(500);
-	});
-	var _emptyMessage = "Please enter an email";
-$("#email")
-    .val(_emptyMessage)
-		.css("color", "#8D8D8D")
-		.focus(function(){
+	<script type="text/javascript">
+		$("#login").ajaxStart(function ()
+		{
+			$("#ajaxloader").show();
+		});
+		$("#login").ajaxComplete(function ()
+		{
+			$("#ajaxloader").hide();
+		});
+		$("#login").ajaxError(function ()
+		{
+			$("#ajaxloader").hide();
+		});
+		var _emptyMessage = "Please enter an email";
+		$("#email")
+			.val(_emptyMessage)
+			.css("color", "#8D8D8D")
+			.focus(function ()
+		{
 			$(this).css("color", "black");
-			if ($(this).val() == _emptyMessage) {
+			if ($(this).val() == _emptyMessage)
+			{
 				$(this).val("");
 			}
 		})
-		.blur(function(){
+			.blur(function ()
+		{
 			$(this).css("color", "black");
-			if ($(this).val() == "") {
-
+			if ($(this).val() == "")
+			{
 				$(this).val(_emptyMessage);
 			}
 		});
-	
-	$("#submit").click(function()
-	{
-		var email  = $("#email").val();
-		var password  = $("#password").val();
-
-		if(email == "" || email == _emptyMessage || password== ""){
-
-
-
-
-			$("#error").html("Please enter an email and password.");
+		$("#submit").click(function ()
+		{
+			var email = $("#email").val();
+			var password = $("#password").val();
+			if (email == "" || email == _emptyMessage || password == "")
+			{
+				$("#error").html("Please enter an email and password.");
+				return false;
+			}
+			var form_data = {
+				"email": $('#email').val(),
+				"password": $('#password').val()
+			};
+			if ($('#rememberme').attr('checked'))
+				form_data.remember = true;
+			$.ajax(
+			{
+				url: "login",
+				type: 'POST',
+				data: form_data,
+				success: function (result, status, request)
+				{
+					var urlparts = window.location.href.split("/");
+					delete urlparts[(urlparts.length - 1)];
+					//window.location = urlparts.join("/");
+				},
+				error: function (result)
+				{
+					var msg = result.getResponseHeader('content-type') == 'application/json' ? 
+						JSON.parse(result.responseText).message :
+						result.responseText;
+					
+					$("#ajaxloader").hide();
+					$("#error").html(msg).appendTo('#login');
+				},
+				complete: function (result) {}
+			});
 			return false;
-		}
+		});
+	</script>
 
+</html>
 
-		var form_data = {
-			"email": $('#email').val(),
-			"password": $('#password').val()
-
-		};
-		
-		if ($('#rememberme').attr('checked'))
-			form_data.remember = true;
-
-	$.ajax({
-	url: "login",
-		type: 'POST',
-		data: form_data,
-		success: function(result, status, request)
-		{
-			var urlparts = window.location.href.split("/");
-			delete urlparts[(urlparts.length-1)];
-		    window.location = urlparts.join("/");
-		},
-		error:function(result)
-		{
-			$("#ajaxloader").hide();
-				$("#error").html('Invalid Username/Password').appendTo('#login');
-			
-			
-		},
-		complete:function(result)
-		{
-		}
-	});
-	
-	return false;
-});
-
-   
-
-</script>

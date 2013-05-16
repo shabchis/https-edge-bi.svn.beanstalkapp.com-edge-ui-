@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://46.51.177.105/seperia/";
+$config['base_url']	= "http://localhost:8888/edge-ui/";
 
 /*
 |--------------------------------------------------------------------------

@@ -392,7 +392,7 @@ var json = jQuery.parseJSON(data);
 
   },
     error:function(data,result){
-	  _generalErrorHandler;
+	  window.handleError(data);
     },
     complete:function(data){
           $('#fbtable div.2').each(function(){
@@ -604,7 +604,7 @@ function update(){
 
     },
     error:function(data){
-    	 _generalErrorHandler;
+    	 window.handleError(data);
         $("#error").show();
 
 

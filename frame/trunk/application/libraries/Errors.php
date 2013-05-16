@@ -20,8 +20,7 @@ class Errors
 			exit();
 		}
 		else
-		{
-					
+		{	
 			if ($redirect)
 				$this->Redirect($statusCode, LOGIN_PAGE ) ;
 			else

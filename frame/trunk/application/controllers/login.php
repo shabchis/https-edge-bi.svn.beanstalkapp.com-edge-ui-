@@ -28,14 +28,13 @@ class Login extends Controller {
 		// Determines whether user/session cookies are reused later
 		$remember =  $this->input->post('remember');
 		
-		
 		// execute the login
 		$this->edgeapi->Login($data, $remember, true);
 	}	 
 	
-	function logout(){
-		
-    global $APPLICATION_ROOT;
+	function logout()
+	{	
+		global $APPLICATION_ROOT;
     
 		delete_cookie("edgebi_session",null,$APPLICATION_ROOT);
 		delete_cookie("edgebi_user",null,$APPLICATION_ROOT);
