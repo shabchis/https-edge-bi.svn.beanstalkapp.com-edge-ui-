@@ -75,19 +75,30 @@ function closeControllerDialog() {
 
 
 function ShowLoadingMessage() {
-    $('#ScreenOverlay').css("width", getBrowserHeight().width);
-    $('#ScreenOverlay').css("height", getBrowserHeight().height);
-    $('#ScreenOverlay').css("display", "block");
-    $('#ScreenOverlay').css("z-index", 1000);
+//    $('#ScreenOverlay').css("width", getBrowserHeight().width);
+//    $('#ScreenOverlay').css("height", getBrowserHeight().height);
+//    $('#ScreenOverlay').css("display", "block");
+//    $('#ScreenOverlay').css("z-index", 1000);
 
-    $('#LoadingMessage').css("display", "block");
+    //    $('#LoadingMessage').css("display", "block");
+    try {
+        window.parent.ajaxLoaderShow();
+    }
+    catch(err)
+    { }
 }
 
 function HideLoadingMessage() {
-    $('#ScreenOverlay').css("display", "none");
-    $('#ScreenOverlay').css("z-index", -1000);
+//    $('#ScreenOverlay').css("display", "none");
+//    $('#ScreenOverlay').css("z-index", -1000);
 
-    $('#LoadingMessage').css("display", "none");
+//    $('#LoadingMessage').css("display", "none");
+    try {
+        window.parent.ajaxLoaderHide();
+    }
+    catch (err)
+    { }
+    
 }
 
 function handleNewValue(selectElement) {
