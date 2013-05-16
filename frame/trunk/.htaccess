@@ -1,0 +1,7 @@
+Options -MultiViews
+RewriteEngine on
+RewriteBase /edge-ui/
+
+RewriteCond $1 !^(index\.php|assets|robots\.txt|login\.html)
+
+RewriteRule ^(.*)$ index.php/$1 [L]

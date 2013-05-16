@@ -479,10 +479,7 @@ function search(filter){
 			
 		    },
 		    error:function(data){
-		    	 _generalErrorHandler;
-		       
-
-
+		    	 window.handleError(data);
 		    },
 		    complete:function(data){
 			  var result = jQuery.parseJSON(data);

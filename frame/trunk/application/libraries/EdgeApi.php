@@ -109,7 +109,7 @@ class EdgeApi
 					// else throw an error and redirect to login page if it is forbidden
 					else
 					{
-						$this->errors->ThrowEx(null, $status, $json, $status == 403);
+						$this->errors->ThrowEx($result, $status, $json, $status == 403);
 					}
 				}
 			}
