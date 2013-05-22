@@ -6,22 +6,8 @@ $(function ()
 		return false;
 	});
 	
-	var viewportHeight = $(window).height();
-	var headerHeight = $('header').outerHeight();
-
-	var frameheight = function()
-	{
-		$("#main").height(viewportHeight - headerHeight - 70);
-		$("#frame").height($("#main").height());
-		if ($.browser.msie)
-		{
-			$("#main").height(viewportHeight - headerHeight - 100);
-			$("#frame").height($("#main").height());
-		}
-	}
-	
-	frameheight();
-	$(window).bind('resize',frameheight);
+	window.adjustFrameHeight();
+	$(window).bind('resize',window.adjustFrameHeight);
 	
 	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
 	$('h2.trigger').removeClass("active").next().hide();
@@ -138,7 +124,7 @@ $(function ()
 		
 		$("#selected").html($parents);
 		$("#selected").attr("class", $accountId);
-		$("#Campaign").html($sub);
+		$("#account-url").html($sub);
 		
 		// Change menu item hrefs
 		$('#sub li.menuheader a').each(function ()
@@ -166,20 +152,16 @@ $(function ()
 				var $parent = "";
 				var $section = "";
 				var $grand = "";
+				document.title = "Edge.BI - " + $("#"+getHashSegments().accountID).data("name");
+				
 				if (item.parent("ul").hasClass("parent"))
 				{
 					$parent = item.parent("ul.parent").attr("data-name");
 					$section = item.parent().parent().parent().parent().parent().prev("h2.trigger").find("span").text();
 					content = $("<ul><li>" + $section + "</li><li class='bread'></li><li>" + $parent + "</li><li class='bread'></li><li class='last'>" + item.find("a:first").text() + "</li></ul>");
 					$("#breadcrumbs").html(content);
-					if ($section.length == 0)
-					{
-						document.title = 'Edge.BI';
-					}
-					else
-					{
-						document.title = 'Edge.BI' + ' - ' + $section + ' :: ' + $parent + ' :: ' + item.find("a:first").text();
-					}
+					if ($section.length > 0)
+						document.title += ' / ' + $section + ' / ' + $parent + ' / ' + item.find("a:first").text();
 				}
 				else if (item.parent().parent().parent("ul").hasClass("parent"))
 				{
@@ -188,42 +170,24 @@ $(function ()
 					$section = item.parent().parent().parent().parent().parent().parent().parent().prev("h2.trigger").find("span").text();
 					content = $("<ul><li>" + $section + "</li><li class='bread'></li><li>" + $grand + "</li><li class='bread'></li><li>" + $parent + "</li><li class='bread'></li><li class='last'>" + text + "</li></ul>");
 					$("#breadcrumbs").html(content);
-					if ($section.length == 0)
-					{
-						document.title = 'Edge.BI';
-					}
-					else
-					{
-						document.title = 'Edge.BI' + ' - ' + $section + ' :: ' + $grand + ' :: ' + $parent + ' :: ' + text;
-					}
+					if ($section.length > 0)
+						document.title += ' / ' + $section + ' / ' + $grand + ' / ' + $parent + ' / ' + text;
 				}
 				else if (item.parent().hasClass("list"))
 				{
 					$section = item.parent().parent().parent().prev("h2.trigger").find("span").text();
 					content = $("<ul><li>" + $section + "</li><li class='bread'></li><li class='last'>" + item.find("a:first").text() + "</li></ul>");
 					$("#breadcrumbs").html(content);
-					if ($section.length == 0)
-					{
-						document.title = 'Edge.BI';
-					}
-					else
-					{
-						document.title = 'Edge.BI' + ' - ' + $section + ' :: ' + item.find("a:first").text();
-					}
+					if ($section.length > 0)
+						document.title += ' / ' + $section + ' / ' + item.find("a:first").text();
 				}
 				else
 				{
 					$section = item.parent().parent().parent().prev("h2.trigger").find("span").text();
 					content = $("<ul><li>" + $section + "</li><span></span><li class='last'>" + text + "</li></ul>");
 					$("#breadcrumbs").html(content);
-					if ($section.length == 0)
-					{
-						document.title = 'Edge.BI';
-					}
-					else
-					{
-						document.title = 'Edge.BI' + ' - ' + $section + ' :: ' + text;
-					}
+					if ($section.length > 0)
+						document.title += ' / ' + $section + ' / ' + text;
 				}
 			}
 		});
@@ -366,7 +330,6 @@ $(function ()
 		$("#accountwrapper").removeClass("shadowOpen").addClass("shadow").hide();
 		$("#accounts").removeClass("unfolded");
 		$("#accounts").addClass("folded");
-		//$("#Campaign").show();
 		$(document).unbind('click', documentArrowToggle);
 	});
 });
@@ -419,6 +382,20 @@ window.handleError = function (data)
 		});
 	}
 };
+
+window.adjustFrameHeight = function()
+{
+	var viewportHeight = $(window).height();
+	var headerHeight = $('header').outerHeight();
+	$("#main").height(viewportHeight - headerHeight - 70);
+	$("#frame").height($("#main").height());
+	if ($.browser.msie)
+	{
+		$("#main").height(viewportHeight - headerHeight - 100);
+		$("#frame").height($("#main").height());
+	}
+}
+	
 
 window.getHashSegments = function()
 {

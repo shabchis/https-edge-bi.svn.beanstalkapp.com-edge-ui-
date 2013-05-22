@@ -145,8 +145,8 @@
 				<label for="password"><span class="required">Password  </span>
 				</label>
 				<input id="password" type="password" name="password" class="text required" minlength="4" maxlength="20" />
-				<label for="rememberme">Remember</label>
-				<input type="checkbox" name="rememberme" value="Remember me" />
+				<label for="remember">Remember</label>
+				<input type="checkbox" id="remember" name="remember" value="Remember me" />
 				<input type="submit" id="submit" value="" name="submit" />
 			</form>
 			<div id="error"></div>
@@ -199,7 +199,7 @@
 				"email": $('#email').val(),
 				"password": $('#password').val()
 			};
-			if ($('#rememberme').attr('checked'))
+			if ($('#remember').attr('checked'))
 				form_data.remember = true;
 			$.ajax(
 			{
@@ -208,9 +208,9 @@
 				data: form_data,
 				success: function (result, status, request)
 				{
-					var urlparts = window.location.href.split("/");
+					var urlparts = window.location.pathname.split("/");
 					delete urlparts[(urlparts.length - 1)];
-					//window.location = urlparts.join("/");
+					window.location = urlparts.join("/") + window.location.hash;
 				},
 				error: function (result)
 				{

@@ -22,7 +22,7 @@ class Main extends Controller {
 			);
 		
 		//$this->firephp->log(json_decode($data["menu"]));
-		$this->load->view('includes/template',$data);	 					
+		$this->load->view('main',$data);	 					
 	  }
 }
 

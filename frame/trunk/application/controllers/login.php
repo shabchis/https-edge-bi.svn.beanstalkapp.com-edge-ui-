@@ -42,7 +42,7 @@ class Login extends Controller {
 		delete_cookie("edgebi_parent_account",null,$APPLICATION_ROOT);
 		delete_cookie("edgebi_remember",null,$APPLICATION_ROOT);
 		
-		redirect(LOGIN_PAGE);
+		redirect(config_item('edge_login_url'));
 	}
 
 }

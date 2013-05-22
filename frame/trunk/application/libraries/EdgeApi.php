@@ -21,7 +21,7 @@ class EdgeApi
 		
 		// Set URL
 		if ($url)
-			curl_setopt($curl_handle, CURLOPT_URL, EDGE_API_URL.$url);
+			curl_setopt($curl_handle, CURLOPT_URL, config_item('edge_api_url') . $url);
 
 		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
 		

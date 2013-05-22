@@ -12,6 +12,7 @@
 |
 */
 $config['base_url']	= "http://localhost:8888/edge-ui/";
+$config['edge_api_url'] = "http://46.51.177.105:6283/seperia";
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ $config['base_url']	= "http://localhost:8888/edge-ui/";
 |
 */
 $config['index_page'] = "index.php";
+$config['edge_login_url'] = $config['base_url'] . "login.html";
 
 /*
 |--------------------------------------------------------------------------
