@@ -11,7 +11,7 @@ class Errors
 			if ($msg)
 				$data->message = $msg;
 			if ($redirect)
-				$data->redirect = LOGIN_PAGE;
+				$data->redirect = config_item('edge_login_url');
 			
 			header('HTTP/1.1 '. $statusCode);
 			header('Content-Type: application/json');
@@ -22,7 +22,7 @@ class Errors
 		else
 		{	
 			if ($redirect)
-				$this->Redirect($statusCode, LOGIN_PAGE ) ;
+				$this->Redirect($statusCode, config_item('edge_login_url') ) ;
 			else
 				show_error($msg, $statusCode);
 		}

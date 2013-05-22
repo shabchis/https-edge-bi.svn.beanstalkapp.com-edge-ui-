@@ -2,7 +2,8 @@
 body{	
 	margin:0 auto;
 	overflow: auto;
-	    font-family: verdana;
+	font-family: verdana;
+	font-size: 12px;
 
 }
 #container {
@@ -186,7 +187,7 @@ header {
 	
 
 }
-#accounts #Campaign{
+#accounts #account-url{
 	 font-size: 12px;
     font-weight: normal;
     height: 30px;
@@ -196,7 +197,7 @@ header {
     width: 100%;
 	
 }
-#Campaign{
+#account-url{
 	border-top:1px white\9;
 	
 }
@@ -853,7 +854,7 @@ margin-left: 0px;
 	padding: 2px;
 }
 
-#Campaign a,#Campaign a:active,#Campaign a:visited{
+#account-url a,#account-url a:active,#account-url a:visited{
 	color: #4A4A4A;
 	text-decoration: none;
 	

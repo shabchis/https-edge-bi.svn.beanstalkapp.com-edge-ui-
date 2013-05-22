@@ -1,21 +1,16 @@
 <script id="facebooktmpl"  type="text/x-jquery-tmpl">
-		
-		{{if Campaign_Name}}
-		<h2 class="facebooktrigger" data-Schedule ="${ScheduleEnabled}" data-campaign="${Campaign_GK}" ><span><a href="#" title="ID:${Campaign_GK}"> ${Campaign_Name}</a></span></h2>
-        
-       {{/if}}      
-
-       
-
-
+	{{if Campaign_Name}}
+	<h2 class="facebooktrigger" data-Schedule ="${ScheduleEnabled}" data-campaign="${Campaign_GK}" ><span><a href="#" title="ID:${Campaign_GK}"> ${Campaign_Name}</a></span></h2>
+	{{/if}}      
 </script>
+
 <script id="schedulertmpl"  type="text/x-jquery-tmpl">
 
 	{{if Day=="1"}}
 	<tr class="scheduleday" data-day="1" data-campaign="${Campaign_GK}">
 
 		<td>Monday</td>
-		<td><a class="all" href="#">All</a></td><td><a href="#" class="none"> None</a></td>
+		<td><a class="all" href="#">All</a></td><td><a href="#" class="none">None</a></td>
 		<td ><div data-hour="Hour00" data-state="${Hour00}"{{if Hour00}} class="${Hour00} day"{{else}} class="1 day" {{/if}}></div></td>
 		<td ><div data-hour="Hour01" data-state="${Hour01}" class="${Hour01} day" ></div></td>
 		<td><div data-hour="Hour02" data-state="${Hour02}" class="${Hour02} day" ></div></td>
@@ -371,7 +366,7 @@ campaignID =campaign ;
 
 $.ajax({
 
-  url: 'AdScheduling/getscheduler/'+getHashSegments().accountID+'/'+campaignID,
+  url: 'adScheduling/load/'+getHashSegments().accountID+'/'+campaignID,
   success: function(data){
 
 var json = jQuery.parseJSON(data);
@@ -595,7 +590,7 @@ function update(){
     dataType:"json",
     type: "POST",
     data:jsonText,
-    url:"AdScheduling/updateScheduler/"+getHashSegments().accountID+'/'+campaignID,
+    url:"adScheduling/save/"+getHashSegments().accountID+'/'+campaignID,
     success: function(data) {
                $('h2[data-campaign='+campaignID+']').attr('data-schedule',boolEnabled);
 //         $('h2[data-campaign='+campaignID+']').css('background-color','red');

@@ -169,7 +169,7 @@ width: 200px;
 	
 
 }
-#accounts #Campaign{
+#accounts #account-url{
 	 font-size: 12px;
     font-weight: normal;
     height: 30px;
@@ -179,7 +179,7 @@ width: 200px;
     width: 100%;
 	
 }
-#Campaign{
+#account-url{
 	border-top:1px white\9;
 	
 }
@@ -788,7 +788,7 @@ ul.list li ul li.disabled{
 	padding: 2px;
 }
 
-#Campaign a,#Campaign a:active,#Campaign a:visited{
+#account-url a,#account-url a:active,#account-url a:visited{
 	color: #4A4A4A;
 	text-decoration: none;
 	
