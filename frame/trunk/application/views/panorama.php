@@ -1,5 +1,5 @@
 <?php
-	$codebase = "/intelligence";
+	$codebase = "/panorama";
 ?>
 
 <script type="text/javascript">
@@ -32,7 +32,7 @@
 		AttachParameter("banner", "true");
 		AttachParameter("Flags", "2");
 		AttachParameter("User", '<?php echo addslashes($role) ?>');
-		AttachParameter("Buttons", "1,6760,280,420,430,460,470,480,9220,490,500,510");
+		AttachParameter("Buttons", "1,6760,280,420,430,460,470,480,9220,490,500,510,2360");
 		AttachParameter("Menus", "0,2370,300,3800,7310");
 		//AttachParameter("Settings", "Skin=Edge.BI");
 		//AttachParameter("Show","Toolbar;Header;Slicers;grid;PrBrBook;BrBook;")
