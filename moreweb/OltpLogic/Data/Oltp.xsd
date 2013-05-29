@@ -265,6 +265,19 @@ SELECT Adunit_ID, ChannelID, Account_ID, Adunit, IsDefaultAdunit FROM User_GUI_A
 							Gateway_GK = @Gateway_GK
 							and Account_ID = @Account_ID;
 							
+						UPDATE UserProcess_GUI_PaidAdgroupCreative
+						SET
+							Page_GK			= @Page_GK,
+							Segment1		= @Segment1,
+							Segment2		= @Segment2,
+							Segment3		= @Segment3,
+							Segment4		= @Segment4,
+							Segment5		= @Segment5,
+							LastUpdated		= getdate()
+						WHERE
+							Gateway_GK = @Gateway_GK
+							and Account_ID = @Account_ID;
+							
 						SELECT Gateway_GK, Account_ID, Gateway_id, Gateway, Dest_URL, Campaign_GK, Adgroup_GK, Page_GK, Reference_Type, Reference_ID, Segment1, Segment2, Segment3, Segment4, Segment5 FROM UserProcess_GUI_Gateway WHERE (Gateway_GK = @Gateway_GK) ORDER BY Gateway
 						]]>
 					</CommandText>
@@ -618,7 +631,7 @@ SELECT Creative_GK, Account_ID, Creative_Title, Creative_Desc1, Creative_Desc2, 
 						SET
 							[Segment1] = isnull(@Segment1, Segment1),
 							[Segment2] = isnull(@Segment2, Segment2),
-							[Segment3] = isnull(@Segment3, Segment3),
+							[Segment3] = isnull(@Segment3, Segmenxt3),
 							[Segment4] = isnull(@Segment4, Segment4),
 							[Segment5] = isnull(@Segment5, Segment5),
 							[LastUpdated] = getdate()
@@ -1724,7 +1737,7 @@ FROM         Constant_Channel</CommandText>
               <DbSource ConnectionRef="easynet_OltpConnectionString (Settings)" DbObjectName="easynet_Oltp.dbo.UserProcess_GUI_PaidAdgroupCreative" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="Get" GetMethodModifier="Public" GetMethodName="Get" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="Get" UserSourceName="Get">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>DELETE FROM [UserProcess_GUI_PaidAdgroupCreative] WHERE (((@IsNull_headline = 1 AND [headline] IS NULL) OR ([headline] = @Original_headline)) AND ((@IsNull_desc1 = 1 AND [desc1] IS NULL) OR ([desc1] = @Original_desc1)) AND ((@IsNull_desc2 = 1 AND [desc2] IS NULL) OR ([desc2] = @Original_desc2)) AND ((@IsNull_creativeVisUrl = 1 AND [creativeVisUrl] IS NULL) OR ([creativeVisUrl] = @Original_creativeVisUrl)) AND ((@IsNull_creativeDestUrl = 1 AND [creativeDestUrl] IS NULL) OR ([creativeDestUrl] = @Original_creativeDestUrl)) AND ((@IsNull_creativeStatus = 1 AND [creativeStatus] IS NULL) OR ([creativeStatus] = @Original_creativeStatus)) AND ([PPC_Creative_GK] = @Original_PPC_Creative_GK) AND ((@IsNull_Account_ID = 1 AND [Account_ID] IS NULL) OR ([Account_ID] = @Original_Account_ID)) AND ((@IsNull_campaignid = 1 AND [campaignid] IS NULL) OR ([campaignid] = @Original_campaignid)) AND ((@IsNull_adgroupid = 1 AND [adgroupid] IS NULL) OR ([adgroupid] = @Original_adgroupid)) AND ((@IsNull_creativeid = 1 AND [creativeid] IS NULL) OR ([creativeid] = @Original_creativeid)) AND ((@IsNull_Channel_ID = 1 AND [Channel_ID] IS NULL) OR ([Channel_ID] = @Original_Channel_ID)) AND ((@IsNull_Page_GK = 1 AND [Page_GK] IS NULL) OR ([Page_GK] = @Original_Page_GK)) AND ((@IsNull_AdGroup_GK = 1 AND [AdGroup_GK] IS NULL) OR ([AdGroup_GK] = @Original_AdGroup_GK)) AND ((@IsNull_Creative_GK = 1 AND [Creative_GK] IS NULL) OR ([Creative_GK] = @Original_Creative_GK)))</CommandText>
+                    <CommandText>DELETE FROM [UserProcess_GUI_PaidAdgroupCreative] WHERE (((@IsNull_headline = 1 AND [headline] IS NULL) OR ([headline] = @Original_headline)) AND ((@IsNull_desc1 = 1 AND [desc1] IS NULL) OR ([desc1] = @Original_desc1)) AND ((@IsNull_desc2 = 1 AND [desc2] IS NULL) OR ([desc2] = @Original_desc2)) AND ((@IsNull_creativeVisUrl = 1 AND [creativeVisUrl] IS NULL) OR ([creativeVisUrl] = @Original_creativeVisUrl)) AND ((@IsNull_creativeDestUrl = 1 AND [creativeDestUrl] IS NULL) OR ([creativeDestUrl] = @Original_creativeDestUrl)) AND ((@IsNull_creativeStatus = 1 AND [creativeStatus] IS NULL) OR ([creativeStatus] = @Original_creativeStatus)) AND ([PPC_Creative_GK] = @Original_PPC_Creative_GK) AND ((@IsNull_Account_ID = 1 AND [Account_ID] IS NULL) OR ([Account_ID] = @Original_Account_ID)) AND ((@IsNull_campaignid = 1 AND [campaignid] IS NULL) OR ([campaignid] = @Original_campaignid)) AND ((@IsNull_adgroupid = 1 AND [adgroupid] IS NULL) OR ([adgroupid] = @Original_adgroupid)) AND ((@IsNull_creativeid = 1 AND [creativeid] IS NULL) OR ([creativeid] = @Original_creativeid)) AND ((@IsNull_Channel_ID = 1 AND [Channel_ID] IS NULL) OR ([Channel_ID] = @Original_Channel_ID)) AND ((@IsNull_Page_GK = 1 AND [Page_GK] IS NULL) OR ([Page_GK] = @Original_Page_GK)) AND ((@IsNull_AdGroup_GK = 1 AND [AdGroup_GK] IS NULL) OR ([AdGroup_GK] = @Original_AdGroup_GK)) AND ((@IsNull_Creative_GK = 1 AND [Creative_GK] IS NULL) OR ([Creative_GK] = @Original_Creative_GK)) AND ((@IsNull_Gateway_GK = 1 AND [Gateway_GK] IS NULL) OR ([Gateway_GK] = @Original_Gateway_GK)))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_headline" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="headline" SourceColumnNullMapping="true" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Original_headline" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="headline" SourceColumnNullMapping="false" SourceVersion="Original" />
@@ -1755,14 +1768,16 @@ FROM         Constant_Channel</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_AdGroup_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AdGroup_GK" SourceColumnNullMapping="false" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Creative_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Creative_GK" SourceColumnNullMapping="true" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Creative_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Creative_GK" SourceColumnNullMapping="false" SourceVersion="Original" />
-                    </Parameters>
+						<Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Gateway_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Gateway_GK" SourceColumnNullMapping="true" SourceVersion="Original" />
+						<Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Gateway_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Gateway_GK" SourceColumnNullMapping="false" SourceVersion="Original" />
+					</Parameters>
                   </DbCommand>
                 </DeleteCommand>
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>
-						INSERT INTO [UserProcess_GUI_PaidAdgroupCreative] ([headline], [desc1], [desc2], [creativeVisUrl], [creativeDestUrl], [creativeStatus], [Account_ID], [campaignid], [adgroupid], [creativeid], [Channel_ID], [Page_GK], [AdGroup_GK], [Creative_GK]) VALUES (@headline, @desc1, @desc2, @creativeVisUrl, @creativeDestUrl, @creativeStatus, @Account_ID, @campaignid, @adgroupid, @creativeid, @Channel_ID, @Page_GK, @AdGroup_GK, @Creative_GK);
-						SELECT headline, desc1, desc2, creativeVisUrl, creativeDestUrl, creativeStatus, PPC_Creative_GK, Account_ID, campaignid, adgroupid, creativeid, Channel_ID, Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = SCOPE_IDENTITY()) ORDER BY headline</CommandText>
+						INSERT INTO [UserProcess_GUI_PaidAdgroupCreative] ([headline], [desc1], [desc2], [creativeVisUrl], [creativeDestUrl], [creativeStatus], [Account_ID], [campaignid], [adgroupid], [creativeid], [Channel_ID], [Page_GK], [AdGroup_GK], [Creative_GK]) VALUES (@headline, @desc1, @desc2, @creativeVisUrl, @creativeDestUrl, @creativeStatus, @Account_ID, @campaignid, @adgroupid, @creativeid, @Channel_ID, @Page_GK, @AdGroup_GK, @Creative_GK, @Gateway_GK);
+						SELECT headline, desc1, desc2, creativeVisUrl, creativeDestUrl, creativeStatus, PPC_Creative_GK, Account_ID, campaignid, adgroupid, creativeid, Channel_ID, Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK, Gateway_GK FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = SCOPE_IDENTITY()) ORDER BY headline</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@headline" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="headline" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@desc1" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="desc1" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1777,7 +1792,8 @@ FROM         Constant_Channel</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Channel_ID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Channel_ID" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Page_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Page_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@AdGroup_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AdGroup_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Creative_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Creative_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
+						<Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Creative_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Creative_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
+						<Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Gateway_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Gateway_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
@@ -1785,7 +1801,7 @@ FROM         Constant_Channel</CommandText>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>
 						SELECT     headline, desc1, desc2, creativeVisUrl, creativeDestUrl, creativeStatus, PPC_Creative_GK, Account_ID, campaignid, adgroupid, creativeid, Channel_ID,
-						Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK, Segment1, Segment2, Segment3, Segment4, Segment5
+						Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK, Gateway_GK, Segment1, Segment2, Segment3, Segment4, Segment5
 						FROM         UserProcess_GUI_PaidAdgroupCreative AS o
 						WHERE     AdGroup_GK = @adgroupGK and (creativeStatus = 1 or creativeStatus is null)
 						ORDER BY Creative_GK</CommandText>
@@ -1814,6 +1830,7 @@ FROM         Constant_Channel</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Page_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Page_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@AdGroup_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AdGroup_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Creative_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Creative_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Gateway_GK" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Gateway_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="PPC_Creative_GK" ColumnName="PPC_Creative_GK" DataSourceName="easynet_Oltp.dbo.UserProcess_GUI_PaidAdgroupCreative" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@PPC_Creative_GK" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="PPC_Creative_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Segment1" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Segment1" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Segment2" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Segment2" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1841,7 +1858,8 @@ FROM         Constant_Channel</CommandText>
               <Mapping SourceColumn="Page_GK" DataSetColumn="PageGK" />
               <Mapping SourceColumn="PageDisplay" DataSetColumn="PageDisplay" />
               <Mapping SourceColumn="AdGroup_GK" DataSetColumn="AdgroupGK" />
-              <Mapping SourceColumn="Creative_GK" DataSetColumn="CreativeGK" />
+				<Mapping SourceColumn="Creative_GK" DataSetColumn="CreativeGK" />
+				<Mapping SourceColumn="Gateway_GK" DataSetColumn="GatewayGK" />
               <Mapping SourceColumn="Segment1" DataSetColumn="Segment1" />
               <Mapping SourceColumn="Segment2" DataSetColumn="Segment2" />
               <Mapping SourceColumn="Segment3" DataSetColumn="Segment3" />
@@ -1852,7 +1870,7 @@ FROM         Constant_Channel</CommandText>
               <DbSource ConnectionRef="easynet_OltpConnectionString (Settings)" DbObjectName="easynet_Oltp.dbo.UserProcess_GUI_PaidAdgroupCreative" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillSingle" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetSingle" GeneratorSourceName="FillSingle" GetMethodModifier="Public" GetMethodName="GetSingle" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetSingle" UserSourceName="FillSingle">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT Account_ID, AdGroup_GK, Channel_ID, Creative_GK, PPC_Creative_GK, Page_GK, adgroupid, campaignid, creativeStatus, creativeVisUrl, creativeid, desc1, desc2, creativeDestUrl, headline, Segment1, Segment2, Segment3, Segment4, Segment5 FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = @adgroupCreativeGK) order by Creative_GK</CommandText>
+                    <CommandText>SELECT Account_ID, AdGroup_GK, Channel_ID, Creative_GK, Gatewat_GK, PPC_Creative_GK, Page_GK, adgroupid, campaignid, creativeStatus, creativeVisUrl, creativeid, desc1, desc2, creativeDestUrl, headline, Segment1, Segment2, Segment3, Segment4, Segment5 FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = @adgroupCreativeGK) order by Creative_GK</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="adgroupCreativeGK" ColumnName="PPC_Creative_GK" DataSourceName="easynet_Oltp.dbo.UserProcess_GUI_PaidAdgroupCreative" DataTypeServer="int" DbType="Int64" Direction="Input" ParameterName="@adgroupCreativeGK" Precision="0" ProviderType="BigInt" Scale="0" Size="4" SourceColumn="PPC_Creative_GK" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
@@ -2991,7 +3009,8 @@ SELECT Campaign_GK, Account_ID, Channel_ID, campaign, Segment1, Segment2, Segmen
               <xs:element name="ChannelID" msdata:Caption="Channel_ID" msprop:Generator_UserColumnName="ChannelID" msprop:Generator_ColumnPropNameInRow="ChannelID" msprop:Generator_ColumnVarNameInTable="columnChannelID" msprop:Generator_ColumnPropNameInTable="ChannelIDColumn" type="xs:int" minOccurs="0" />
               <xs:element name="PageGK" msdata:Caption="Page_GK" msprop:Generator_UserColumnName="PageGK" msprop:nullValue="-1" msprop:Generator_ColumnVarNameInTable="columnPageGK" msprop:Generator_ColumnPropNameInTable="PageGKColumn" msprop:Generator_ColumnPropNameInRow="PageGK" type="xs:long" default="-1" minOccurs="0" />
               <xs:element name="AdgroupGK" msdata:Caption="AdGroup_GK" msprop:Generator_UserColumnName="AdgroupGK" msprop:Generator_ColumnPropNameInRow="AdgroupGK" msprop:Generator_ColumnVarNameInTable="columnAdgroupGK" msprop:Generator_ColumnPropNameInTable="AdgroupGKColumn" type="xs:long" minOccurs="0" />
-              <xs:element name="CreativeGK" msdata:Caption="Creative_GK" msprop:Generator_UserColumnName="CreativeGK" msprop:Generator_ColumnPropNameInRow="CreativeGK" msprop:Generator_ColumnVarNameInTable="columnCreativeGK" msprop:Generator_ColumnPropNameInTable="CreativeGKColumn" type="xs:long" minOccurs="0" />
+				<xs:element name="CreativeGK" msdata:Caption="Creative_GK" msprop:Generator_UserColumnName="CreativeGK" msprop:Generator_ColumnPropNameInRow="CreativeGK" msprop:Generator_ColumnVarNameInTable="columnCreativeGK" msprop:Generator_ColumnPropNameInTable="CreativeGKColumn" type="xs:long" minOccurs="0" />
+				<xs:element name="GatewayGK" msdata:Caption="Gateway_GK" msprop:Generator_UserColumnName="GatewayGK" msprop:Generator_ColumnPropNameInRow="GatewayGK" msprop:Generator_ColumnVarNameInTable="columnGatewayGK" msprop:Generator_ColumnPropNameInTable="GatewayGKColumn" type="xs:long" minOccurs="0" />
               <xs:element name="Segment1" msprop:Generator_UserColumnName="Segment1" msprop:nullValue="-1" msprop:Generator_ColumnPropNameInRow="Segment1" msprop:Generator_ColumnPropNameInTable="Segment1Column" msprop:Generator_ColumnVarNameInTable="columnSegment1" type="xs:int" default="-1" minOccurs="0" />
               <xs:element name="Segment2" msprop:Generator_UserColumnName="Segment2" msprop:nullValue="-1" msprop:Generator_ColumnPropNameInRow="Segment2" msprop:Generator_ColumnPropNameInTable="Segment2Column" msprop:Generator_ColumnVarNameInTable="columnSegment2" type="xs:int" default="-1" minOccurs="0" />
               <xs:element name="Segment3" msprop:Generator_UserColumnName="Segment3" msprop:nullValue="-1" msprop:Generator_ColumnPropNameInRow="Segment3" msprop:Generator_ColumnPropNameInTable="Segment3Column" msprop:Generator_ColumnVarNameInTable="columnSegment3" type="xs:int" default="-1" minOccurs="0" />

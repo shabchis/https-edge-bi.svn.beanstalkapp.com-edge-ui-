@@ -6766,6 +6766,8 @@ namespace Easynet.Edge.UI.Data {
             
             private global::System.Data.DataColumn columnCreativeGK;
             
+            private global::System.Data.DataColumn columnGatewayGK;
+            
             private global::System.Data.DataColumn columnSegment1;
             
             private global::System.Data.DataColumn columnSegment2;
@@ -6939,6 +6941,14 @@ namespace Easynet.Edge.UI.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GatewayGKColumn {
+                get {
+                    return this.columnGatewayGK;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn Segment1Column {
                 get {
                     return this.columnSegment1;
@@ -7030,6 +7040,7 @@ namespace Easynet.Edge.UI.Data {
                         long PageGK, 
                         long AdgroupGK, 
                         long CreativeGK, 
+                        long GatewayGK, 
                         int Segment1, 
                         int Segment2, 
                         int Segment3, 
@@ -7053,6 +7064,7 @@ namespace Easynet.Edge.UI.Data {
                         PageGK,
                         AdgroupGK,
                         CreativeGK,
+                        GatewayGK,
                         Segment1,
                         Segment2,
                         Segment3,
@@ -7103,6 +7115,7 @@ namespace Easynet.Edge.UI.Data {
                 this.columnPageGK = base.Columns["PageGK"];
                 this.columnAdgroupGK = base.Columns["AdgroupGK"];
                 this.columnCreativeGK = base.Columns["CreativeGK"];
+                this.columnGatewayGK = base.Columns["GatewayGK"];
                 this.columnSegment1 = base.Columns["Segment1"];
                 this.columnSegment2 = base.Columns["Segment2"];
                 this.columnSegment3 = base.Columns["Segment3"];
@@ -7145,6 +7158,8 @@ namespace Easynet.Edge.UI.Data {
                 base.Columns.Add(this.columnAdgroupGK);
                 this.columnCreativeGK = new global::System.Data.DataColumn("CreativeGK", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCreativeGK);
+                this.columnGatewayGK = new global::System.Data.DataColumn("GatewayGK", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGatewayGK);
                 this.columnSegment1 = new global::System.Data.DataColumn("Segment1", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSegment1);
                 this.columnSegment2 = new global::System.Data.DataColumn("Segment2", typeof(int), null, global::System.Data.MappingType.Element);
@@ -7179,6 +7194,7 @@ namespace Easynet.Edge.UI.Data {
                 this.columnPageGK.DefaultValue = ((long)(-1));
                 this.columnAdgroupGK.Caption = "AdGroup_GK";
                 this.columnCreativeGK.Caption = "Creative_GK";
+                this.columnGatewayGK.Caption = "Gateway_GK";
                 this.columnSegment1.DefaultValue = ((int)(-1));
                 this.columnSegment2.DefaultValue = ((int)(-1));
                 this.columnSegment3.DefaultValue = ((int)(-1));
@@ -14117,6 +14133,22 @@ namespace Easynet.Edge.UI.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long GatewayGK {
+                get {
+                    try {
+                        return ((long)(this[this.tableAdgroupCreative.GatewayGKColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GatewayGK\' in table \'AdgroupCreative\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAdgroupCreative.GatewayGKColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Segment1 {
                 get {
                     if (this.IsSegment1Null()) {
@@ -14373,6 +14405,18 @@ namespace Easynet.Edge.UI.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCreativeGKNull() {
                 this[this.tableAdgroupCreative.CreativeGKColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGatewayGKNull() {
+                return this.IsNull(this.tableAdgroupCreative.GatewayGKColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGatewayGKNull() {
+                this[this.tableAdgroupCreative.GatewayGKColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17635,6 +17679,19 @@ ORDER BY IsDefaultAdunit DESC, Adunit";
 							Gateway_GK = @Gateway_GK
 							and Account_ID = @Account_ID;
 							
+						UPDATE UserProcess_GUI_PaidAdgroupCreative
+						SET
+							Page_GK			= @Page_GK,
+							Segment1		= @Segment1,
+							Segment2		= @Segment2,
+							Segment3		= @Segment3,
+							Segment4		= @Segment4,
+							Segment5		= @Segment5,
+							LastUpdated		= getdate()
+						WHERE
+							Gateway_GK = @Gateway_GK
+							and Account_ID = @Account_ID;
+							
 						SELECT Gateway_GK, Account_ID, Gateway_id, Gateway, Dest_URL, Campaign_GK, Adgroup_GK, Page_GK, Reference_Type, Reference_ID, Segment1, Segment2, Segment3, Segment4, Segment5 FROM UserProcess_GUI_Gateway WHERE (Gateway_GK = @Gateway_GK) ORDER BY Gateway
 						";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
@@ -19046,7 +19103,7 @@ SELECT Creative_GK, Account_ID, Creative_Title, Creative_Desc1, Creative_Desc2, 
 						SET
 							[Segment1] = isnull(@Segment1, Segment1),
 							[Segment2] = isnull(@Segment2, Segment2),
-							[Segment3] = isnull(@Segment3, Segment3),
+							[Segment3] = isnull(@Segment3, Segmenxt3),
 							[Segment4] = isnull(@Segment4, Segment4),
 							[Segment5] = isnull(@Segment5, Segment5),
 							[LastUpdated] = getdate()
@@ -24140,6 +24197,7 @@ or
             tableMapping.ColumnMappings.Add("PageDisplay", "PageDisplay");
             tableMapping.ColumnMappings.Add("AdGroup_GK", "AdgroupGK");
             tableMapping.ColumnMappings.Add("Creative_GK", "CreativeGK");
+            tableMapping.ColumnMappings.Add("Gateway_GK", "GatewayGK");
             tableMapping.ColumnMappings.Add("Segment1", "Segment1");
             tableMapping.ColumnMappings.Add("Segment2", "Segment2");
             tableMapping.ColumnMappings.Add("Segment3", "Segment3");
@@ -24148,7 +24206,26 @@ or
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [UserProcess_GUI_PaidAdgroupCreative] WHERE (((@IsNull_headline = 1 AND [headline] IS NULL) OR ([headline] = @Original_headline)) AND ((@IsNull_desc1 = 1 AND [desc1] IS NULL) OR ([desc1] = @Original_desc1)) AND ((@IsNull_desc2 = 1 AND [desc2] IS NULL) OR ([desc2] = @Original_desc2)) AND ((@IsNull_creativeVisUrl = 1 AND [creativeVisUrl] IS NULL) OR ([creativeVisUrl] = @Original_creativeVisUrl)) AND ((@IsNull_creativeDestUrl = 1 AND [creativeDestUrl] IS NULL) OR ([creativeDestUrl] = @Original_creativeDestUrl)) AND ((@IsNull_creativeStatus = 1 AND [creativeStatus] IS NULL) OR ([creativeStatus] = @Original_creativeStatus)) AND ([PPC_Creative_GK] = @Original_PPC_Creative_GK) AND ((@IsNull_Account_ID = 1 AND [Account_ID] IS NULL) OR ([Account_ID] = @Original_Account_ID)) AND ((@IsNull_campaignid = 1 AND [campaignid] IS NULL) OR ([campaignid] = @Original_campaignid)) AND ((@IsNull_adgroupid = 1 AND [adgroupid] IS NULL) OR ([adgroupid] = @Original_adgroupid)) AND ((@IsNull_creativeid = 1 AND [creativeid] IS NULL) OR ([creativeid] = @Original_creativeid)) AND ((@IsNull_Channel_ID = 1 AND [Channel_ID] IS NULL) OR ([Channel_ID] = @Original_Channel_ID)) AND ((@IsNull_Page_GK = 1 AND [Page_GK] IS NULL) OR ([Page_GK] = @Original_Page_GK)) AND ((@IsNull_AdGroup_GK = 1 AND [AdGroup_GK] IS NULL) OR ([AdGroup_GK] = @Original_AdGroup_GK)) AND ((@IsNull_Creative_GK = 1 AND [Creative_GK] IS NULL) OR ([Creative_GK] = @Original_Creative_GK)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [UserProcess_GUI_PaidAdgroupCreative] WHERE (((@IsNull_headline = 1 A" +
+                "ND [headline] IS NULL) OR ([headline] = @Original_headline)) AND ((@IsNull_desc1" +
+                " = 1 AND [desc1] IS NULL) OR ([desc1] = @Original_desc1)) AND ((@IsNull_desc2 = " +
+                "1 AND [desc2] IS NULL) OR ([desc2] = @Original_desc2)) AND ((@IsNull_creativeVis" +
+                "Url = 1 AND [creativeVisUrl] IS NULL) OR ([creativeVisUrl] = @Original_creativeV" +
+                "isUrl)) AND ((@IsNull_creativeDestUrl = 1 AND [creativeDestUrl] IS NULL) OR ([cr" +
+                "eativeDestUrl] = @Original_creativeDestUrl)) AND ((@IsNull_creativeStatus = 1 AN" +
+                "D [creativeStatus] IS NULL) OR ([creativeStatus] = @Original_creativeStatus)) AN" +
+                "D ([PPC_Creative_GK] = @Original_PPC_Creative_GK) AND ((@IsNull_Account_ID = 1 A" +
+                "ND [Account_ID] IS NULL) OR ([Account_ID] = @Original_Account_ID)) AND ((@IsNull" +
+                "_campaignid = 1 AND [campaignid] IS NULL) OR ([campaignid] = @Original_campaigni" +
+                "d)) AND ((@IsNull_adgroupid = 1 AND [adgroupid] IS NULL) OR ([adgroupid] = @Orig" +
+                "inal_adgroupid)) AND ((@IsNull_creativeid = 1 AND [creativeid] IS NULL) OR ([cre" +
+                "ativeid] = @Original_creativeid)) AND ((@IsNull_Channel_ID = 1 AND [Channel_ID] " +
+                "IS NULL) OR ([Channel_ID] = @Original_Channel_ID)) AND ((@IsNull_Page_GK = 1 AND" +
+                " [Page_GK] IS NULL) OR ([Page_GK] = @Original_Page_GK)) AND ((@IsNull_AdGroup_GK" +
+                " = 1 AND [AdGroup_GK] IS NULL) OR ([AdGroup_GK] = @Original_AdGroup_GK)) AND ((@" +
+                "IsNull_Creative_GK = 1 AND [Creative_GK] IS NULL) OR ([Creative_GK] = @Original_" +
+                "Creative_GK)) AND ((@IsNull_Gateway_GK = 1 AND [Gateway_GK] IS NULL) OR ([Gatewa" +
+                "y_GK] = @Original_Gateway_GK)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_headline", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "headline", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_headline", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "headline", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -24179,11 +24256,13 @@ or
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AdGroup_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AdGroup_GK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Creative_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Creative_GK", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Creative_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Creative_GK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Gateway_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gateway_GK", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Gateway_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gateway_GK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = @"
-						INSERT INTO [UserProcess_GUI_PaidAdgroupCreative] ([headline], [desc1], [desc2], [creativeVisUrl], [creativeDestUrl], [creativeStatus], [Account_ID], [campaignid], [adgroupid], [creativeid], [Channel_ID], [Page_GK], [AdGroup_GK], [Creative_GK]) VALUES (@headline, @desc1, @desc2, @creativeVisUrl, @creativeDestUrl, @creativeStatus, @Account_ID, @campaignid, @adgroupid, @creativeid, @Channel_ID, @Page_GK, @AdGroup_GK, @Creative_GK);
-						SELECT headline, desc1, desc2, creativeVisUrl, creativeDestUrl, creativeStatus, PPC_Creative_GK, Account_ID, campaignid, adgroupid, creativeid, Channel_ID, Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = SCOPE_IDENTITY()) ORDER BY headline";
+						INSERT INTO [UserProcess_GUI_PaidAdgroupCreative] ([headline], [desc1], [desc2], [creativeVisUrl], [creativeDestUrl], [creativeStatus], [Account_ID], [campaignid], [adgroupid], [creativeid], [Channel_ID], [Page_GK], [AdGroup_GK], [Creative_GK]) VALUES (@headline, @desc1, @desc2, @creativeVisUrl, @creativeDestUrl, @creativeStatus, @Account_ID, @campaignid, @adgroupid, @creativeid, @Channel_ID, @Page_GK, @AdGroup_GK, @Creative_GK, @Gateway_GK);
+						SELECT headline, desc1, desc2, creativeVisUrl, creativeDestUrl, creativeStatus, PPC_Creative_GK, Account_ID, campaignid, adgroupid, creativeid, Channel_ID, Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK, Gateway_GK FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = SCOPE_IDENTITY()) ORDER BY headline";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@headline", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "headline", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@desc1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "desc1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -24199,6 +24278,7 @@ or
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Page_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Page_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AdGroup_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AdGroup_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Creative_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Creative_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Gateway_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gateway_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = @"
@@ -24219,6 +24299,7 @@ or
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Page_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Page_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AdGroup_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AdGroup_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Creative_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Creative_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Gateway_GK", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gateway_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PPC_Creative_GK", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "PPC_Creative_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Segment1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Segment1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Segment2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Segment2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -24242,7 +24323,7 @@ or
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"
 						SELECT     headline, desc1, desc2, creativeVisUrl, creativeDestUrl, creativeStatus, PPC_Creative_GK, Account_ID, campaignid, adgroupid, creativeid, Channel_ID,
-						Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK, Segment1, Segment2, Segment3, Segment4, Segment5
+						Page_GK, (SELECT case when Title is null then Page else Title end FROM UserProcess_GUI_Page AS p WHERE Page_gk = o.Page_GK) AS PageDisplay, AdGroup_GK, Creative_GK, Gateway_GK, Segment1, Segment2, Segment3, Segment4, Segment5
 						FROM         UserProcess_GUI_PaidAdgroupCreative AS o
 						WHERE     AdGroup_GK = @adgroupGK and (creativeStatus = 1 or creativeStatus is null)
 						ORDER BY Creative_GK";
@@ -24250,7 +24331,7 @@ or
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@adgroupGK", global::System.Data.SqlDbType.BigInt, 4, global::System.Data.ParameterDirection.Input, 0, 0, "AdGroup_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT Account_ID, AdGroup_GK, Channel_ID, Creative_GK, PPC_Creative_GK, Page_GK, adgroupid, campaignid, creativeStatus, creativeVisUrl, creativeid, desc1, desc2, creativeDestUrl, headline, Segment1, Segment2, Segment3, Segment4, Segment5 FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = @adgroupCreativeGK) order by Creative_GK";
+            this._commandCollection[1].CommandText = @"SELECT Account_ID, AdGroup_GK, Channel_ID, Creative_GK, Gatewat_GK, PPC_Creative_GK, Page_GK, adgroupid, campaignid, creativeStatus, creativeVisUrl, creativeid, desc1, desc2, creativeDestUrl, headline, Segment1, Segment2, Segment3, Segment4, Segment5 FROM UserProcess_GUI_PaidAdgroupCreative AS o WHERE (PPC_Creative_GK = @adgroupCreativeGK) order by Creative_GK";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@adgroupCreativeGK", global::System.Data.SqlDbType.BigInt, 4, global::System.Data.ParameterDirection.Input, 0, 0, "PPC_Creative_GK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

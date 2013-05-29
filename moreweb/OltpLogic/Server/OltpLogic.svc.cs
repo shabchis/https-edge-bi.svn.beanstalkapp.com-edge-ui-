@@ -1493,7 +1493,7 @@ namespace Easynet.Edge.UI.Server
 				update	UserProcess_GUI_PaidAdgroupCreative
 				set		Page_GK = @pageGK:BigInt,
 						LastUpdated = getdate()
-				where	Account_ID = @accountID:Int and PPC_Creative_GK = @adgroupCreativeGK:BigInt;
+				where	PPC_Creative_GK = @adgroupCreativeGK:BigInt and Account_ID = @accountID:Int;
 
 				update	UserProcess_GUI_Gateway
 				set		Page_GK = @pageGK:BigInt,
@@ -1503,7 +1503,7 @@ namespace Easynet.Edge.UI.Server
 						Segment4 = (case when @segment4:Int is null then Segment4 else @segment4 end),
 						Segment5 = (case when @segment5:Int is null then Segment5 else @segment5 end),
 						LastUpdated = getdate()
-				where	Account_ID = @accountID:Int and Reference_Type = {0} and Reference_ID = @adgroupCreativeGK:BigInt;
+				where	Gateway_GK = @gatewayGK:BigInt and Account_ID = @accountID:Int;
 				",
 				 0)//(int)GatewayReferenceType.Creative)
 			);
@@ -1540,7 +1540,7 @@ namespace Easynet.Edge.UI.Server
 				// First update the page
 				pageAndGatewayCmd.Parameters["@accountID"].Value = adgCreative.AccountID;
 				pageAndGatewayCmd.Parameters["@pageGK"].Value = adgCreative.PageGK;
-				pageAndGatewayCmd.Parameters["@adgroupCreativeGK"].Value = adgCreative.AdgroupCreativeGK;
+				pageAndGatewayCmd.Parameters["@gatewayGK"].Value = adgCreative.GatewayGK;
 				pageAndGatewayCmd.Parameters["@segment1"].Value = s1;
 				pageAndGatewayCmd.Parameters["@segment2"].Value = s2;
 				pageAndGatewayCmd.Parameters["@segment3"].Value = s3;
