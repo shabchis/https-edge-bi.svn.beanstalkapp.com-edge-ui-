@@ -48,9 +48,7 @@ class sessionValidation{
 			$result = $this->edgeapi->Request('/permissions', 'POST', true, array('Content-Type: application/json'), $data);
 			
 			if ($result != 'true')
-			{
-				show_error('The account you requested was not found.', 404);
-			}
+				$this->errors->ThrowEx('The requested page was not found, or you do not have permission to view it for this account.', 404);
 		}
 	}
 	

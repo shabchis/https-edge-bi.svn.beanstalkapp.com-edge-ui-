@@ -36,9 +36,13 @@
 	</head>
 	<body>
 		<div id="container" >
-			<div id="modal">
-			<div id="content"></div>
+			
+			<div id="errorDialog">
+				<div id="errorMessage"></div>
+				<div id="errorDetails">(details)</div>
+				<p id="errorContent"></p>
 			</div>
+			
 			<script id="usertmpl"  type="text/x-jquery-tmpl">
 				<span class="${UserID}">${Name}</span>
 			</script>
@@ -96,17 +100,17 @@
 			<header>
 				<img src="<?php base_url();?>assets/img/logo_app.jpg" id="logo" />
 				<div id="login">
-					<div id="user">
-					&nbsp; <span id="loginout"><a href="login/logout">(Log Out)</a> </span>
-					</div>				
-					<div id="top"></div>	
+					<div id="user">Logged in as <span id="username"></span> <span id="loginout"><a href="login/logout">(log out)</a></span></div>				
+					<div id="top"></div>
 				</div>
 				<div id="breadcrumbs"><div>		
 			</header>
 			
 			<div id="ajaxloader">
-				<img src="<?php base_url(); ?>assets/img/no-bg.gif" id="ajax" />
-				<div>loading....</div>
+				<div id="ajaxloader-content">
+					<img src="<?php base_url(); ?>assets/img/no-bg.gif" id="ajax" />
+					<div>loading....</div>
+				</div>
 			</div>
 			<div class="clear"></div>
 
@@ -114,12 +118,12 @@
 			<script id="accountbar"  type="text/x-jquery-tmpl">
 				{{if Name }}
 				<ul>
-					<li id="${ID}" class="campaign" data-url="${SiteURL}" data-name="${Name}" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
+					<li id="${ID}" class="account-root" data-url="${SiteURL}" data-name="${Name}" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
 						<span><a href="accounts/${ID}">${ Name }</a></span>
 						{{if ChildAccounts}}
 							{{each ChildAccounts}}
 								{{if ChildAccounts}}
-									<li id="${ID}" data-name="${Name}" class="parent" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
+									<li id="${ID}" data-name="${Name}" class="account-sub1" {{if Permissions}}data-Permissions=${Permissions} {{else}} data-Permissions="none" {{/if}}>
 										<a href="accounts/${ID}">${ Name }</a>
 										{{if ChildAccounts}}
 											<ul>
@@ -143,8 +147,9 @@
 				{{/if}}
 			</script>
 
-			<div id="slider">
-				<span data-show="true"><img src="<?php base_url();?>assets/img/arrows_04.png" /></span>
+			<div id="slider" data-show="true">
+				<span id="slider-open"><img src="<?php base_url();?>assets/img/arrows_04.png" /></span>
+				<span id="slider-closed" style="display: none"><img src="<?php base_url();?>assets/img/arrows_03.png" /></span>
 				<div id="caption">Hide</div>
 			</div>
 
@@ -177,12 +182,11 @@
 				$("#topmenu").tmpl(_menudata).appendTo("#top");
 			}
 			else{
-
-				$("#sub").html("the menu is unavailible for some reason");
+				$("#sub").html("The menu is unavailible for some reason. Please contact an administrator.");
 			}
 			if (_userdata)
 			{
-				$("#usertmpl").tmpl(_userdata).prependTo("header #login #user");
+				$("#usertmpl").tmpl(_userdata).appendTo("header #login #user #username");
 			}
 			if(_accountdata)
 			{

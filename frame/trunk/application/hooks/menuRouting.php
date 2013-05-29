@@ -28,7 +28,7 @@ class menuRouting{
 		$this->addRoutesFromMenuItems($menuItems);
 		
 		// Default routing when no path specified
-		$MENU_ROUTES["accounts/(:num)/?$"] = 'home/index/$1';
+		$MENU_ROUTES["accounts/(:num)/?$"] = 'pages/home/index/$1';
 	}
 	
 	function addRoutesFromMenuItems(&$menuItems)

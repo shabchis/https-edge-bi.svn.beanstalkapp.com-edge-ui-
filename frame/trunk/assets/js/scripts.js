@@ -1,9 +1,8 @@
 $(function ()
 {
-	$("#modal small a").live('click', function ()
+	$("#errorDialog #errorDetails").click(function ()
 	{
-		$("#modal #content").slideToggle("slow");
-		return false;
+		$("#errorDialog #errorContent").slideToggle("slow");
 	});
 	
 	window.adjustFrameHeight();
@@ -92,13 +91,13 @@ $(function ()
 		{
 			window.location.hash = "#accounts/" + _accountdata[0].ID;
 		}
-		else if (accountListItem.hasClass("parent"))
+		else if (accountListItem.hasClass("account-sub1"))
 		{
-			$parents = accountListItem.siblings(".campaign").find("span").text();
+			$parents = accountListItem.siblings(".account-root").find("span").text();
 			$sub = accountListItem.find('a:first').text();
-			$accountId = accountListItem.siblings(".campaign").attr("id");
+			$accountId = accountListItem.siblings(".account-root").attr("id");
 		}
-		else if (accountListItem.hasClass("campaign"))
+		else if (accountListItem.hasClass("account-root"))
 		{
 			$parents = accountListItem.find("span").text();
 			$sub = $link;
@@ -106,9 +105,9 @@ $(function ()
 		}
 		else
 		{
-			$parents = accountListItem.parent().parent().siblings(".campaign").find("span").text();
+			$parents = accountListItem.parent().parent().siblings(".account-root").find("span").text();
 			$sub = accountListItem.text();
-			$accountId = accountListItem.parent().parent().siblings(".campaign").attr("id");
+			$accountId = accountListItem.parent().parent().siblings(".account-root").attr("id");
 		}
 		
 		
@@ -272,42 +271,42 @@ $(function ()
 		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 		return false;
 	});
+	
 	// Slider operations
-	$("#slider span").hover(function ()
-	{
-		$("#caption").css(
-		{
-			'display': 'block',
-			'float': 'right',
-			'margin-right': '7px'
-		});
-	}, function ()
-	{
-		$("#caption").css('display', 'none');
-	});
-	$("#slider span").toggle(function ()
-	{
-		$("#caption").html("Show");
-		//$("#menu").hide();
-		$("#menuwrapper").animate(
-		{
-			marginLeft: '-250px',
-			opacity: 0
+	$("#slider").hover(
+		function (){
+			$("#caption").css({
+				'display': 'block',
+				'float': 'right',
+				'margin-right': '7px'
+			});
 		},
-			500);
-	}, function ()
-	{
-		$("#caption").html("Hide");
-		//	$("#menu").show();
-		//$("#menu").css("width",'200px');
-		$("#menuwrapper").animate(
-		{
-			marginLeft: '0px',
-			opacity: 1
+		function (){
+			$("#caption").css('display', 'none');
+		}
+	);
+		
+	$("#slider").toggle(
+		function (){
+			$("#caption").html("Show");
+			$("#slider-open").hide();
+			$("#slider-closed").show();
+			$("#menuwrapper").animate({
+				marginLeft: '-250px',
+				opacity: 0
+				}, 500);
 		},
-			500);
-		return false;
-	});
+		function () {
+			$("#caption").html("Hide");
+			$("#slider-open").show();
+			$("#slider-closed").hide();
+			$("#menuwrapper").animate({
+				marginLeft: '0px',
+				opacity: 1
+				}, 500);
+			return false;
+		}
+	);
 	// -------------------------------------------
 	// Account picker drop down
 	var documentArrowToggle = function ()
@@ -363,23 +362,23 @@ window.handleError = function (data)
 	}
 	else
 	{
-		$("#modal").html(
-			json && json.message ?
-			json.message :
-		'<h2>Sorry, an unexpected error occured. Please check your network connection</h2><small><a href="#">Details</a></small><div id="content"><p>' + data.responseText + '</p></div>'
-		).dialog(
-		{
-			title: 'Edge.BI Error',
-			modal: true,
-			resizable: false,
-			buttons:
-			{
-				Ok: function ()
-				{
-					$(this).dialog("close");
+		var $errorDialog = $("#errorDialog");
+		
+		$errorDialog.find('#errorMessage')
+			.html(json && json.message ? json.message : 'Sorry, an unexpected error occured.');
+		$errorDialog.find('#errorContent')
+			.html(data.responseText);
+		$errorDialog
+			.dialog({
+				title: 'Edge.BI Error',
+				modal: true,
+				resizable: false,
+				buttons: {
+					OK: function () {
+						$(this).dialog("close");
+					}
 				}
-			}
-		});
+			});
 	}
 };
 
