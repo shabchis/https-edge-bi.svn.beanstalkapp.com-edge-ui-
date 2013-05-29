@@ -80,7 +80,7 @@
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 2px solid #95B054; background: #dadada url(../img/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121;outline:none; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none;border:#95B054; }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #aaaaaa; background: #ffffff url(../img/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #212121; }
-.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #212121; text-decoration: none; }/
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #212121; text-decoration: none; }
 .ui-widget :active { outline: none; }
 
 /* Interaction Cues
@@ -484,7 +484,7 @@ line-height: 28px;
 .ui-dialog .ui-dialog-content { color:#666;font-family: verdana;position: relative; border: 0; background: none; overflow: auto; zoom: 1;
  font-size:12px;
 }
-.ui-dialog .ui-dialog-buttonpane { border-top: 1px solid #E5E5E5; text-align: left; border-width: 1px 0 0 0; background:url('../img/shade-down_01.png') no-repeat;  margin: .5em 0 0 0; padding: 10px 3px 5px 3px; }
+.ui-dialog .ui-dialog-buttonpane { border-top: 1px solid #E5E5E5; text-align: left; border-width: 1px 0 0 0;  margin: .5em 0 0 0; padding: 10px 3px 5px 3px; }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
 /*
 .ui-dialog .ui-dialog-buttonpane button {
@@ -636,72 +636,51 @@ box-shadow: 0px 0px 0px #666;
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
 
 
- .ui-dialog-content h2{
-color:#c81616;
 
-font-size: 12px;
-line-height: 14px;
-
-padding-bottom:  5px;
-margin-top: 0px;
-	
-	
+.ui-dialog-content h2 {
+	color: #c81616;
+	font-size: 12px;
+	line-height: 14px;
+	padding-bottom: 5px;
+	margin-top: 0px;
 }
-.ui-dialog .ui-dialog-content{
-	
 
-	
-
--moz-border-radius: 20px; /* FF1+ */
--webkit-border-radius: 20px; /* Saf3-4 */
-border-radius: 20px;
+.ui-dialog {
+	-moz-border-radius: 20px;/* FF1+ */
+	-webkit-border-radius: 20px; /* Saf3-4 */
+	border-radius: 20px;
 }
-.ui-dialog .ui-dialog-content p{
+
+.ui-dialog .ui-dialog-content p {
 	line-height: 18px;
-        color: #616161;
-        font-size: 12px;
-       margin-top: 5px;
-       margin-left: 10px;
+	color: #616161;
+	font-size: 12px;
+	margin-top: 5px;
+	margin-left: 10px;
 }
 
-.ui-dialog .ui-dialog-buttonpane{
-  border-top: 1px solid #cccccc;
-   margin: 1px 0px;
-
-}
-.ui-button{
- /* FF1+ */
--webkit-border-radius: 5px; /* Saf3-4 */
-border-radius: 10px;
-      -moz-border-radius: 5px 5px 5px 5px;
-      font-size: 12px !important;
-      padding: 0px 5px;
-      float: left !important;
-     
-  
-} 
-.ui-dialog-titlebar{
-  font-size: 18px;
-    font-weight: bold;
-    line-height: 28px;
-    padding: 0 0 6px !important;
-
-}
-.ui-dialog .ui-dialog-titlebar-close span{
-  display: none;
-}
-#modal #content{
-  display: none;
-  
-}
-#modal small a {
-  font-size: 12px;
-  
+.ui-dialog .ui-dialog-buttonpane {
+	border-top: 1px solid #cccccc;
+	margin: 1px 0px;
 }
 
-.ui-tabs .ui-tabs-nav {
-     -moz-border-radius: 0px; /* FF1+ */
-  -webkit-border-radius: 0px; /* Saf3-4, iOS 1+, Android 1.5+ */
-           border-radius: 0px;
+.ui-button {
 
+	-moz-border-radius: 5px 5px 5px 5px;  /* FF1+ */
+	-webkit-border-radius: 5px; /* Saf3-4 */
+	border-radius: 10px;
+	font-size: 12px !important;
+	padding: 0px 5px;
+	float: left !important;
+}
+
+.ui-dialog-titlebar {
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 28px;
+	padding: 0 0 6px !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+	display: none;
 }
