@@ -37,11 +37,11 @@
 
 
 </script>
-
-<div class="IndexTopNav">
     <div style="float:right;">
         <a href="" onclick="openBatchTrackers(); return false;">Batch Update</a>
     </div>
+<div class="IndexTopNav" style="clear:both;">
+
 @using (Html.BeginForm("FindTrackers", "Trackers", FormMethod.Post, new { id = "PageEditorForm", defaultbutton = "FilterButton" }))
 {
     <div class="FilterSegment">
@@ -63,7 +63,7 @@
         <div class="FilterSegmentTitle">
             @segment.SegmentRow.Name
         </div>
-        <select name="Segment@(segment.SegmentRow.SegmentID)">
+        <select name="Segment@(segment.SegmentRow.SegmentID)" style="max-width:110px;">
             <option value="0">(Any)</option>
             <option value="-1">None</option>
             @foreach (Oltp.SegmentValueRow Value in segment.Values)

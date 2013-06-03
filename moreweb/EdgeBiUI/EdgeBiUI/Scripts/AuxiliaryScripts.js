@@ -108,7 +108,7 @@ function handleNewValue(selectElement) {
     if (value == -1000) {
         //jElement.css("display", "none");
         jElement.fadeOut(200, function () {
-            jElement.after("<span id='newValeOption_" + segmentID + "_div'><input type='text' id='newValeOption_" + segmentID + "'/><input type='button' value='Add' id='newValeOption_" + segmentID + "_button' /><input type='button' value='Cancel' id='newValeOption_" + segmentID + "_cancel'/></span>");
+            jElement.after("<span id='newValeOption_" + segmentID + "_div'><input onkeypress='return handleEnterButton(event);' type='text' id='newValeOption_" + segmentID + "'/><input type='button' value='Add' id='newValeOption_" + segmentID + "_button' /><input type='button' value='Cancel' id='newValeOption_" + segmentID + "_cancel'/></span>");
             $("#newValeOption_" + segmentID + "_button").click(function () { addNewValue(selectElement); });
             $("#newValeOption_" + segmentID + "_cancel").click(function () { cancelNewValue(selectElement); });
         });
@@ -149,5 +149,14 @@ function cancelNewValue(selectElement) {
     var segmentID = jElement.attr("segmentID");
     $("#newValeOption_" + segmentID + "_div").remove();
     jElement.val(jElement.attr("originalValue"));
-    jElement.fadeIn(200);    
+    jElement.fadeIn(200);
+}
+
+function handleEnterButton(event) {
+    var keyCode = ('which' in event) ? event.which : event.keyCode;
+    if (keyCode == "13") {
+        return false;
+    }
+    else
+        return true;
 }
