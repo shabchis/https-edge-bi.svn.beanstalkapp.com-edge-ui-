@@ -41,7 +41,7 @@
 */
 $route['default_controller'] = "main";
 $route['scaffolding_trigger'] = "";
-$route['panorama/(:num)']="panorama/index/$1";
+$route['panorama-viewer/(:num)']="panorama/index/$1";
 
 // Merge controller names from menu
 global $MENU_ROUTES;
