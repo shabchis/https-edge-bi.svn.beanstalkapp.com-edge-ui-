@@ -6,6 +6,7 @@ using Easynet.Edge.Core.Services;
 using Easynet.Edge.UI.Data;
 using Easynet.Edge.UI.Server;
 using System.Configuration;
+using System.ServiceModel;
 
 namespace Easynet.Edge.UI.Client
 {
@@ -16,11 +17,12 @@ namespace Easynet.Edge.UI.Client
 
 		public static OltpLogicClient Open(string sessionID)
 		{
+			// All this is a very ugly hack to support MoreWeb's MVC client
 			OltpLogicClient client;
 			try { client = new OltpLogicClient(sessionID); }
-			catch (EdgeSessionException ex)
+			catch (FaultException ex)
 			{
-				if (ex.ErrorType == EdgeSessionErrorType.Expired)
+				if (ex.Message == Const.SessionExpiredMessage)
 					client = null;
 				else
 					throw;
