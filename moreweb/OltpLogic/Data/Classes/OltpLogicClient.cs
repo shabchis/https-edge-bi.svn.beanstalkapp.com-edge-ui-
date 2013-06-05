@@ -14,7 +14,22 @@ namespace Easynet.Edge.UI.Client
 		#region Public
 		//=========================
 
-		public OltpLogicClient(string sessionID)
+		public static OltpLogicClient Open(string sessionID)
+		{
+			OltpLogicClient client;
+			try { client = new OltpLogicClient(sessionID); }
+			catch (EdgeSessionException ex)
+			{
+				if (ex.ErrorType == EdgeSessionErrorType.Expired)
+					client = null;
+				else
+					throw;
+			}
+
+			return client;
+		}
+
+		private OltpLogicClient(string sessionID)
 		{
 			// Automatically restart session
 			SessionStart(sessionID);
