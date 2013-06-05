@@ -40,7 +40,12 @@ namespace EdgeBiUI.Controllers
                 m.Channels = client.Service.Channel_Get().ToDictionary(h => h.ID, h => h.DisplayName);
                 
                 foreach(Oltp.CampaignRow c in t)
-					m.Campaigns.Add(new Models.CampaignRowModel() { CampaignGK = c.GK, CampaignName = c.IsNameNull() ? "[null]" : c.Name, Status = c.StatusID >= 0 ? m.Statuses[c.StatusID] : "N/A", ChannelName = c.ChannelID >= 0 ? m.Channels[c.ChannelID] : "N/A" });
+					m.Campaigns.Add(new Models.CampaignRowModel() {
+						CampaignGK = c.GK,
+						CampaignName = c.IsNameNull() ? "(no name)" : c.Name,
+						Status = m.Statuses.ContainsKey(c.StatusID) ? m.Statuses[c.StatusID] : String.Format("Unknown ({0})", c.StatusID),
+						ChannelName = m.Channels.ContainsKey(c.ChannelID) ? m.Channels[c.ChannelID] : String.Format("Unknown ({0})", c.ChannelID)
+					});
             }
 
             return View(m);
