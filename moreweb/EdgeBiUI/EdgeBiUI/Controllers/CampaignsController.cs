@@ -32,12 +32,12 @@ namespace EdgeBiUI.Controllers
             Models.CampaignListModel m = new Models.CampaignListModel();
             using (var client = new OltpLogicClient(session_id))
             {
-                //Oltp.CampaignDataTable t = client.Service.Campaign_Get(acc_id, null, null, null, false);
+                Oltp.CampaignDataTable t = client.Service.Campaign_Get(acc_id, null, null, null, false);
                 m.Statuses = client.Service.CampaignStatus_Get().ToDictionary(x => x.ID, x => x.Name);
                 m.Channels = client.Service.Channel_Get().ToDictionary(h => h.ID, h => h.DisplayName);
                 
-                //foreach(Oltp.CampaignRow c in t)
-                  //  m.Campaigns.Add(new Models.CampaignRowModel() { CampaignGK = c.GK, CampaignName = c.Name, Status = m.Statuses[c.StatusID], ChannelName = m.Channels[c.ChannelID] });
+                foreach(Oltp.CampaignRow c in t)
+                    m.Campaigns.Add(new Models.CampaignRowModel() { CampaignGK = c.GK, CampaignName = c.Name, Status = m.Statuses[c.StatusID], ChannelName = m.Channels[c.ChannelID] });
             }
 
             return View(m);

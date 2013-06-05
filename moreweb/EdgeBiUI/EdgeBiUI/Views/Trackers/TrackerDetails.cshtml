@@ -55,6 +55,7 @@
                 <div class="segmentRowName">Landing Page</div>
                 <div class="segmentRowValue">
                     <select name="LandingPage" onchange="handleNewValue(this)" segmentID="999" originalValue="@(Model.Tracker.PageGK)">
+                            <option value="-1">(none)</option>
                         @foreach (KeyValuePair<long, string> landingPage in Model.LandingPages)
                         {
                             <option value="@landingPage.Key" @(landingPage.Key == Model.Tracker.PageGK ? "selected='selected'" : "")>@landingPage.Value</option>
