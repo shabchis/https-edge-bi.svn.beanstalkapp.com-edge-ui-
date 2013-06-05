@@ -60,10 +60,12 @@ namespace EdgeBiUI.Controllers
         {
             Models.CreativeModel m = new Models.CreativeModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (OltpLogicClient client = null)
             {
+                if (client==null)
+                    return new ContentResult { Content = "<script type='text/javascript'>window.parent.handleSessionExpired();</script>" };
+
                 Oltp.CreativeRow creative = client.Service.Creative_GetSingle(creativeGK)[0];
-                //client.Service.Creative_Get(
                 m.Creative = creative;
 
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, false);
