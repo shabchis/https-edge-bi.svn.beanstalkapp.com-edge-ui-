@@ -43,6 +43,12 @@
 				<p id="errorContent"></p>
 			</div>
 			
+			<div id="infoDialog">
+				<div id="infoMessage"></div>
+				<div id="infoDetails">(details)</div>
+				<p id="infoContent"></p>
+			</div>
+			
 			<script id="usertmpl"  type="text/x-jquery-tmpl">
 				<span class="${UserID}">${Name}</span>
 			</script>
