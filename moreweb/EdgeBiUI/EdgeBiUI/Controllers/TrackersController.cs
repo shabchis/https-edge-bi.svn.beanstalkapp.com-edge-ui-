@@ -59,7 +59,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 int? channelID = colls["Channel"] == "0" ? null : (int?)int.Parse(colls["Channel"]);
 
@@ -111,7 +111,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 m.Tracker = client.Service.Gateway_GetByIdentifier(acc_id, identifier)[0];
 
@@ -154,7 +154,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 trackers = client.Service.Gateway_GetByIdentifier(acc_id, identifier);
 
@@ -233,7 +233,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
                 foreach (Oltp.SegmentRow segment in segments)
@@ -312,7 +312,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 result = client.Service.Gateway_BatchProperties(acc_id, ranges.ToArray(), channelID, pageGK, segments);
             }

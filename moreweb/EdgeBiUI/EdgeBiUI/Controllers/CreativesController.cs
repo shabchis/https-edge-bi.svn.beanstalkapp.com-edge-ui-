@@ -66,7 +66,7 @@ namespace EdgeBiUI.Controllers
             using (OltpLogicClient client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.CreativeRow creative = client.Service.Creative_GetSingle(creativeGK)[0];
                 m.Creative = creative;
@@ -118,7 +118,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
                 creatives = client.Service.Creative_GetSingle(creativeGK);
             }
 
@@ -160,7 +160,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 foreach (long creativeGK in CreativesGK)
                 {
@@ -205,7 +205,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.CreativeDataTable Creatives = new Oltp.CreativeDataTable();
                 foreach (long creativeGK in CreativesGK)

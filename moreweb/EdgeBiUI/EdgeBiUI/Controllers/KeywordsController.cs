@@ -39,7 +39,7 @@ namespace EdgeBiUI.Controllers
             using (OltpLogicClient client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 string str = searchText.Trim().Length > 0 ? searchText.Trim() + "*" : null;
                 Oltp.KeywordDataTable keywords = client.Service.Keyword_Get(acc_id, true, str, true);
@@ -59,7 +59,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 m.Keyword = client.Service.Keyword_GetSingle(keywordGK)[0];
 

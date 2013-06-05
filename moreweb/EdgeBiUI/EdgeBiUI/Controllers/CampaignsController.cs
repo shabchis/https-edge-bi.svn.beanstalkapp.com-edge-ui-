@@ -33,7 +33,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.CampaignDataTable t = client.Service.Campaign_Get(acc_id, null, null, null, false);
                 m.Statuses = client.Service.CampaignStatus_Get().ToDictionary(x => x.ID, x => x.Name);
@@ -53,7 +53,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 m.Statuses = client.Service.CampaignStatus_Get().ToDictionary(x => x.ID, x => x.Name);
                 m.Channels = client.Service.Channel_Get().ToDictionary(h => h.ID, h => h.DisplayName);
@@ -92,7 +92,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.AdgroupDataTable t = client.Service.Adgroup_Get(campaignGK, null);
 
@@ -111,7 +111,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 m.Campaign = client.Service.Campaign_GetSingle(campaignGK)[0];
 
@@ -157,7 +157,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 string a1 = coll["campaignsGK"];
                 Dictionary<long, long> campaignsGK = a1.Split(',').Select(x => long.Parse(x)).ToDictionary(d=>d, d=>d);
@@ -232,7 +232,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 campaigns = client.Service.Campaign_GetSingle(campaignGK);
 
@@ -310,7 +310,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired(); 
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml"); 
                 
                 m.Campaigns = client.Service.Campaign_GetIndividualCampaigns(CampaingsGK.ToArray()).ToList();
 
@@ -350,7 +350,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 campaigns = client.Service.Campaign_GetIndividualCampaigns(CampaingsGK.ToArray());
                 foreach (string key in coll.Keys)
@@ -484,7 +484,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 m.Adgroup = client.Service.Adgroup_GetSingle(adgroupGK)[0];
 
@@ -572,7 +572,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 adgroups = client.Service.Adgroup_GetSingle(adgroupGK);
 
@@ -636,7 +636,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 foreach (long adgroupGK in AdgroupsGK)
                 {
@@ -680,7 +680,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.AdgroupDataTable adgroups = new Oltp.AdgroupDataTable();
                 foreach (long adgroupGK in AdgroupsGK)
