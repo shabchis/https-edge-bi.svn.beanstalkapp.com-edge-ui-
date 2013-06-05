@@ -464,12 +464,15 @@ li.current > a {
 	position: relative;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	.
 	color: white;
 }
 
+.ajaxloader-dialog .ui-dialog-titlebar {
+	display: none
+}
 
 #ajaxloader {
+	/*
 	background: url("../img/loading-box.png") no-repeat scroll right center transparent;
 	background: #fff \9;
 	height: 159px;
@@ -477,14 +480,13 @@ li.current > a {
 	position: absolute;
 	top: 153px;
 	width: 233px;
-	color: #616161;
 	font-family: Verdana,sans-serif;
 	font-size: 12px;
+	*/
+	color: #616161;
 }
-
 	#ajaxloader-content {
 		text-align: center;
-		margin-top: 40px;
 	}
 
 #show {
