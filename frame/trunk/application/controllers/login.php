@@ -30,7 +30,7 @@ class Login extends Controller {
 		
 		// execute the login
 		$this->edgeapi->Login($data, $remember, true);
-	}	 
+	}
 	
 	function logout()
 	{	
