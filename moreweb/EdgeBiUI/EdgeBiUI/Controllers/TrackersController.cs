@@ -30,7 +30,7 @@ namespace EdgeBiUI.Controllers
 
             Models.TrackersListModel m = new Models.TrackersListModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
                 // Load Channels
                 Oltp.ChannelDataTable channels = client.Service.Channel_Get();
@@ -56,8 +56,11 @@ namespace EdgeBiUI.Controllers
         {
             List<EdgeBiUI.Models.TrackerRowModel> L = new List<Models.TrackerRowModel>();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 int? channelID = colls["Channel"] == "0" ? null : (int?)int.Parse(colls["Channel"]);
 
                 int?[] segments = new int?[5];
@@ -105,8 +108,11 @@ namespace EdgeBiUI.Controllers
         {
             Models.TrackerModel m = new Models.TrackerModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 m.Tracker = client.Service.Gateway_GetByIdentifier(acc_id, identifier)[0];
 
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
@@ -145,8 +151,11 @@ namespace EdgeBiUI.Controllers
         public ActionResult EditTracker(string identifier, FormCollection coll)
         {
             Oltp.GatewayDataTable trackers;
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 trackers = client.Service.Gateway_GetByIdentifier(acc_id, identifier);
 
                 trackers[0].Name = coll["TrackerName"];
@@ -221,8 +230,11 @@ namespace EdgeBiUI.Controllers
         {
             Models.TrackersBatchModel m = new Models.TrackersBatchModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
                 foreach (Oltp.SegmentRow segment in segments)
                 {
@@ -297,8 +309,11 @@ namespace EdgeBiUI.Controllers
             }
 
             int[] result;
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 result = client.Service.Gateway_BatchProperties(acc_id, ranges.ToArray(), channelID, pageGK, segments);
             }
 

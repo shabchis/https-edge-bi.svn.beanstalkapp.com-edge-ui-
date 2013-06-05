@@ -30,8 +30,11 @@ namespace EdgeBiUI.Controllers
             session_id = AppState.SessionID;
 
             Models.CampaignListModel m = new Models.CampaignListModel();
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.CampaignDataTable t = client.Service.Campaign_Get(acc_id, null, null, null, false);
                 m.Statuses = client.Service.CampaignStatus_Get().ToDictionary(x => x.ID, x => x.Name);
                 m.Channels = client.Service.Channel_Get().ToDictionary(h => h.ID, h => h.DisplayName);
@@ -47,8 +50,11 @@ namespace EdgeBiUI.Controllers
         public PartialViewResult Find(FormCollection colls)
         {
             Models.CampaignListModel m = new Models.CampaignListModel();
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 m.Statuses = client.Service.CampaignStatus_Get().ToDictionary(x => x.ID, x => x.Name);
                 m.Channels = client.Service.Channel_Get().ToDictionary(h => h.ID, h => h.DisplayName);
                 
@@ -83,8 +89,11 @@ namespace EdgeBiUI.Controllers
         public PartialViewResult GetAdgroupsForCampaign(long campaignGK)
         {
             List<Models.AdgroupRowModel> L = new List<Models.AdgroupRowModel>();
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.AdgroupDataTable t = client.Service.Adgroup_Get(campaignGK, null);
 
                 foreach (Oltp.AdgroupRow a in t)
@@ -99,8 +108,11 @@ namespace EdgeBiUI.Controllers
         {
             Models.CampaignModel m = new Models.CampaignModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 m.Campaign = client.Service.Campaign_GetSingle(campaignGK)[0];
 
 
@@ -142,8 +154,11 @@ namespace EdgeBiUI.Controllers
         [OutputCache(Duration = 0, NoStore = true)]
         public ActionResult SaveTargets(FormCollection coll)
         {
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 string a1 = coll["campaignsGK"];
                 Dictionary<long, long> campaignsGK = a1.Split(',').Select(x => long.Parse(x)).ToDictionary(d=>d, d=>d);
                 DataTable targetsTable = client.Service.CampaignTargets_Get(acc_id, null);
@@ -214,8 +229,11 @@ namespace EdgeBiUI.Controllers
         public ActionResult EditCampaign(long campaignGK, FormCollection coll)
         {
             Oltp.CampaignDataTable campaigns;
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 campaigns = client.Service.Campaign_GetSingle(campaignGK);
 
                 foreach (string key in coll.Keys)
@@ -289,8 +307,11 @@ namespace EdgeBiUI.Controllers
             List<long> CampaingsGK = campaignsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
             Models.MultiCampaignModel m = new Models.MultiCampaignModel();
             m.CampaignsGK = campaignsGK;
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired(); 
+                
                 m.Campaigns = client.Service.Campaign_GetIndividualCampaigns(CampaingsGK.ToArray()).ToList();
 
                 Oltp.SegmentDataTable segments = client.Service.Segment_Get(acc_id, true);
@@ -326,8 +347,11 @@ namespace EdgeBiUI.Controllers
             Oltp.CampaignDataTable campaigns;
             List<long> CampaingsGK = campaignsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 campaigns = client.Service.Campaign_GetIndividualCampaigns(CampaingsGK.ToArray());
                 foreach (string key in coll.Keys)
                 {
@@ -457,8 +481,11 @@ namespace EdgeBiUI.Controllers
         {
             Models.AdgroupModel m = new Models.AdgroupModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 m.Adgroup = client.Service.Adgroup_GetSingle(adgroupGK)[0];
 
 
@@ -542,8 +569,11 @@ namespace EdgeBiUI.Controllers
         public ActionResult EditAdgroup(long adgroupGK, FormCollection coll)
         {
             Oltp.AdgroupDataTable adgroups;
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 adgroups = client.Service.Adgroup_GetSingle(adgroupGK);
 
                 foreach (string key in coll.Keys)
@@ -603,8 +633,11 @@ namespace EdgeBiUI.Controllers
             Models.MultipleAdgroupModel m = new Models.MultipleAdgroupModel();
             m.AdgroupsGK = adgroupsGK;
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 foreach (long adgroupGK in AdgroupsGK)
                 {
                     Oltp.AdgroupDataTable t = client.Service.Adgroup_GetSingle(adgroupGK);
@@ -644,8 +677,11 @@ namespace EdgeBiUI.Controllers
         {
             List<long> AdgroupsGK = adgroupsGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.AdgroupDataTable adgroups = new Oltp.AdgroupDataTable();
                 foreach (long adgroupGK in AdgroupsGK)
                     adgroups.Merge(client.Service.Adgroup_GetSingle(adgroupGK));

@@ -39,8 +39,11 @@ namespace EdgeBiUI.Controllers
         {
             Models.CreativeListModel m = new Models.CreativeListModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.CreativeDataTable creatives = client.Service.Creative_Get(acc_id, searchText.Trim() + "*", true);
 
                 foreach (Oltp.CreativeRow creative in creatives)
@@ -60,10 +63,10 @@ namespace EdgeBiUI.Controllers
         {
             Models.CreativeModel m = new Models.CreativeModel();
 
-            using (OltpLogicClient client = null)
+            using (OltpLogicClient client = OltpLogicClient.Open(session_id))
             {
-                if (client==null)
-                    return new ContentResult { Content = "<script type='text/javascript'>window.parent.handleSessionExpired();</script>" };
+                if (client == null)
+                    Helpers.HandleSessionExpired();
 
                 Oltp.CreativeRow creative = client.Service.Creative_GetSingle(creativeGK)[0];
                 m.Creative = creative;
@@ -112,8 +115,10 @@ namespace EdgeBiUI.Controllers
         public ActionResult EditCreative(long creativeGK, FormCollection coll)
         {
             Oltp.CreativeDataTable creatives;
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
                 creatives = client.Service.Creative_GetSingle(creativeGK);
             }
 
@@ -137,7 +142,7 @@ namespace EdgeBiUI.Controllers
             }
             System.Data.DataTable t = creatives.GetChanges();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
                 client.Service.Creative_Save(creatives);
             }
@@ -152,8 +157,11 @@ namespace EdgeBiUI.Controllers
             Models.MutliCreativeModel m = new Models.MutliCreativeModel();
             m.CreativesGK = creativesGK;
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 foreach (long creativeGK in CreativesGK)
                 {
                     Oltp.CreativeDataTable t = client.Service.Creative_GetSingle(creativeGK);
@@ -194,8 +202,11 @@ namespace EdgeBiUI.Controllers
         {
             List<long> CreativesGK = creativesGK.Split(',').Select(s => s.Length > 0 ? long.Parse(s) : 0).ToList();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.CreativeDataTable Creatives = new Oltp.CreativeDataTable();
                 foreach (long creativeGK in CreativesGK)
                     Creatives.Merge(client.Service.Creative_GetSingle(creativeGK));
