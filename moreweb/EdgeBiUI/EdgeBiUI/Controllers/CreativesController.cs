@@ -42,7 +42,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(session_id))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.CreativeDataTable creatives = client.Service.Creative_Get(acc_id, searchText.Trim() + "*", true);
 
