@@ -36,5 +36,18 @@ namespace EdgeBiUI
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
         }
+
+        //protected void Application_Error(object sender, EventArgs e)
+        //{
+        //    Exception exception = Server.GetLastError();
+        //    Response.Clear();
+        //    HttpException httpException = exception as HttpException;
+        //    if (httpException != null)
+        //    {
+        //        RouteData routeData = new RouteData();
+        //        routeData.Values.Add("controller", "Home");
+        //        routeData.Values.Add("action", "SessionExpired");
+        //    }
+        //}
     }
 }
