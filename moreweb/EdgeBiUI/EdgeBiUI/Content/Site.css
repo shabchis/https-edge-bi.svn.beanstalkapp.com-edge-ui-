@@ -74,4 +74,4 @@ a:hover     { color:#7ca826;  }
 .campaignMultiSelect        { float:left; margin-left:20px; }
 
 input.errorValue            { border:1px solid red; }
-input { padding:2px; }
+input:text { padding:2px; }
