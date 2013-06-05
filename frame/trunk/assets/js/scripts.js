@@ -333,7 +333,9 @@ $(function ()
 	});
 });
 
-
+window.handleSessionExpired = function() {
+	window.location.reload(false);
+};
 
 window.ajaxLoaderShow = function()
 {

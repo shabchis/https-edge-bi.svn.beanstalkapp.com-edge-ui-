@@ -472,17 +472,6 @@ li.current > a {
 }
 
 #ajaxloader {
-	/*
-	background: url("../img/loading-box.png") no-repeat scroll right center transparent;
-	background: #fff \9;
-	height: 159px;
-	left: 684px;
-	position: absolute;
-	top: 153px;
-	width: 233px;
-	font-family: Verdana,sans-serif;
-	font-size: 12px;
-	*/
 	color: #616161;
 }
 	#ajaxloader-content {
