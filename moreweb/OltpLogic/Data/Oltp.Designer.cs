@@ -19103,7 +19103,7 @@ SELECT Creative_GK, Account_ID, Creative_Title, Creative_Desc1, Creative_Desc2, 
 						SET
 							[Segment1] = isnull(@Segment1, Segment1),
 							[Segment2] = isnull(@Segment2, Segment2),
-							[Segment3] = isnull(@Segment3, Segmenxt3),
+							[Segment3] = isnull(@Segment3, Segment3),
 							[Segment4] = isnull(@Segment4, Segment4),
 							[Segment5] = isnull(@Segment5, Segment5),
 							[LastUpdated] = getdate()

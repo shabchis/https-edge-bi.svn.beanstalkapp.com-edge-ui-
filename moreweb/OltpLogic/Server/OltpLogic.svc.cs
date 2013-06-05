@@ -1540,7 +1540,7 @@ namespace Easynet.Edge.UI.Server
 				// First update the page
 				pageAndGatewayCmd.Parameters["@accountID"].Value = adgCreative.AccountID;
 				pageAndGatewayCmd.Parameters["@pageGK"].Value = adgCreative.PageGK;
-				pageAndGatewayCmd.Parameters["@gatewayGK"].Value = adgCreative.GatewayGK;
+				pageAndGatewayCmd.Parameters["@gatewayGK"].Value = adgCreative.IsGatewayGKNull() ? (object)DBNull.Value : (object)adgCreative.GatewayGK;
 				pageAndGatewayCmd.Parameters["@segment1"].Value = s1;
 				pageAndGatewayCmd.Parameters["@segment2"].Value = s2;
 				pageAndGatewayCmd.Parameters["@segment3"].Value = s3;
