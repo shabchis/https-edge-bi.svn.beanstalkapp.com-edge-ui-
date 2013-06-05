@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Classes\ApiMenuItem.cs" />
     <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\NetDataContract.cs" />
     <Compile Include="Classes\OltpLogicClient.cs" />
     <Compile Include="Classes\ServiceClient.cs" />
