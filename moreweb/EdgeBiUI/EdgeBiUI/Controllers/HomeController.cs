@@ -12,8 +12,15 @@ namespace EdgeBiUI.Controllers
     public class HomeController : Controller
     {
 
-        int acc_id = 10035;
-        
+        int acc_id = 0;
+        string session_id = null;
+
+        public HomeController()
+        {
+            acc_id = AppState.AccountID;
+            session_id = AppState.SessionID;
+        }
+
         public ActionResult Index()
         {
 
