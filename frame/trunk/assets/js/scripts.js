@@ -334,7 +334,26 @@ $(function ()
 });
 
 window.handleSessionExpired = function() {
-	window.location.reload(false);
+
+	var $errorDialog = $("#errorDialog");
+	$errorDialog.find('#errorMessage').html("Sorry, but you've been away for a while. Press 'OK' to login again (unsaved changes will be lost).");
+	$errorDialog.find('#errorDetails').hide();
+	$errorDialog.find('#errorContent').html("");
+
+	$errorDialog
+		.dialog({
+			title: 'Session expired',
+			modal: true,
+			resizable: false,
+			buttons: {
+				OK: function () {
+					window.location.reload(true);
+				},
+				Cancel: function() {
+					$(this).dialog("close");
+				}
+			}
+		});
 };
 
 window.ajaxLoaderShow = function()
