@@ -19,5 +19,10 @@ namespace EdgeBiUI.Auxilary
         {
             return new ContentResult { Content = "<script type='text/javascript'>window.parent.handleSessionExpired();</script>" };
         }
+
+        public static PartialViewResult HandleSessionExpired2()
+        {
+            return new PartialViewResult() { ViewName = "~/Shared/_SessionExpiredView.cshtml" };
+        }
     }
 }
