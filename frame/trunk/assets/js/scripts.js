@@ -343,19 +343,66 @@ window.ajaxLoaderHide = function()
 {
 	$("#ajaxloader").hide();
 };
+
+window.handleInfo = function(data) {
+	var json;
+	var responseText;
+	if (data.responseText)
+	{
+		responseText = data.responseText;
+		try { json = jQuery.parseJSON(data.responseText); }
+		catch (ex)
+		{}
+	}
+	else {
+		json = data;
+	}
+	
+	var details = json && json.details ? json.details : (responseText ? responseText: null);
+	
+	var $errorDialog = $("#infoDialog");
+		
+	$errorDialog.find('#infoMessage')
+		.html(json && json.message ? json.message : 'No message to display, but everything is okay!');
+
+	if (details)
+		$errorDialog.find('#infoDetails').show();
+	else
+		$errorDialog.find('#infoDetails').hide();
+
+	$errorDialog.find('#infoContent')
+		.html(details);
+
+	$errorDialog
+		.dialog({
+			title: 'Info',
+			modal: true,
+			resizable: false,
+			buttons: {
+				OK: function () {
+					$(this).dialog("close");
+				}
+			}
+		});
+}
 	
 window.handleError = function (data)
 {
 	var json;
+	var responseText;
 	if (data.responseText)
 	{
-		try
-		{
-			json = jQuery.parseJSON(data.responseText);
-		}
+		responseText = data.responseText;
+		try { json = jQuery.parseJSON(data.responseText); }
 		catch (ex)
 		{}
 	}
+	else {
+		json = data;
+	}
+	
+	var details = json && json.details ? json.details : (responseText ? responseText: null);
+	
 	if (json && json.redirect)
 	{
 		window.location.href = json.redirect;
@@ -366,11 +413,18 @@ window.handleError = function (data)
 		
 		$errorDialog.find('#errorMessage')
 			.html(json && json.message ? json.message : 'Sorry, an unexpected error occured.');
+		
+		if (details)
+			$errorDialog.find('#errorDetails').show();
+		else
+			$errorDialog.find('#errorDetails').hide();
+		
 		$errorDialog.find('#errorContent')
-			.html(data.responseText);
+			.html(details);
+			
 		$errorDialog
 			.dialog({
-				title: 'Edge.BI Error',
+				title: 'Error',
 				modal: true,
 				resizable: false,
 				buttons: {

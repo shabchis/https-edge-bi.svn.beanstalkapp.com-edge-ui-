@@ -807,3 +807,24 @@ li.account-sub1 li.menuitem {
 	font-size: 12px;
 	cursor: pointer;
 }
+
+#infoDialog {
+	display: none;
+}
+
+#infoDialog #infoMessage {
+	color: #15B31B;
+	font-size: 12px;
+	line-height: 14px;
+	padding-bottom: 5px;
+	margin-top: 0px;
+}
+
+#infoDialog #infoContent {
+	display: none;
+}
+
+#infoDialog #infoDetails {
+	font-size: 12px;
+	cursor: pointer;
+}

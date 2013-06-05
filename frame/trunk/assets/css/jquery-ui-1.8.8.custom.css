@@ -481,7 +481,7 @@ line-height: 28px;
 /*.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; } */
-.ui-dialog .ui-dialog-content { color:#666;font-family: verdana;position: relative; border: 0; background: none; overflow: auto; zoom: 1;
+.ui-dialog .ui-dialog-content { color:#616161;font-family: verdana;position: relative; border: 0; background: none; overflow: auto; zoom: 1;
  font-size:12px;
 }
 .ui-dialog .ui-dialog-buttonpane { border-top: 1px solid #E5E5E5; text-align: left; border-width: 1px 0 0 0;  margin: .5em 0 0 0; padding: 10px 3px 5px 3px; }

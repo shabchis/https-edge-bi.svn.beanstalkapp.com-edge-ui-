@@ -113,17 +113,8 @@
 		<input type="submit" value="Submit" id="submit" />
 		<div class="clear"></div>
 	</form>
-	<div id="success">
-		<div id="error">
-			<img src="assets/img/alert-icon.png" />
-		</div>
-		<div id="v">
-			<img src="assets/img/success-icon.png" />
-		</div>
-	</div>
 	<div id="confirm">
-		<p>Are you sure you want to delete?</p>
-		<p>The operation may take a few minutes.</p>
+		<p>Are you sure you want to delete? The operation may take a few minutes.</p>
 	</div>
 </div>
 
@@ -132,14 +123,6 @@
 <script type="text/javascript">
 	$(function ()
 	{
-		$("#main").ajaxStart(function ()
-		{
-			$("#success").html('The operation may take a few minutes').fadeIn(500);
-		});
-		$("#main").ajaxComplete(function ()
-		{
-			$("#success").fadeOut(500);
-		});
 		$('.date-picker').datepicker(
 		{
 			changeMonth: true,
@@ -164,7 +147,7 @@
 		$("#submit").button();
 		$("#submit").click(function ()
 		{
-			if ($("input[name='refund_action']").val() != 'refund_delete')
+			if ($("input:radio[name=refund_action]:checked").val() != 'refund_delete')
 			{
 				var form_data = {
 					"accountID": getHashSegments().accountID,
@@ -172,43 +155,51 @@
 					"date": $('#startDate').val(),
 					"channel": $('select option:selected').val()
 				};
-				try
-				{
-					$.ajax(
-					{
-						dataType: "json",
-						type: "POST",
-						data: form_data,
-						url: "refund/add",
-						success: function (data)
-						{
-							$("#v").show();
-							$("#success").append("Refund data added successfully").show();
-						},
-						error: window.handleError
-					});
+				
+				if (!form_data.refund.length || !form_data.date.length || !form_data.channel.length){
+					window.handleError({message: "Please specify a valid channel, refund amount and date."});
 				}
-				catch (ex)
-				{
-					alert(ex);
+				else {
+					try
+					{
+						$.ajax(
+						{
+							dataType: "json",
+							type: "POST",
+							data: form_data,
+							url: "refund/add",
+							success: function (data)
+							{
+								window.handleInfo({message: "Refund data added successfully."});
+							},
+							error: window.handleError
+						});
+					}
+					catch (ex)
+					{
+						alert(ex);
+					}
 				}
 			}
 			else
 			{
-				$("#confirm").dialog(
-				{
+				var form_data = {
+						"accountID": getHashSegments().accountID,
+						"date": $('#startDate').val(),
+						"channel": $('select option:selected').val()
+					};
+					
+				if (!form_data.date.length || !form_data.channel.length){
+					window.handleError({message: "Please specify a valid channel and date."});
+				}
+				else {
+				$("#confirm").dialog({
 					resizable: false,
-					height: 200,
 					modal: true,
 					buttons:
 					{
 						"Delete ": function ()
 						{
-							var form_data = {
-								"accountID": getHashSegments().accountID,
-								"date": $('#startDate').val(),
-								"channel": $('select option:selected').val()
-							};
 							try
 							{
 								$.ajax(
@@ -219,8 +210,7 @@
 									url: "refund/delete",
 									success: function (data)
 									{
-										$("v").show();
-										$("#success").append("Refund data deleted successfully").show();
+										window.handleInfo({message: "Refund data deleted successfully."});
 									},
 									error: window.handleError
 								});
@@ -237,6 +227,7 @@
 						}
 					}
 				});
+				}
 			}
 			return false;
 		});
