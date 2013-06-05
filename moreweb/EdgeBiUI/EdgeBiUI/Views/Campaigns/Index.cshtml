@@ -183,7 +183,14 @@
         else
             $(".campaignMultiSelect input").each(function () { $(this).attr("checked", "checked"); });
         campaigns_all_checked = !campaigns_all_checked;
-    }
+       }
+
+    function deselectAll() {
+    	$(".campaignMultiSelect input").each(function () { $(this).removeAttr("checked"); });
+    	$(".adgroupMultiSelect input").each(function () { $(this).removeAttr("checked"); });
+    	campaigns_all_checked = false;
+    	adgroups_all_checked = false;
+	}
 
     function selectAllAdgroups() {
         $(".campaignMultiSelect input").each(function () { $(this).removeAttr("checked"); });
@@ -241,7 +248,7 @@
 }
 </div>
 
-<div style="text-align:left;">
+<div class="TableActions" style="text-align:left;">
     <div style="float:right;">
         <span id="OpenTargetsButton">
             <a href="" onclick="openTargets(); return false;">Open Targets</a>
@@ -251,9 +258,11 @@
             <a href="" onclick="closeTargets(true); return false;">Cancel</a>
         </span>
     </div>
-    <a href="" onclick="selectAllCampaigns(); return false;">Select All Campaigns</a> &nbsp;|&nbsp; 
-    <a href="" onclick="selectAllAdgroups(); return false;">Select All Adgroups</a> &nbsp;|&nbsp; 
-    <a href="" onclick="openMultipleCampaignOrAdgroupDetails(); return false;">Edit Multiple</a>
+	Select:
+    <a href="" onclick="selectAllCampaigns(); return false;">All Campaigns</a> &nbsp;|&nbsp; 
+    <a href="" onclick="selectAllAdgroups(); return false;">All Adgroups</a> &nbsp;|&nbsp; 
+    <a href="" onclick="deselectAll(); return false;">None</a>
+    @*<a href="" onclick="openMultipleCampaignOrAdgroupDetails(); return false;">Edit Multiple</a>*@
 </div>
 
 <div id="IndexDynamicTableContainer">
