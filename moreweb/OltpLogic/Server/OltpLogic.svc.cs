@@ -64,7 +64,7 @@ namespace Easynet.Edge.UI.Server
 			try { sessionID = Int32.Parse(_decryptor.Dec(sessionIDString)); }
 			catch (Exception ex)
 			{
-				throw new ArgumentException(String.Format("Session information is invalid. Data: {0}", sessionIDString), ex);
+				throw new EdgeSessionException(String.Format("Session information is not in the corrent format. Data: {0}", sessionIDString), EdgeSessionErrorType.BadFormat, ex);
 			}
 
 			using (DataManager.Current.OpenConnection())
@@ -76,10 +76,10 @@ namespace Easynet.Edge.UI.Server
 				using (SqlDataReader reader = cmd.ExecuteReader())
 				{
 					if (!reader.Read())
-						throw new ArgumentException(String.Format("Session does not exist. Session ID: {0}.", sessionID));
+						throw new EdgeSessionException(String.Format("Session was not found. Session ID: {0}.", sessionID), EdgeSessionErrorType.NotFound);
 					userID = reader["UserID"] is int ? (int)reader["UserID"] : -1;
 					if (userID <= 0)
-						throw new ArgumentException("Session has expired. Please refresh the page.");
+						throw new EdgeSessionException("Session has expired. Please refresh the page.", EdgeSessionErrorType.Expired);
 				}
 
 				SqlCommand usrCmd = DataManager.CreateCommand(@"User_GetByID(@userID:int)", CommandType.StoredProcedure);
@@ -88,7 +88,7 @@ namespace Easynet.Edge.UI.Server
 				using (SqlDataReader reader = usrCmd.ExecuteReader())
 				{
 					if (!reader.Read())
-						throw new Exception("User no longer exists. Please login again.");
+						throw new EdgeSessionException("User no longer exists. Please login again.", EdgeSessionErrorType.InvalidUser);
 
 					// Import the table
 					Oltp.UserDataTable table = new Oltp.UserDataTable();
@@ -1540,6 +1540,7 @@ namespace Easynet.Edge.UI.Server
 				// First update the page
 				pageAndGatewayCmd.Parameters["@accountID"].Value = adgCreative.AccountID;
 				pageAndGatewayCmd.Parameters["@pageGK"].Value = adgCreative.PageGK;
+				pageAndGatewayCmd.Parameters["@adgroupCreativeGK"].Value = adgCreative.AdgroupCreativeGK;
 				pageAndGatewayCmd.Parameters["@gatewayGK"].Value = adgCreative.IsGatewayGKNull() ? (object)DBNull.Value : (object)adgCreative.GatewayGK;
 				pageAndGatewayCmd.Parameters["@segment1"].Value = s1;
 				pageAndGatewayCmd.Parameters["@segment2"].Value = s2;
