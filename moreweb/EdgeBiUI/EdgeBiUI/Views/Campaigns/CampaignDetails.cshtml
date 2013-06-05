@@ -12,8 +12,9 @@
             var cpa2 = $("#TabsContent input[name=Target2]").val();
             $("input[name=campaigntarget_@(Model.Campaign.GK)_CPA1]").val(cpa1);
             $("input[name=campaigntarget_@(Model.Campaign.GK)_CPA2]").val(cpa2);
-            closeControllerDialog();
-        });
+            if (closeAfter)
+                closeControllerDialog();
+        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 </script>
 
@@ -70,9 +71,9 @@
 
 
     <div id="Buttons">
-        <input type="button" value="Apply" onclick="SaveCampaign();" />
+        <input type="button" value="Apply" onclick="SaveCampaign(false);" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveCampaign();" />
+        <input type="button" value="OK" onclick="SaveCampaign(true);" />
     </div>
         
     }

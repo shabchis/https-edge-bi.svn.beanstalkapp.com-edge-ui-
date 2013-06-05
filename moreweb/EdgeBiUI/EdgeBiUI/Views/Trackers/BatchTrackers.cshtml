@@ -9,12 +9,13 @@
     function BatchUpdate() {
         $.post($('#TrackersEditForm').attr("action"), $('#TrackersEditForm').serialize(), function (data) {
             if (data == "Error")
-                alert("Make sure the range is in the correct format: 111-222,333-444,555,666");
+                window.parent.handleError({ message: "Make sure the range is in the correct format: 111-222,333-444,555,666" });
             else {
                 var s = data.split(',');
-                alert(s[0] + " trackers were affected (of which " + s[1] + " are new)");
+                window.parent.handleError({ message: s[0] + " trackers were affected (of which " + s[1] + " are new)" });
+                //alert(s[0] + " trackers were affected (of which " + s[1] + " are new)");
                 closeControllerDialog();
-            }            
+            }
         });
     }
 </script>

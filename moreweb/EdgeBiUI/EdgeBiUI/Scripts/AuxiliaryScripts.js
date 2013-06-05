@@ -121,8 +121,9 @@ function addNewValue(selectElement) {
     var segmentID = jElement.attr("segmentID");
     var newValue = $("#newValeOption_" + segmentID).val();
 
-    if (newValue.replace(/^\s+|\s+$/g,"") == "") {
-        alert("The segment name is empty");
+    if (newValue.replace(/^\s+|\s+$/g, "") == "") {
+        window.parent.handleError({ message: "The segment name is empty" });
+        //alert("The segment name is empty");
         return;
     }
     var exist = false;
@@ -141,7 +142,8 @@ function addNewValue(selectElement) {
         });
     }
     else {
-        alert("The segment value '" + newValue + "' already exist");
+        window.parent.handleError({ message: "The segment value '" + newValue + "' already exist" });
+        //alert("The segment value '" + newValue + "' already exist");
     }
 }
 
