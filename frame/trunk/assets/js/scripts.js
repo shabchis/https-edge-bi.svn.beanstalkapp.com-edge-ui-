@@ -336,7 +336,7 @@ $(function ()
 window.handleSessionExpired = function() {
 
 	var $errorDialog = $("#errorDialog");
-	$errorDialog.find('#errorMessage').html("Sorry, but you've been away for a while. Press 'OK' to login again (unsaved changes will be lost).");
+	$errorDialog.find('#errorMessage').html("Sorry, but you've been away for a while.<br/><br/>Press 'OK' to login again (unsaved changes will be lost).");
 	$errorDialog.find('#errorDetails').hide();
 	$errorDialog.find('#errorContent').html("");
 
