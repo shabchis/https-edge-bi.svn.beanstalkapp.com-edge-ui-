@@ -6,9 +6,11 @@
         OpenTabsJS();
     });
 
-    function SaveAdgroups() {
+    function SaveAdgroups(closeAfter) {
         $.post($('#AdgroupEditForm').attr("action"), $('#AdgroupEditForm').serialize(), function (data) {
-        });
+            if (closeAfter)
+                closeControllerDialog();
+        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 
     function editSegmentValue(segID) {
@@ -59,9 +61,9 @@
 
 
     <div id="Buttons">
-        <input type="button" value="Apply" onclick="SaveAdgroups();" />
+        <input type="button" value="Apply" onclick="SaveAdgroups(false);" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveAdgroups(); closeControllerDialog();" />
+        <input type="button" value="OK" onclick="SaveAdgroups(true);" />
     </div>
         
     }

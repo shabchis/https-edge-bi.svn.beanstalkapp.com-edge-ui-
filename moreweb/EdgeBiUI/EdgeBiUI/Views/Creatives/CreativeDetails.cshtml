@@ -6,10 +6,11 @@
         OpenTabsJS();
     });
 
-    function SaveCreative() {
+    function SaveCreative(closeAfter) {
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
-            closeControllerDialog();
-        }).error(function () { window.parent.handleError({ message: "xxx" });/*alert("x");*/ });
+            if (closeAfter)
+                closeControllerDialog();
+        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 </script>
 
@@ -84,9 +85,9 @@
 
 
     <div id="Buttons">
-        <input type="button" value="Apply" onclick="SaveCreative();" />
+        <input type="button" value="Apply" onclick="SaveCreative(false);" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveCreative();" />
+        <input type="button" value="OK" onclick="SaveCreative(true);" />
     </div>
         
     }

@@ -6,9 +6,11 @@
         OpenTabsJS();
     });
 
-    function SaveAdgroup() {
+    function SaveAdgroup(closeAfter) {
         $.post($('#AdgroupEditForm').attr("action"), $('#AdgroupEditForm').serialize(), function (data) {
-        });
+            if (closeAfter)
+                closeControllerDialog();
+        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 </script>
 
@@ -138,9 +140,9 @@
 
 
     <div id="Buttons">
-        <input type="button" value="Apply" onclick="SaveAdgroup();" />
+        <input type="button" value="Apply" onclick="SaveAdgroup(false);" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveAdgroup(); closeControllerDialog();" />
+        <input type="button" value="OK" onclick="SaveAdgroup(true);" />
     </div>
         
     }

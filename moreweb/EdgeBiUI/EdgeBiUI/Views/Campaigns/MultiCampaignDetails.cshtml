@@ -6,9 +6,11 @@
         OpenTabsJS();
     });
 
-    function SaveCampaigns() {
+    function SaveCampaigns(closeAfter) {
         $.post($('#CampaignEditForm').attr("action"), $('#CampaignEditForm').serialize(), function (data) {
-        });
+            if (closeAfter)
+                closeControllerDialog();
+        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 
     function editSegmentValue(segID) {
@@ -86,9 +88,9 @@
 
 
     <div id="Buttons">
-        <input type="button" value="Apply" onclick="SaveCampaigns();" />
+        <input type="button" value="Apply" onclick="SaveCampaigns(false);" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveCampaigns(); closeControllerDialog();" />
+        <input type="button" value="OK" onclick="SaveCampaigns(true);" />
     </div>
         
     }

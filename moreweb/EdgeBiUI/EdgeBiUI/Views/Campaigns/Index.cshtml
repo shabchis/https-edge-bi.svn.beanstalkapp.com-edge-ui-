@@ -50,7 +50,8 @@
                 campaignsGK += this.name.split('_')[1] + ",";
         });
         if (campaignsGK.length > 0 && adgroupsGK.length > 0) {
-            alert("To edit multiple items, select items of the same type.");
+            //alert("To edit multiple items, select items of the same type.");
+            window.parent.handleError({ message: "To edit multiple items, select items of the same type." });
             return;
         }
 
@@ -154,13 +155,15 @@
 
     function saveTargets() {
         if ($(".errorValue").length > 0) {
-            alert("wrong input data");
+            window.parent.handleError({ message: "wrong input data" });
+            //alert("wrong input data");
             return;
         }
 
         if (cpa_has_changed) {
-            $.post($('#TargetsEditorForm').attr("action"), $('#TargetsEditorForm').serialize(), function (data) {                
-                alert("Targets Saved");
+            $.post($('#TargetsEditorForm').attr("action"), $('#TargetsEditorForm').serialize(), function (data) {
+                //alert("Targets Saved");
+                window.parent.handleError({ message: "Targets Saved" });
             });
         }
     }
