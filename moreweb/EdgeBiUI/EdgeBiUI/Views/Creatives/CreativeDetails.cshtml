@@ -8,7 +8,8 @@
 
     function SaveCreative() {
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
-        });
+            closeControllerDialog();
+        }).error(function () { window.parent.handleError({ message: "xxx" });/*alert("x");*/ });
     }
 </script>
 
@@ -85,7 +86,7 @@
     <div id="Buttons">
         <input type="button" value="Apply" onclick="SaveCreative();" />
         <input type="button" value="Cancel" onclick="closeControllerDialog();" />        
-        <input type="button" value="OK" onclick="SaveCreative(); closeControllerDialog();" />
+        <input type="button" value="OK" onclick="SaveCreative();" />
     </div>
         
     }
