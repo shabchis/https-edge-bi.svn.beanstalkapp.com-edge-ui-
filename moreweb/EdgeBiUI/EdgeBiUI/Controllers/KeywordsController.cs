@@ -36,8 +36,11 @@ namespace EdgeBiUI.Controllers
         public PartialViewResult FindKeywords(string searchText)
         {
             List<Oltp.KeywordRow> L = new List<Oltp.KeywordRow>();
-            using (var client = new OltpLogicClient(session_id))
+            using (OltpLogicClient client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 string str = searchText.Trim().Length > 0 ? searchText.Trim() + "*" : null;
                 Oltp.KeywordDataTable keywords = client.Service.Keyword_Get(acc_id, true, str, true);
 
@@ -53,8 +56,11 @@ namespace EdgeBiUI.Controllers
         {
             Models.KeywordModel m = new Models.KeywordModel();
 
-            using (var client = new OltpLogicClient(session_id))
+            using (var client = OltpLogicClient.Open(session_id))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 m.Keyword = client.Service.Keyword_GetSingle(keywordGK)[0];
 
                 Oltp.AdgroupDataTable keyword_adgroups = client.Service.Adgroup_GetByKeyword(keywordGK);

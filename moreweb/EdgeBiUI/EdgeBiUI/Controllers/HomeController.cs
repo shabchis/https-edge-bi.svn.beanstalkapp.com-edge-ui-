@@ -35,8 +35,11 @@ namespace EdgeBiUI.Controllers
         public ActionResult AddNewSegmentValue(int segmentID, string newValue)
         {
             int newValueID = 0;
-            using (var client = new OltpLogicClient(AppState.SessionID))
+            using (var client = OltpLogicClient.Open(AppState.SessionID))
             {
+                if (client == null)
+                    Helpers.HandleSessionExpired();
+
                 Oltp.SegmentValueDataTable t = client.Service.SegmentValue_Get(acc_id, segmentID);
                 Oltp.SegmentValueRow r = t.NewSegmentValueRow();
                 r.AccountID = acc_id;
