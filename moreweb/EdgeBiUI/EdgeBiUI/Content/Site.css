@@ -4,29 +4,32 @@ a:visited   { color:#7ca826;  }
 a:hover     { color:#7ca826;  }
 
 #ControllerDialogDiv    { width:600px; height:450px; background-color:#FFFFFF; position:fixed; top:50%; margin-top:-225px; right:50%; margin-right:-300px; display:none; z-index:1200; overflow:hidden; -moz-border-radius: 20px; -webkit-border-radius: 20px; border-radius: 20px; -webkit-box-shadow: 0px 4px 17px #666; -moz-box-shadow: 0px 4px 17px #666; box-shadow: 0px 4px 17px #666; }
-#ScreenOverlay          { position:fixed; filter:Alpha(Opacity=80); background-color:rgb(0,0,0); opacity:0.1; z-index:-1000; display:none; top:0px; left:0px; }
+#ScreenOverlay          { position:fixed; z-index:-1000; display:none; top:0px; left:0px; }
 #LoadingMessage         { width:100px; height:25px; position:fixed; top:50%; margin-top:-12px; text-align:center; padding-top:8px; font-weight:bold; right:50%; margin-right:-50px; display:none; z-index:4000; background-color:#FFFFFF;  } 
 
 #SiteContainer          { margin:5px; padding:5px; }
 
-.IndexTopNav        { margin-bottom:10px; overflow:auto; }
+.IndexTopNav        { margin-bottom:20px; overflow:auto; }
 .searchText         { width:200px; height:20px; border:1px solid #8d8d8d; }
 
-.IndexTable         { min-width:200px; min-height:300px; border:1px solid silver; padding:2px; font-family:Arial; font-size:13px; }
-.IndexTableHeader   { background-color:#8d8d8d; color:White; overflow:auto; height:19px; padding-top:7px; padding-bottom:7px; margin-bottom:2px; }
-.IndexTableRow      { background-color:#f5f5f5; color:black; overflow:auto; height:19px; padding-top:7px; padding-bottom:7px;  border-top:1px solid silver; }   
+.IndexTable         { min-width:200px; min-height:300px; border:1px solid silver; padding:2px; font-family:Verdana; font-size:12px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;}
+.IndexTableHeader   { background-color:#8d8d8d; color:White; overflow:auto; height:19px; padding-top:7px; padding-bottom:7px; margin-bottom:2px; -webkit-border-top-left-radius: 10px; -webkit-border-top-right-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+.IndexTableRow      { background-color:#f5f5f5; color:black; overflow:auto; height:19px; padding-top:7px; padding-bottom:7px;  border-top:1px solid silver;  }   
 .IndexTableRow:hover { background-color:#e3edcb; }
 .IndexTableRow.selected { background-color:#e3edcb; } 
 .IndexTableName     { float:left; width:50%; color:#7ca826; height:19px; overflow:hidden; cursor:pointer; }
 .IndexTableDesc     { float:left; width:50%; color:#666666; height:19px; overflow:hidden; }
+.IndexTableDesc input[type=text] {text-align: right}
 .IndexTableRowNoResult  { height:19px; padding-top:7px; padding-bottom:7px; padding-left:5px; display:none; }
 
 .IndexTableContainer .IndexTableRow         { background-color:#FFFFFF; }
 .IndexTableContainer .IndexTableRow:hover   { background-color:#e3edcb; }
 .IndexTableContainer .IndexTableRow.selected { background-color:#e3edcb; } 
 
-.FilterSegment      { float:left; margin-right:10px; }
-.FilterSegmentTitle { margin-bottom:4px; } 
+.FilterSegment      { float:left; margin-right:12px; }
+.FilterSegmentTitle { margin-bottom:4px; color: #616161; height: 14px; } 
+
+.TableActions		{ padding: 0 12px; margin-bottom: 5px; color: #8d8d8d; }
 
 #CampaignsIndexTable .IndexTableRow { height:21px; }
 #CampaignsIndexTable .IndexTableDesc { height:21px; }
@@ -40,13 +43,13 @@ a:hover     { color:#7ca826;  }
 #TabsContent                    { position:relative; overflow:hidden; border-top:0px; width:550px; height:250px; background-color:#FFFFFF; }
 
 #container ul.menu              { margin:0px; padding:0px; list-style: none; list-style-position: outside; }
-#container ul.menu li           { margin:0px; float:left; color:Black; padding:5px 10px 4px 10px; margin-right:-1px; cursor: pointer; border:1px solid #F5F5F5; background-color:#d1d1d1; }
+#container ul.menu li           { margin:0px; float:left; color:#616161; padding:5px 10px 4px 10px; margin-right:5px; cursor: pointer; background-color:#d1d1d1; font-family: Verdana; font-size: 12px; -webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;}
 #container ul.menu li:first-child {  }
-#container ul.menu li.active    { background-color:#FFFFFF; color:#000000; border-bottom:1px solid white; }
+#container ul.menu li.active    { background-color:#FFFFFF;  }
 .content                        { position:absolute; top:0; left:0; padding:20px; width:510px; height:210px; overflow:auto; }
 
 #Buttons                        { margin-top:10px; }
-#Buttons input                  { float:right; margin-left:10px; width:60px; height:25px; }
+#Buttons input                  { float:right; margin-left:10px; width:60px; }
 
 .segmentRow         { margin-bottom:10px; overflow:auto; clear:both; }
 .segmentRowName     { float:left; width:120px; padding-top:3px; }
@@ -58,10 +61,11 @@ a:hover     { color:#7ca826;  }
 .associationRow     { margin-bottom:5px; }
 .associationRow span    { color:#7ca826; }
 
-.adgroupInnerTable          { border:1px solid silver; background-color:White; padding:2px; padding-bottom:0px; }
-.adgroupInnerTableHeader    { background-color:#8d8d8d; color:White; overflow:auto; height:16px; padding:4px; margin-bottom:2px; }
-.adgroupInnerTableRow       { background-color:#E6E6E6; color:#042271; overflow:auto; padding:3px; margin-bottom:2px; }
-.adgroupInnerTableRow:hover { background-color:#D3D3D3; } 
+.adgroupInnerTable          { border:1px solid silver; background-color:White; padding:2px; padding-bottom:0px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
+.adgroupInnerTableHeader    { background-color:#8d8d8d; color:White; overflow:auto; height:16px; padding:4px; margin-bottom:2px; -webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;}
+.adgroupInnerTableRow       { background-color:#f5f5f5; overflow:auto; padding:3px; margin-bottom:2px; }
+.adgroupInnerTableRow:hover { background-color:#e3edcb; } 
+.adgroupCreativeDestURL		{ font-size:10px; color:#7ca826; white-space:normal }
 
 .adgroupInnerTableRow .segmentRowValue input[type=text] { width:135px; }
 
@@ -74,4 +78,6 @@ a:hover     { color:#7ca826;  }
 .campaignMultiSelect        { float:left; margin-left:20px; }
 
 input.errorValue            { border:1px solid red; }
-input:text { padding:2px; }
+input[type=text]			{ color: #4a4a4a; font-family: Verdana, Sans-Serif; font-size: 12px; padding: 2px}
+input[type=button]			{ color: #4a4a4a; font-family: Verdana, Sans-Serif; font-size: 12px; padding: 4px}
+select						{ color: #4a4a4a; font-family: Verdana, Sans-Serif; font-size: 12px; padding: 2px }
