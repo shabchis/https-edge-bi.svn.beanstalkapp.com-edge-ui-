@@ -39,21 +39,6 @@
 		margin:0 0 0 75px;
 	}
 	
-	#success {
-		display:none;
-		width:300px;
-		color:#9BBD53;
-		text-align: center;
-		margin:80px 0px 0px 100px;
-		-moz-border-radius: 5px 5px 5px 5px;
-		-moz-box-shadow: 0 0 10px #DBD8DB;
-		background-color: #FFFFFF;
-		background-image: -moz-linear-gradient(center bottom, #F5F2F5 0%, #FAFAFA 17%, #FFFFFF 79%);
-		border: 1px solid #E5E5E5;
-		
-		padding: 10px;
-	}
-	
 	#confirm {
 		display: none;
 		line-height: 18px;

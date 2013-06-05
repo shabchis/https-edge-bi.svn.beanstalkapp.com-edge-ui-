@@ -337,11 +337,17 @@ $(function ()
 
 window.ajaxLoaderShow = function()
 {
-	$("#ajaxloader").show();
+	$("#ajaxloader").dialog({
+		resizable: false,
+		modal: true,
+		height: 100,
+		width: 120,
+		dialogClass: "ajaxloader-dialog"
+	});
 };
 window.ajaxLoaderHide = function()
 {
-	$("#ajaxloader").hide();
+	$("#ajaxloader").dialog("close");
 };
 
 window.handleInfo = function(data) {
@@ -363,7 +369,7 @@ window.handleInfo = function(data) {
 	var $errorDialog = $("#infoDialog");
 		
 	$errorDialog.find('#infoMessage')
-		.html(json && json.message ? json.message : 'No message to display, but everything is okay!');
+		.html(json && json.message ? json.message : 'No message to display, but everything is okay');
 
 	if (details)
 		$errorDialog.find('#infoDetails').show();
