@@ -38,7 +38,7 @@ namespace EdgeBiUI.Controllers
             using (var client = OltpLogicClient.Open(AppState.SessionID))
             {
                 if (client == null)
-                    Helpers.HandleSessionExpired();
+                    return PartialView("~/Views/Shared/_SessionExpiredView.cshtml");
 
                 Oltp.SegmentValueDataTable t = client.Service.SegmentValue_Get(acc_id, segmentID);
                 Oltp.SegmentValueRow r = t.NewSegmentValueRow();
