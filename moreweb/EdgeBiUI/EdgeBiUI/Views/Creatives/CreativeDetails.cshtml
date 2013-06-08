@@ -58,15 +58,15 @@
         <div class="Details content">
             <div class="segmentRow">
                 <div class="segmentRowName">Title</div>
-                <div class="segmentRowValue"><input type="text" disabled="disabled" value="@Model.Creative.Title" style="width:300px;" /></div>
+                <div class="segmentRowValue"><div style="width:300px; padding:3px; color:Gray; border:1px solid silver; background-color:#E3E3E3;">@Model.Creative.Title</div></div>
             </div>
             <div class="segmentRow">
                 <div class="segmentRowName">Description 1</div>
-                <div class="segmentRowValue"><div style="width:300px; padding:3px; color:Gray; border:1px solid silver;">@Model.Creative.Desc1 &nbsp;</div></div>
+                <div class="segmentRowValue"><div style="width:300px; padding:3px; color:Gray; border:1px solid silver; background-color:#E3E3E3;">@Model.Creative.Desc1 &nbsp;</div></div>
             </div>
             <div class="segmentRow">
                 <div class="segmentRowName">Description 2</div>
-                <div class="segmentRowValue"><div style="width:300px; padding:3px; color:Gray; border:1px solid silver;">@Model.Creative.Desc2 &nbsp;</div></div>
+                <div class="segmentRowValue"><div style="width:300px; padding:3px; color:Gray; border:1px solid silver; background-color:#E3E3E3;">@Model.Creative.Desc2 &nbsp;</div></div>
             </div>
         </div>
 
@@ -81,8 +81,7 @@
                     >
                     <span>@(association.AdGroup.Name)</span>
                 </div>
-            }
-        
+            }        
         </div>
         
     </div>

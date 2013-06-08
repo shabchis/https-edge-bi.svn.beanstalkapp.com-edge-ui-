@@ -29,8 +29,11 @@
 </script>
 
 <div class="IndexTopNav">
-    <input type="text" name="search_value" class="searchText" id="search_value" />
-    <input type="button" value="find" onclick="findKeywords()" />
+    @using (Html.BeginForm("FindKeywords", "Keywords", FormMethod.Post, new { id = "PageEditorForm", defaultbutton = "FilterButton" }))
+    {
+        <input type="text" name="search_value" class="searchText" id="search_value" />
+        <input type="button" value="Find" id="FilterButton" onclick="findKeywords()" />
+    }
 </div>
 
 <div id="IndexDynamicTableContainer">

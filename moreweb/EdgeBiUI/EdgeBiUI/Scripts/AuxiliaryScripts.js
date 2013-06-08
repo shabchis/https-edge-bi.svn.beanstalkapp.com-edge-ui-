@@ -130,7 +130,10 @@ function addNewValue(selectElement) {
     jElement.children("option").each(function () { if (this.text.toLowerCase() == newValue.toLowerCase()) exist = true; });
 
     if (!exist) {
-        $.post(applicationPath + "/Home/AddNewSegmentValue", { segmentID: segmentID, newValue: newValue }, function (data) {
+        if (applicationPath == "/")
+            applicationPath = "";
+
+        $.post(applicationPath + "Home/AddNewSegmentValue", { segmentID: segmentID, newValue: newValue }, function (data) {
             $("#newValeOption_" + segmentID + "_div").remove();
             jElement.children("option[value='-1000']").remove();
             //alert(newValue + " " + data);
