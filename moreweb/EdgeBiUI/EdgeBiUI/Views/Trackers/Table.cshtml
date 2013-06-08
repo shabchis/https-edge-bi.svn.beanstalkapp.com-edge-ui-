@@ -9,7 +9,7 @@
     @foreach (EdgeBiUI.Models.TrackerRowModel tracker in Model)
     {
         <div class="IndexTableRow" id="IndexTableRow_@(tracker.TrackerID)" onclick="selectRow(@(tracker.TrackerID), false);">
-            <div class="IndexTableName" style="width:80%;"><div style="padding-left:30px;" onclick="openTrackerDetails(@tracker.Identifier)" title="Gk=@tracker.TrackerID">@tracker.TrackerName (@tracker.Identifier)</div></div>
+            <div class="IndexTableName" style="width:80%;"><div style="padding-left:30px;" onclick="openTrackerDetails(@tracker.Identifier)" title="Tracker Gk=@tracker.TrackerID">@tracker.TrackerName (@tracker.Identifier)</div></div>
             <div class="IndexTableDesc" style="width:20%;">@tracker.ChannelName</div>
         </div>
     }

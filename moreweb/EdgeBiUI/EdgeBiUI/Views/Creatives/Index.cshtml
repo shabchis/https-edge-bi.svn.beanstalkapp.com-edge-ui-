@@ -50,13 +50,14 @@
         });
     }
 
-
-
 </script>
 
 <div class="IndexTopNav">
+    @using (Html.BeginForm("FindCreatives", "Creatives", FormMethod.Post, new { id = "FilterForm", defaultbutton = "FilterButton" }))
+    {
     <input type="text" name="search_value" class="searchText" id="search_value" />
-    <input type="button" value="find" onclick="findCreatives()" />
+    <input type="button" value="Find" id="FilterButton" onclick="findCreatives()" />
+    }
 </div>
 
 <div class="TableActions" style="text-align:left;">

@@ -8,8 +8,12 @@
 
     function SaveAdgroup(closeAfter) {
         $.post($('#AdgroupEditForm').attr("action"), $('#AdgroupEditForm').serialize(), function (data) {
-            if (closeAfter)
-                closeControllerDialog();
+            if (data == "OK") {
+                if (closeAfter)
+                    closeControllerDialog();
+            } else {
+                $('#ControllerDialogDiv').html(data);
+            } 
         }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 </script>

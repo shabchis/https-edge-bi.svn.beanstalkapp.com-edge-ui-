@@ -8,8 +8,12 @@
 
     function SaveTracker(closeAfter) {
         $.post($('#TrackersEditForm').attr("action"), $('#TrackersEditForm').serialize(), function (data) {
-            if (closeAfter)
-                closeControllerDialog();
+            if (data == "OK") {
+                if (closeAfter)
+                    closeControllerDialog();
+            } else {
+                $('#ControllerDialogDiv').html(data);
+            }
         }).error(function () { window.parent.handleError({ message: "error saving data" }); });
     }
 </script>
@@ -17,7 +21,7 @@
 <div id="container">
 
     <div class="containerTitle">
-       Editing Tracker
+       Editing Tracker @Model.Tracker.Identifier
     </div>
     @using (Html.BeginForm("EditTracker", "Trackers", new { identifier = Model.Tracker.Identifier }, FormMethod.Post, new { id = "TrackersEditForm" }))
     {
@@ -32,12 +36,16 @@
         <div class="Details content">
             <div class="segmentRow">
                 <div class="segmentRowName">Name</div>
-                <div class="segmentRowValue"><input type="text"  name="TrackerName" value="@(Model.Tracker.IsNameNull() ? "" : Model.Tracker.Name)" style="width:150px;" /></div>
+                <div class="segmentRowValue"><input type="text"  name="TrackerName" value="@(Model.Tracker.IsNameNull() ? "" : Model.Tracker.Name)" style="width:300px;" /></div>
             </div>
             <div class="segmentRow">
+                <div class="segmentRowName">Destination URL</div>
+                <div class="segmentRowValue"><input type="text" name="DestinationURL" value="@(Model.Tracker.IsDestinationURLNull() ? "" : Model.Tracker.DestinationURL)" style="width:300px;" /></div>
+            </div>
+@*            <div class="segmentRow">
                 <div class="segmentRowName">Identifier</div>
                 <div class="segmentRowValue"><input type="text" name="Identifier" disabled="disabled" value="@Model.Tracker.Identifier" style="width:150px;" /></div>
-            </div>
+            </div>*@
             <div class="segmentRow">
                 <div class="segmentRowName">Channel</div>
                 <div class="segmentRowValue">
@@ -48,10 +56,6 @@
                         }
                     </select>
                 </div>
-            </div>
-            <div class="segmentRow">
-                <div class="segmentRowName">Destination URL</div>
-                <div class="segmentRowValue"><input type="text" name="DestinationURL" value="@(Model.Tracker.IsDestinationURLNull() ? "" : Model.Tracker.DestinationURL)" style="width:300px;" /></div>
             </div>
             <div class="segmentRow">
                 <div class="segmentRowName">Landing Page</div>

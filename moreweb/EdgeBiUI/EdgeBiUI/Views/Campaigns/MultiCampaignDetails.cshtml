@@ -7,6 +7,12 @@
     });
 
     function SaveCampaigns(closeAfter) {
+        if ($("#container .errorValue").length > 0) {
+            window.parent.handleError({ message: "wrong target value" });
+            //alert("wrong target value");
+            return;
+        }
+
         $.post($('#CampaignEditForm').attr("action"), $('#CampaignEditForm').serialize(), function (data) {
             if (closeAfter)
                 closeControllerDialog();
@@ -71,14 +77,14 @@
             <div class="segmentRow">
                 <div class="segmentRowName">CPA (Customers)</div>
                 <div class="segmentRowValue">
-                    <input type="text" id="Target1" name="Target1" value="@Model.Target_Customer" disabled="disabled" />
+                    <input type="text" id="Target1" name="Target1" value="@Model.Target_Customer" disabled="disabled" onkeyup="checkvalue(this)" />
                     <input type="checkbox" name="EditTarget1" value="1" onclick="editTarget(1);" />
                 </div>
             </div>
             <div class="segmentRow">
                 <div class="segmentRowName">CPA (Depositors)</div>
                 <div class="segmentRowValue">
-                    <input type="text" id="Target2" name="Target2" value="@Model.Target_Depositor" disabled="disabled" />
+                    <input type="text" id="Target2" name="Target2" value="@Model.Target_Depositor" disabled="disabled" onkeyup="checkvalue(this)" />
                     <input type="checkbox" name="EditTarget2" value="1" onclick="editTarget(2);" />
                 </div>
             </div>
