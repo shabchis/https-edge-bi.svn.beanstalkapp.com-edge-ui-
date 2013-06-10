@@ -30,12 +30,11 @@
         if (campaignsGK.length > 0 && containsGK)
             openMultipleCampaignOrAdgroupDetails();
         else {
-            ShowLoadingMessage();
             $.get('@(Url.Action("EditCampaign", "Campaigns"))', { campaignGK: campaignGK }, function (data) {
-                HideLoadingMessage();
-                $('#ControllerDialogDiv').html(data);
-                openController(600, 400);
-            });
+            	$('#ControllerDialogDiv').html(data);
+            	openController(600, 400);
+            })
+			.fail(window.parent.handleError);
         }
     }
 
@@ -56,21 +55,22 @@
         }
 
         if (campaignsGK.length > 0) {
-            ShowLoadingMessage();
+            
             $.get('@(Url.Action("EditMultipleCampaign", "Campaigns"))', { campaignsGK: campaignsGK }, function (data) {
-                HideLoadingMessage();
                 $('#ControllerDialogDiv').html(data);
                 openController(600, 400);
-            });
+               })
+			   .fail(window.parent.handleError)
+			   ;
         }
 
         if (adgroupsGK.length > 0) {
-            ShowLoadingMessage();
+            
             $.get('@(Url.Action("EditMultipleAdgroups", "Campaigns"))', { adgroupsGK: adgroupsGK }, function (data) {
-                HideLoadingMessage();
                 $('#ControllerDialogDiv').html(data);
                 openController(600, 400);
-            });
+            })
+			.fail(window.parent.handleError);
         }
     }
 
@@ -90,17 +90,16 @@
         if (containsGK && adgroupsGK.length > 0)
             openMultipleCampaignOrAdgroupDetails();
         else {
-            ShowLoadingMessage();
-            $.get('@(Url.Action("EditAdgroup", "Campaigns"))', { adgroupGK: adgroupGK }, function (data) {
-                HideLoadingMessage();
-                $('#ControllerDialogDiv').html(data);
-                openController(600, 400);
-            });
+
+        	$.get('@(Url.Action("EditAdgroup", "Campaigns"))', { adgroupGK: adgroupGK }, function (data) {
+        		$('#ControllerDialogDiv').html(data);
+        		openController(600, 400);
+        	})
+			.fail(window.parent.handleError);
         }
     }
 
     function findCampaigns() {
-        ShowLoadingMessage();
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
             $("#IndexDynamicTableContainer").html(data);
             if (targets_are_open)
@@ -108,19 +107,18 @@
             else
                 closeTargets(false);
 
-            HideLoadingMessage();
             $(".IndexTableRowNoResult").css("display", "block");
-        });
+        })
+			.fail(window.parent.handleError);
     }
 
     function openAdGroups(campaignGK) {
         if ($("#Adgroups" + campaignGK).css("display") == "none") {
-            ShowLoadingMessage();
             $.get('@Url.Action("GetAdgroupsForCampaign","Campaigns")', { campaignGK: campaignGK }, function (data) {
                 $("#Adgroups" + campaignGK).html(data);
                 $("#Adgroups" + campaignGK).css("display", "block");
-                HideLoadingMessage();
-            });
+            })
+			.fail(window.parent.handleError);
         }
         else
             $("#Adgroups" + campaignGK).css("display", "none");

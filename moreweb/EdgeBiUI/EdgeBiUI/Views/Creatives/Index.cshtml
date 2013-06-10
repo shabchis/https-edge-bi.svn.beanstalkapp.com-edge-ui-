@@ -18,12 +18,11 @@
             openMultipleCreativeDetails();
         else
         {
-            ShowLoadingMessage();
             $.get('@(Url.Action("EditCreative", "Creatives"))', { creativeGK: creativeGK }, function (data) {
-                HideLoadingMessage();
                 $('#ControllerDialogDiv').html(data);
                 openController(600, 400);
-            });
+               })
+			.fail(window.parent.handleError);
         }
     }
 
@@ -31,23 +30,21 @@
         var creativesGK = "";
         $("#IndexDynamicTableContainer input:checked").each(function () { creativesGK += this.name.split('_')[1] + ","; });
         if (creativesGK.length > 0) {
-            ShowLoadingMessage();
             $.get('@(Url.Action("EditMultipleCreatives", "Creatives"))', { creativesGK: creativesGK }, function (data) {
-                HideLoadingMessage();
                 $('#ControllerDialogDiv').html(data);
                 openController(600, 400);
-            });
+               })
+			.fail(window.parent.handleError);
         }
     }
 
     function findCreatives() {
         searchText = $("#search_value").val();
-        ShowLoadingMessage();
         $.get('@(Url.Action("FindCreatives", "Creatives"))', { searchText: searchText }, function (data) {
-            HideLoadingMessage();
             $('#IndexDynamicTableContainer').html(data);
             $(".IndexTableRowNoResult").css("display", "block");
-        });
+           })
+			.fail(window.parent.handleError);
     }
 
 </script>

@@ -8,30 +8,27 @@
 <script type="text/javascript">
 
     function openTrackerDetails(identifier) {
-        ShowLoadingMessage();
         $.get('@(Url.Action("EditTracker", "Trackers"))', { identifier: identifier }, function (data) {
-            HideLoadingMessage();
             $('#ControllerDialogDiv').html(data);
             openController(600, 400);
-        });
+           })
+			.fail(window.parent.handleError);
     }
 
     function openBatchTrackers() {
-        ShowLoadingMessage();
-        $.get('@(Url.Action("BatchUpdate", "Trackers"))', function (data) {
-            HideLoadingMessage();
-            $('#ControllerDialogDiv').html(data);
-            openController(600, 400);
-        });
+    	$.get('@(Url.Action("BatchUpdate", "Trackers"))', function (data) {
+    		$('#ControllerDialogDiv').html(data);
+    		openController(600, 400);
+    	})
+			.fail(window.parent.handleError);
     }
 
     function findTrackers() {
-        ShowLoadingMessage();
         $.post($('#PageEditorForm').attr("action"), $('#PageEditorForm').serialize(), function (data) {
             $("#IndexDynamicTableContainer").html(data);
-            HideLoadingMessage();
             $(".IndexTableRowNoResult").css("display", "block");
-        });
+           })
+			.fail(window.parent.handleError);
     }
 
 

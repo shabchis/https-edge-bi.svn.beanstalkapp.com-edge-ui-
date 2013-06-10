@@ -8,22 +8,21 @@
 <script type="text/javascript">
 
     function openKeywordDetails(keywordGK) {
-        ShowLoadingMessage();
         $.get('@(Url.Action("EditKeyword", "Keywords"))', { keywordGK: keywordGK }, function (data) {
             $('#ControllerDialogDiv').html(data);
             openController(600, 400);
-            HideLoadingMessage();
-        });
+           })
+			.fail(window.parent.handleError);
     }
 
     function findKeywords() {
         searchText = $("#search_value").val();
-        ShowLoadingMessage();
+        
         $.get('@(Url.Action("FindKeywords", "Keywords"))', { searchText: searchText }, function (data) {
-            HideLoadingMessage();
             $('#IndexDynamicTableContainer').html(data);
             $(".IndexTableRowNoResult").css("display", "block");
-        });
+           })
+			.fail(window.parent.handleError);
     }
 
 </script>
