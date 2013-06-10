@@ -10,7 +10,7 @@
         $.post($('#AdgroupEditForm').attr("action"), $('#AdgroupEditForm').serialize(), function (data) {
             if (closeAfter)
                 closeControllerDialog();
-        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
+           }).error(window.parent.handleError);
     }
 
     function editSegmentValue(segID) {
