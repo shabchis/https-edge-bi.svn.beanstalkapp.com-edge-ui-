@@ -417,7 +417,7 @@ window.handleError = function (data)
 {
 	var json;
 	var responseText;
-	if (data.responseText)
+	if (data && data.responseText)
 	{
 		responseText = data.responseText;
 		try { json = jQuery.parseJSON(data.responseText); }
