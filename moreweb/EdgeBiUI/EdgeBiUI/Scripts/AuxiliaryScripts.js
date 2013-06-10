@@ -14,7 +14,17 @@ $(document).ready(function () {
             return false;
         }
     });
-})
+         })
+
+$(document).ajaxStart(function () {
+	try { window.parent.ajaxLoaderShow(); }
+	catch (err) { }
+});
+$(document).ajaxStop(function () {
+	try { window.parent.ajaxLoaderHide(); }
+	catch (err) { }
+});
+
 
 function selectRow(gk, multiple) {
     if (!multiple)
@@ -75,33 +85,6 @@ function closeControllerDialog() {
 }
 
 
-function ShowLoadingMessage() {
-//    $('#ScreenOverlay').css("width", getBrowserHeight().width);
-//    $('#ScreenOverlay').css("height", getBrowserHeight().height);
-//    $('#ScreenOverlay').css("display", "block");
-//    $('#ScreenOverlay').css("z-index", 1000);
-
-    //    $('#LoadingMessage').css("display", "block");
-    try {
-        window.parent.ajaxLoaderShow();
-    }
-    catch(err)
-    { }
-}
-
-function HideLoadingMessage() {
-//    $('#ScreenOverlay').css("display", "none");
-//    $('#ScreenOverlay').css("z-index", -1000);
-
-//    $('#LoadingMessage').css("display", "none");
-    try {
-        window.parent.ajaxLoaderHide();
-    }
-    catch (err)
-    { }
-    
-}
-
 function handleNewValue(selectElement) {
     var jElement = $(selectElement)
     var value = jElement.val();
@@ -134,6 +117,7 @@ function addNewValue(selectElement) {
             applicationPath = "";
 
         $.post(applicationPath + "Home/AddNewSegmentValue", { segmentID: segmentID, newValue: newValue }, function (data) {
+        	
             $("#newValeOption_" + segmentID + "_div").remove();
             jElement.children("option[value='-1000']").remove();
             //alert(newValue + " " + data);
@@ -142,7 +126,7 @@ function addNewValue(selectElement) {
             //jElement.append(new Option("Add New...", "-1000", false, false));
             jElement.append("<option value='" + -1000 + "'>" + "Add New..." + "</option>");
             jElement.fadeIn(200);
-        });
+           }).fail(window.parent.handleError);
     }
     else {
         window.parent.handleError({ message: "The segment value '" + newValue + "' already exists." });
