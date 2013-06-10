@@ -145,7 +145,7 @@ function addNewValue(selectElement) {
         });
     }
     else {
-        window.parent.handleError({ message: "The segment value '" + newValue + "' already exist" });
+        window.parent.handleError({ message: "The segment value '" + newValue + "' already exists." });
         //alert("The segment value '" + newValue + "' already exist");
     }
 }

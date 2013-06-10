@@ -155,7 +155,7 @@
 
     function saveTargets() {
         if ($(".errorValue").length > 0) {
-            window.parent.handleError({ message: "wrong input data" });
+            window.parent.handleError({ message: "Invalid values." });
             //alert("wrong input data");
             return;
         }
@@ -163,7 +163,7 @@
         if (cpa_has_changed) {
             $.post($('#TargetsEditorForm').attr("action"), $('#TargetsEditorForm').serialize(), function (data) {
                 //alert("Targets Saved");
-                window.parent.handleError({ message: "Targets Saved" });
+                window.parent.handleInfo({ message: "Targets saved successfully." });
             });
         }
     }

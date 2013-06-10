@@ -9,7 +9,7 @@
     function BatchUpdate() {
         $.post($('#TrackersEditForm').attr("action"), $('#TrackersEditForm').serialize(), function (data) {
             if (data == "Error")
-                window.parent.handleError({ message: "Make sure the range is in the correct format: 111-222,333-444,555,666" });
+                window.parent.handleError({ message: "Ranges must be entered in the following format: 111-222,333-444,555,666" });
             else {
                 var s = data.split(',');
                 window.parent.handleError({ message: s[0] + " trackers were affected (of which " + s[1] + " are new)" });
@@ -45,7 +45,7 @@
                 <div class="segmentRowValue">
                     <select name="Channel">
                         <option value="-1">(no change)</option>
-                        @foreach (KeyValuePair<int, string> channel in Model.Channels)
+                        @foreach (KeyValuePair<int, string> channel in Model.Channels.ToList().OrderBy(s=>s.Value))
                         {
                             <option value="@channel.Key">@channel.Value</option>
                         }
@@ -74,11 +74,11 @@
                 <div class="segmentRowValue">
                     <select name="batchtrackersSegmentValue_@(seg.SegmentRow.SegmentID)" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
                         <option value="-1">(no change)</option>
+						<option value="-1000">Add New...</option>
                         @foreach (Oltp.SegmentValueRow value in seg.Values)
                         {
                             <option value="@(value.ValueID)">@(value.Value)</option>
                         }
-                        <option value="-1000">Add New...</option>
                     </select>
                 </div>
             </div>
