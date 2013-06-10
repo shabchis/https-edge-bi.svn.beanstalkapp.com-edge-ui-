@@ -50,11 +50,11 @@
                     <select id="creativeSegmentValue_@(seg.SegmentRow.SegmentID)" name="creativeSegmentValue_@(seg.SegmentRow.SegmentID)" disabled="disabled" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
                         <option value="-100" @(seg.SelectedValue == -100 ? "selected=\"selected\"" : "")></option>
                         <option value="-1">(none)</option>
+						<option value="-1000">Add New...</option>
                     @foreach (Oltp.SegmentValueRow value in seg.Values)
                     {
                         <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
                     }
-                        <option value="-1000">Add New...</option>
                     </select>
                     <input type="checkbox" name="creativeSegmentValueEdit_@(seg.SegmentRow.SegmentID)" value="1" onclick="editSegmentValue(@(seg.SegmentRow.SegmentID));" />
                 </div>

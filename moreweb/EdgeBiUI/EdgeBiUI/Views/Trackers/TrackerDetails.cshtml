@@ -62,11 +62,11 @@
                 <div class="segmentRowValue">
                     <select name="LandingPage" onchange="handleNewValue(this)" segmentID="999" originalValue="@(Model.Tracker.PageGK)">
                             <option value="-1">(none)</option>
+							<option value="-1000">Add New...</option>
                         @foreach (KeyValuePair<long, string> landingPage in Model.LandingPages)
                         {
                             <option value="@landingPage.Key" @(landingPage.Key == Model.Tracker.PageGK ? "selected='selected'" : "")>@landingPage.Value</option>
                         }
-                        <option value="-1000">Add New...</option>
                     </select>
                 </div>
             </div>
@@ -85,11 +85,11 @@
                 <div class="segmentRowValue">
                     <select name="trackerSegmentValue_@(seg.SegmentRow.SegmentID)" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
                         <option value="-1">(none)</option>
+						<option value="-1000">Add New...</option>
                     @foreach (Oltp.SegmentValueRow value in seg.Values)
                     {
                         <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
                     }
-                        <option value="-1000">Add New...</option>
                     </select>
                 </div>
             </div>

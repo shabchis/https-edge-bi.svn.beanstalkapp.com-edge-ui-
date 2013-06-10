@@ -51,11 +51,11 @@
                 <div class="segmentRowValue">
                     <select name="campaignSegmentValue_@(seg.SegmentRow.SegmentID)" onchange="handleNewValue(this)" segmentID="@(seg.SegmentRow.SegmentID)" originalValue="@(seg.SelectedValue)">
                         <option value="-1">(none)</option>
+						<option value="-1000">Add New...</option>
                     @foreach (Oltp.SegmentValueRow value in seg.Values)
                     {
                         <option value="@(value.ValueID)" @(seg.SelectedValue == value.ValueID ? "selected=\"selected\"" : "")>@(value.Value)</option>
                     }
-                        <option value="-1000">Add New...</option>
                     </select>
                 </div>
             </div>
