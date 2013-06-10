@@ -429,38 +429,34 @@ window.handleError = function (data)
 	}
 	
 	var details = json && json.details ? json.details : (responseText ? responseText: null);
-	
+	var message = json && json.message ? json.message : 'Sorry, an unexpected error occured.';
 	if (json && json.redirect)
-	{
-		window.location.href = json.redirect;
-	}
+		message = message + "<br/><br/>Press OK to redirect."
+	var $errorDialog = $("#errorDialog");
+
+	$errorDialog.find('#errorMessage').html(message);
+	$errorDialog.find('#errorContent').html(details);
+	if (details)
+		$errorDialog.find('#errorDetails').show();
 	else
-	{
-		var $errorDialog = $("#errorDialog");
-		
-		$errorDialog.find('#errorMessage')
-			.html(json && json.message ? json.message : 'Sorry, an unexpected error occured.');
-		
-		if (details)
-			$errorDialog.find('#errorDetails').show();
-		else
-			$errorDialog.find('#errorDetails').hide();
-		
-		$errorDialog.find('#errorContent')
-			.html(details);
-			
-		$errorDialog
-			.dialog({
-				title: 'Error',
-				modal: true,
-				resizable: false,
-				buttons: {
-					OK: function () {
-						$(this).dialog("close");
+		$errorDialog.find('#errorDetails').hide();
+
+	$errorDialog
+		.dialog({
+			title: 'Error',
+			modal: true,
+			resizable: false,
+			buttons: {
+				OK: function () {
+					if (json && json.redirect)
+					{
+						window.location.href = json.redirect;
 					}
+					else
+						$(this).dialog("close");
 				}
-			});
-	}
+			}
+		});
 };
 
 window.adjustFrameHeight = function()
