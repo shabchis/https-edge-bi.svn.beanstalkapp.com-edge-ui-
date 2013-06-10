@@ -8,7 +8,7 @@
 
     function SaveCampaign(closeAfter) {
         if ($("#container .errorValue").length > 0) {
-            window.parent.handleError({ message: "wrong target value" });
+            window.parent.handleError({ message: "Invalid target value." });
             //alert("wrong target value");
             return;
         }
@@ -24,7 +24,7 @@
             } else {
                 $('#ControllerDialogDiv').html(data);
             } 
-        }).error(function () { window.parent.handleError({ message: "error saving data" }); });
+        }).error(window.parent.handleError);
     }
 </script>
 
