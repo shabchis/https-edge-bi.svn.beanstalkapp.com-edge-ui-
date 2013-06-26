@@ -260,7 +260,7 @@ namespace EdgeBiUI.Controllers
                     }
                 }
                 
-                client.Service.Campaign_Save(campaigns, false);
+                client.Service.Campaign_Save(campaigns, true);
 
                 double? target1, target2;
                 if (coll["Target1"].Equals(""))
@@ -383,7 +383,7 @@ namespace EdgeBiUI.Controllers
                     }
                 }
 
-                client.Service.Campaign_Save(campaigns, false);
+                client.Service.Campaign_Save(campaigns, true);
 
                 double? target1, target2;
                 if (coll["Target1"] == null || coll["Target1"].Equals(""))
@@ -600,7 +600,7 @@ namespace EdgeBiUI.Controllers
                     }
                 }
 
-                client.Service.Adgroup_Save(adgroups, false);
+                client.Service.Adgroup_Save(adgroups, true);
 
                 Oltp.AdgroupCreativeDataTable adgroupcreatives = client.Service.AdgroupCreative_Get(adgroupGK);
                 foreach (Oltp.AdgroupCreativeRow r in adgroupcreatives)
@@ -716,7 +716,7 @@ namespace EdgeBiUI.Controllers
                     }
                 }
 
-                client.Service.Adgroup_Save(adgroups, false);
+                client.Service.Adgroup_Save(adgroups, true);
             }
 
             return Content("OK");
