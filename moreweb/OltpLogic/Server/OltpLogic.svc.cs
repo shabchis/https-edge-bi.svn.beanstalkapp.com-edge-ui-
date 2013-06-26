@@ -79,7 +79,7 @@ namespace Easynet.Edge.UI.Server
 						throw new EdgeSessionException(String.Format("Session was not found. Session ID: {0}.", sessionID), EdgeSessionErrorType.NotFound);
 					userID = reader["UserID"] is int ? (int)reader["UserID"] : -1;
 					if (userID <= 0)
-						throw new EdgeSessionException("Session has expired. Please refresh the page.", EdgeSessionErrorType.Expired);
+						throw new EdgeSessionException(Const.SessionExpiredMessage, EdgeSessionErrorType.Expired);
 				}
 
 				SqlCommand usrCmd = DataManager.CreateCommand(@"User_GetByID(@userID:int)", CommandType.StoredProcedure);
@@ -1075,7 +1075,8 @@ namespace Easynet.Edge.UI.Server
 		}
 		public Oltp.CampaignDataTable Campaign_Get(int accountID, int? channelID, int? statusID, string filter, bool filterByAdgroup)
 		{
-			return From<CampaignTableAdapter>().Get(accountID, channelID, statusID, EscapeSearchString(filter), filterByAdgroup);
+			var d = From<CampaignTableAdapter>().Get(accountID, channelID, statusID, EscapeSearchString(filter), filterByAdgroup);
+			return d;
 		}
 
 		public Oltp.CampaignDataTable Campaign_GetIndividualCampaigns(long[] campaignGKs)
