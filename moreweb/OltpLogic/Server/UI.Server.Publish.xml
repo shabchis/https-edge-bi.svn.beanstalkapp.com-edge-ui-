@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="D:\Edge\EDGE-MERGE\deployment\EDGE1\Seperia\2.5\Web\Console\OLTP-Logic" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="bin/Edge.UI.Server.dll" publishTime="06/05/2013 14:31:24" />
-    <file relUrl="Web.config" publishTime="03/11/2013 15:59:21" />
-    <file relUrl="bin/Edge.UI.Data.dll" publishTime="06/05/2013 14:31:23" />
-    <file relUrl="bin/Edge.UI.Server.pdb" publishTime="06/05/2013 14:31:24" />
+    <file relUrl="Web.config" publishTime="06/26/2013 11:51:09" />
     <file relUrl="OltpLogic.svc" publishTime="07/25/2010 15:21:14" />
-    <file relUrl="bin/Edge.UI.Data.pdb" publishTime="06/05/2013 14:31:23" />
+    <file relUrl="bin/Edge.UI.Data.dll" publishTime="06/05/2013 19:10:46" />
+    <file relUrl="bin/Edge.UI.Server.pdb" publishTime="06/26/2013 11:48:39" />
+    <file relUrl="bin/Edge.UI.Server.dll" publishTime="06/26/2013 11:48:39" />
+    <file relUrl="bin/Edge.UI.Data.pdb" publishTime="06/05/2013 19:10:46" />
   </publishProfile>
 </publishData>
