@@ -2,7 +2,6 @@
 
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=9" >
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 		<title>Edge.BI</title>
 		<link rel="stylesheet" href="<?php base_url(); ?>assets/css/exstyle.css" type="text/css" media="screen" />
